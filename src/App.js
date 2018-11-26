@@ -6,7 +6,6 @@ import * as globals from "./utils/globals";
 
 import Nav from "./components/Nav";
 import Home from "./components/Home";
-import Page from "./components/Page";
 import CC from "./components/CC";
 import Upgrades from "./components/Upgrades";
 
