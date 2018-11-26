@@ -13,10 +13,18 @@ const Header = () => {
         <li>
           <Link to={globals.URL_COMMUNITY_CENTER}>Community Center</Link>
           <ul className="subnav">
-            <li className="link-spring">Spring</li>
-            <li className="link-summer">Summer</li>
-            <li className="link-autumn">Autumn</li>
-            <li className="link-winter">Winter</li>
+            <Link to={`${globals.URL_COMMUNITY_CENTER}/spring`}>
+              <li className="link-spring">Spring</li>
+            </Link>
+            <Link to={`${globals.URL_COMMUNITY_CENTER}/summer`}>
+              <li className="link-summer">Summer</li>
+            </Link>
+            <Link to={`${globals.URL_COMMUNITY_CENTER}/autumn`}>
+              <li className="link-autumn">Autumn</li>
+            </Link>
+            <Link to={`${globals.URL_COMMUNITY_CENTER}/winter`}>
+              <li className="link-winter">Winter</li>
+            </Link>
           </ul>
         </li>
         <li>
