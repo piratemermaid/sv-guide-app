@@ -39,4 +39,4 @@ const CC = props => {
   );
 };
 
-export default CC;
+export default withRouter(CC);

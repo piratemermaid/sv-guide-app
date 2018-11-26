@@ -5,13 +5,18 @@ const CCItem = props => {
 
   function renderSeasons(seasons) {
     return seasons.map(season => {
-      return <div className={`season-dot ${season}`} />;
+      return <div key={season} className={`season-dot ${season}`} />;
     });
   }
 
   return (
     <div>
-      {name}
+      <label>
+        <input type="checkbox" />
+        <span className="checkbox" checked="checked">
+          {name}
+        </span>
+      </label>
       {season.constructor === Array ? renderSeasons(season) : null}
     </div>
   );

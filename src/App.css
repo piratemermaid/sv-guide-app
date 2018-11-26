@@ -2,6 +2,10 @@ body {
   font: sans-serif;
 }
 
+.container {
+  margin-left: 240px;
+}
+
 h2 {
   font-size: 26px;
 }
@@ -109,4 +113,13 @@ li.link-winter:hover {
 
 .season-dot.winter {
   background: rgb(157, 228, 228);
+}
+
+span.checkbox {
+  color: black;
+}
+
+[type="checkbox"]:checked + span:not(.lever):before {
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
 }

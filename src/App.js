@@ -13,7 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { cc: [], upgrades: [] };
+    this.state = {};
   }
 
   updateData(newState) {
@@ -23,16 +23,21 @@ class App extends Component {
 
   componentWillMount() {
     // get data from LS
-    if (this.state.cc.length === 0 && this.state.upgrades.length === 0) {
-      if (localStorage.getItem(globals.LS)) {
-        this.setState(JSON.parse(localStorage.getItem(globals.LS)));
-      } else {
-        localStorage.setItem(globals.LS, JSON.stringify(globals.DEFAULT_STATE));
-      }
+    if (Object.keys(this.state).length === 0) {
+      //   if (localStorage.getItem(globals.LS)) {
+      //     this.setState(JSON.parse(localStorage.getItem(globals.LS)));
+      //   } else {
+      //     localStorage.setItem(globals.LS, JSON.stringify(globals.DEFAULT_STATE));
+      //   }
+      const { cc, upgrades } = globals.DEFAULT_STATE;
+      this.setState({ cc, upgrades });
+      localStorage.setItem(globals.LS, JSON.stringify({ cc, upgrades }));
     }
   }
 
   render() {
+    const { cc } = this.state;
+
     return (
       <div className="App">
         <BrowserRouter>
@@ -41,8 +46,15 @@ class App extends Component {
             <div className="container">
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route exact path="/community_center" component={CC} />
-                <Route path="/community_center/:season" component={CC} />
+                <Route
+                  exact
+                  path="/community_center"
+                  render={() => <CC cc={cc} />}
+                />
+                <Route
+                  path="/community_center/:season"
+                  render={() => <CC cc={cc} />}
+                />
                 <Route path="/upgrades" component={Upgrades} />
               </Switch>
             </div>
