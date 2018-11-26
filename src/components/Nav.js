@@ -12,6 +12,12 @@ const Header = () => {
         </li>
         <li>
           <Link to={globals.URL_COMMUNITY_CENTER}>Community Center</Link>
+          <ul className="subnav">
+            <li className="link-spring">Spring</li>
+            <li className="link-summer">Summer</li>
+            <li className="link-autumn">Autumn</li>
+            <li className="link-winter">Winter</li>
+          </ul>
         </li>
         <li>
           <Link to={globals.URL_UPGRADES}>Upgrades</Link>

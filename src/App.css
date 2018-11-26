@@ -15,3 +15,42 @@ body {
 .active-nav-link {
   background: #fff59d;
 }
+
+.sidenav li:hover .subnav {
+  display: block;
+  max-height: 200px;
+}
+
+.subnav {
+  overflow: hidden;
+  max-height: 0;
+  -webkit-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+  background: #fffde7;
+}
+
+ul.subnav li {
+  padding-left: 26px;
+}
+
+.subnav li:hover {
+  cursor: pointer;
+  /* color: rgb(94, 94, 94); */
+  /* font-style: italic; */
+}
+
+li.link-spring:hover {
+  color: rgb(147, 221, 141);
+}
+
+li.link-summer:hover {
+  color: rgb(223, 214, 95);
+}
+
+li.link-autumn:hover {
+  color: rgb(226, 172, 111);
+}
+
+li.link-winter:hover {
+  color: rgb(157, 228, 228);
+}
