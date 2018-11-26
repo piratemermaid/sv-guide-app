@@ -1,3 +1,17 @@
 body {
   font: sans-serif;
 }
+
+/*///////////////////////////////////////////////
+// NAV STYLES
+///////////////////////////////////////////////*/
+
+.sidenav {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  width: 200px;
+}
+
+.active-nav-link {
+  background: #fff59d;
+}
