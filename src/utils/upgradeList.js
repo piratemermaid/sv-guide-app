@@ -6,7 +6,7 @@ export const upgradeList = [
   { name: "Backpack Upgrade 2", cost: [] },
   {
     name: "Copper Pickaxe",
-    cost: []
+    cost: [{ "Copper Bar": 5 }]
   },
   {
     name: "Steel Pickaxe",
@@ -22,7 +22,7 @@ export const upgradeList = [
   },
   {
     name: "Copper Watering Can",
-    cost: []
+    cost: [{ "Copper Bar": 5 }]
   },
   {
     name: "Steel Watering Can",
@@ -38,7 +38,7 @@ export const upgradeList = [
   },
   {
     name: "Copper Axe",
-    cost: []
+    cost: [{ "Copper Bar": 5 }]
   },
   {
     name: "Steel Axe",
@@ -54,7 +54,7 @@ export const upgradeList = [
   },
   {
     name: "Copper Hoe",
-    cost: []
+    cost: [{ "Copper Bar": 5 }]
   },
   {
     name: "Steel Hoe",

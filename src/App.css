@@ -2,6 +2,14 @@ body {
   font: sans-serif;
 }
 
+h2 {
+  font-size: 26px;
+}
+
+h3 {
+  font-size: 18px;
+}
+
 /*///////////////////////////////////////////////
 // NAV STYLES
 ///////////////////////////////////////////////*/
@@ -47,10 +55,30 @@ li.link-summer:hover {
   color: rgb(223, 214, 95);
 }
 
-li.link-autumn:hover {
+li.link-fall:hover {
   color: rgb(226, 172, 111);
 }
 
 li.link-winter:hover {
+  color: rgb(157, 228, 228);
+}
+
+/*///////////////////////////////////////////////
+// SEASON COLORS
+///////////////////////////////////////////////*/
+
+.spring {
+  color: rgb(147, 221, 141);
+}
+
+.summer {
+  color: rgb(223, 214, 95);
+}
+
+.fall {
+  color: rgb(226, 172, 111);
+}
+
+.winter {
   color: rgb(157, 228, 228);
 }

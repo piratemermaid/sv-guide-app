@@ -1,9 +1,8 @@
 const x = "all";
 const sp = "spring";
 const su = "summer";
-const a = "autumn";
+const f = "fall";
 const w = "winter";
-const i = idk;
 
 export const ccItems = [
   {
@@ -36,19 +35,19 @@ export const ccItems = [
   },
   {
     name: "Common Mushroom",
-    season: a
+    season: f
   },
   {
     name: "Wild Plum",
-    season: a
+    season: f
   },
   {
     name: "Hazelnut",
-    season: a
+    season: f
   },
   {
     name: "Blackberry",
-    season: a
+    season: f
   },
   {
     name: "Winter Root",
@@ -159,19 +158,19 @@ export const ccItems = [
   },
   {
     name: "Corn",
-    season: [su, a]
+    season: [su, f]
   },
   {
     name: "Eggplant",
-    season: a
+    season: f
   },
   {
     name: "Pumpkin",
-    season: a
+    season: f
   },
   {
     name: "Yam",
-    season: a
+    season: f
   },
   {
     name: "Gold Star Parsnip",
@@ -186,12 +185,12 @@ export const ccItems = [
   {
     name: "Gold Star Pumpkin",
     amt: 5,
-    season: a
+    season: f
   },
   {
     name: "Gold Star Corn",
     amt: 5,
-    season: [su, a]
+    season: [su, f]
   },
   {
     name: "Large Brown Egg",
@@ -235,7 +234,7 @@ export const ccItems = [
   },
   {
     name: "Honey",
-    season: [sp, su, a]
+    season: [sp, su, f]
   },
   {
     name: "Jelly",
@@ -259,11 +258,11 @@ export const ccItems = [
   },
   {
     name: "Apple",
-    season: a
+    season: f
   },
   {
     name: "Pomegranate",
-    season: a
+    season: f
   },
   {
     name: "Sunfish",
@@ -275,21 +274,21 @@ export const ccItems = [
     name: "Catfish",
     location: "River & Secret Woods",
     time: "anytime",
-    season: [sp, a],
+    season: [sp, f],
     special: "Rain"
   },
   {
     name: "Shad",
     location: "River",
     time: "9am - 2am",
-    season: [sp, su, a],
+    season: [sp, su, f],
     special: "Rain"
   },
   {
     name: "Tiger Trout",
     location: "River",
     time: "6am - 7pm",
-    season: [a, w]
+    season: [f, w]
   },
   {
     name: "Largemouth Bass",
@@ -301,7 +300,7 @@ export const ccItems = [
     name: "Carp",
     location: "Lake",
     time: "anytime",
-    season: [sp, su, a]
+    season: [sp, su, f]
   },
   {
     name: "Bullhead",
@@ -319,7 +318,7 @@ export const ccItems = [
     name: "Sardine",
     location: "Ocean",
     time: "6am - 7pm",
-    season: [sp, a, w]
+    season: [sp, f, w]
   },
   {
     name: "Tuna",
@@ -331,20 +330,20 @@ export const ccItems = [
     name: "Red Snapper",
     location: "Ocean",
     time: "6am - 7pm",
-    season: [su, a],
+    season: [su, f],
     special: "Rain"
   },
   {
     name: "Tilapia",
     location: "Ocean",
     time: "6am - 2pm",
-    season: [su, a]
+    season: [su, f]
   },
   {
     name: "Walleye",
     location: "River & Lake",
     time: "12pm - 2am",
-    season: a
+    season: f
   },
   {
     name: "Bream",
@@ -356,7 +355,7 @@ export const ccItems = [
     name: "Eel",
     location: "Ocean",
     time: "4pm - 2am",
-    season: [sp, a],
+    season: [sp, f],
     special: "Rain"
   },
   {
@@ -514,7 +513,7 @@ export const ccItems = [
   },
   {
     name: "Sunflower",
-    season: [su, a]
+    season: [su, f]
   },
   {
     name: "Duck Feather",
@@ -548,7 +547,7 @@ export const ccItems = [
   {
     name: "Wheat",
     amt: 10,
-    season: [su, a]
+    season: [su, f]
   },
   {
     name: "Hay",
@@ -558,7 +557,7 @@ export const ccItems = [
   {
     name: "Apple",
     amt: 3,
-    season: a
+    season: f
   },
   {
     name: "Oak Resin", //duplicate
@@ -574,7 +573,7 @@ export const ccItems = [
   },
   {
     name: "Pomegranate", //duplicate
-    season: a
+    season: f
   },
   {
     name: "2,500 g",

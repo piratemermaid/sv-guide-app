@@ -7,6 +7,7 @@ import * as globals from "./utils/globals";
 import Nav from "./components/Nav";
 import Home from "./components/Home";
 import Page from "./components/Page";
+import CC from "./components/CC";
 import Upgrades from "./components/Upgrades";
 
 class App extends Component {
@@ -41,8 +42,8 @@ class App extends Component {
             <div className="container">
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route exact path="/community_center" component={Page} />
-                <Route path="/community_center/:season" component={Page} />
+                <Route exact path="/community_center" component={CC} />
+                <Route path="/community_center/:season" component={CC} />
                 <Route path="/upgrades" component={Upgrades} />
               </Switch>
             </div>

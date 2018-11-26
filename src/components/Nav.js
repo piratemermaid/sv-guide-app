@@ -19,8 +19,8 @@ const Header = () => {
             <Link to={`${globals.URL_COMMUNITY_CENTER}/summer`}>
               <li className="link-summer">Summer</li>
             </Link>
-            <Link to={`${globals.URL_COMMUNITY_CENTER}/autumn`}>
-              <li className="link-autumn">Autumn</li>
+            <Link to={`${globals.URL_COMMUNITY_CENTER}/fall`}>
+              <li className="link-fall">Fall</li>
             </Link>
             <Link to={`${globals.URL_COMMUNITY_CENTER}/winter`}>
               <li className="link-winter">Winter</li>
