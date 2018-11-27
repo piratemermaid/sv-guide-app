@@ -5,22 +5,6 @@ import { getItemID } from "../utils/utils";
 import UpgradeItem from "./UpgradeItem";
 
 const Upgrades = props => {
-  //   function renderUpgrades() {
-  //     let i = -1;
-  //     return upgradeItems.map(upgrade => {
-  //       const id = getItemID(upgrade.name, "upgrades");
-  //       return (
-  //   <UpgradeItem
-  //     key={id}
-  //     info={upgrade}
-  //     checked={props.upgrades[id] === 1}
-  //     toggleItem={props.toggleItem}
-  //     id={id}
-  //   />
-  //       );
-  //     });
-  //   }
-
   function renderUpgrades(group) {
     const range = upgradeGroups[group];
     let arr = [];
