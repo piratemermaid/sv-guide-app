@@ -9,9 +9,16 @@ export function getItemID(itemName, itemType) {
 }
 
 export function getImgUrl(name) {
+  // If it's an amount of gold, use gold.png
+  if (name.includes(" g")) {
+    return "gold";
+  }
+
+  // Remove (#2) from duplicates
   if (name.includes("(#2)")) {
     name = name.substring(0, name.length - 5);
   }
+
   return name.replace(/ /g, "_");
 }
 

@@ -3,7 +3,7 @@ import React from "react";
 import { getImgUrl } from "../utils/utils";
 
 const CCItem = props => {
-  const { name, season, location, time, special } = props.info;
+  const { name, season, amt, location, time, special } = props.info;
 
   function renderSeasons(seasons) {
     return seasons.map(season => {
@@ -23,13 +23,15 @@ const CCItem = props => {
           checked={props.checked ? "checked" : ""}
           onChange={() => handleCheck(props.id, name)}
         />
-        <span className="ccItem-tip">
+        <span style={{ fontSize: "13px" }}>
           <img
             src={`/img/${getImgUrl(name)}.png`}
             title={name}
             alt={name}
             className="ccItem-img"
           />
+          {name.includes(" g") ? ` ${name}` : null}
+          {amt ? ` x${amt}` : null}
           {location ? location : null}
           {location && time ? " " : null}
           {time ? time : null}
