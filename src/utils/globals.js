@@ -6,8 +6,13 @@ export const URLS = {
   CALENDAR: "/calendar"
 };
 
-let ccArr = [];
+let cc = [];
 for (let i = 0; i < 128; i++) {
-  ccArr.push(0);
+  cc.push(0);
 }
-export const DEFAULT_STATE = { cc: ccArr, upgrades: [] };
+let upgrades = [];
+for (let i = 0; i < 44; i++) {
+  upgrades.push(0);
+}
+
+export const DEFAULT_STATE = { cc, upgrades };

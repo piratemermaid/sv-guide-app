@@ -53,7 +53,7 @@ class App extends Component {
   }
 
   render() {
-    const { cc } = this.state;
+    const { cc, upgrades } = this.state;
 
     return (
       <div className="App">
@@ -72,7 +72,15 @@ class App extends Component {
                   path={`${globals.URLS.COMMUNITY_CENTER}/:season`}
                   render={() => <CC cc={cc} toggleItem={this.toggleItem} />}
                 />
-                <Route path={globals.URLS.UPGRADES} component={Upgrades} />
+                <Route
+                  path={globals.URLS.UPGRADES}
+                  render={() => (
+                    <Upgrades
+                      upgrades={upgrades}
+                      toggleItem={this.toggleItem}
+                    />
+                  )}
+                />
                 <Route path={globals.URLS.CALENDAR} component={Calendar} />
               </Switch>
             </div>

@@ -1,9 +1,9 @@
 import { ccItems } from "./ccItems";
-import { upgradeList } from "./upgradeList";
+import { upgradeItems } from "./upgrades";
 
 export function getItemID(itemName, itemType) {
   let arr;
-  itemType === "cc" ? (arr = ccItems) : (arr = upgradeList);
+  itemType === "cc" ? (arr = ccItems) : (arr = upgradeItems);
 
   return arr.findIndex(item => item.name === itemName);
 }

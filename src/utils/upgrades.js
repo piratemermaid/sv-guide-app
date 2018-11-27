@@ -1,9 +1,17 @@
-export const upgradeList = [
+export const upgradeItems = [
   {
     name: "Backpack Upgrade 1",
     cost: []
   },
   { name: "Backpack Upgrade 2", cost: [] },
+  {
+    name: "Milk Pail",
+    cost: []
+  },
+  {
+    name: "Shears",
+    cost: []
+  },
   {
     name: "Copper Pickaxe",
     cost: [{ "Copper Bar": 5 }]
@@ -17,7 +25,7 @@ export const upgradeList = [
     cost: []
   },
   {
-    name: "Platinum Pickaxe",
+    name: "Iridium Pickaxe",
     cost: []
   },
   {
@@ -33,7 +41,7 @@ export const upgradeList = [
     cost: []
   },
   {
-    name: "Platinum Watering Can",
+    name: "Iridium Watering Can",
     cost: []
   },
   {
@@ -49,7 +57,7 @@ export const upgradeList = [
     cost: []
   },
   {
-    name: "Platinum Axe",
+    name: "Iridium Axe",
     cost: []
   },
   {
@@ -65,7 +73,7 @@ export const upgradeList = [
     cost: []
   },
   {
-    name: "Platinum Hoe",
+    name: "Iridium Hoe",
     cost: []
   },
   {
@@ -137,14 +145,6 @@ export const upgradeList = [
     cost: []
   },
   {
-    name: "Milk Pail",
-    cost: []
-  },
-  {
-    name: "Shears",
-    cost: []
-  },
-  {
     name: "Peach Tree",
     cost: []
   },
@@ -169,3 +169,10 @@ export const upgradeList = [
     cost: []
   }
 ];
+
+export const upgradeGroups = {
+  tools: [0, 19],
+  buildings: [20, 29],
+  animals: [30, 36],
+  trees: [37, 42]
+};
