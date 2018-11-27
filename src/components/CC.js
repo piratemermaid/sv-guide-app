@@ -29,7 +29,7 @@ const CC = props => {
                   key={i}
                   info={item}
                   checked={props.cc[id] === 1}
-                  toggleCCItem={props.toggleCCItem}
+                  toggleItem={props.toggleItem}
                   id={id}
                 />
               );

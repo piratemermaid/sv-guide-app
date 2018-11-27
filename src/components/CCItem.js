@@ -12,7 +12,7 @@ const CCItem = props => {
   }
 
   function handleCheck(id) {
-    props.toggleCCItem(id);
+    props.toggleItem(id, "cc");
   }
 
   return (

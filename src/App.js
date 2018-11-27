@@ -16,7 +16,7 @@ class App extends Component {
 
     this.state = {};
 
-    this.toggleCCItem = this.toggleCCItem.bind(this);
+    this.toggleItem = this.toggleItem.bind(this);
   }
 
   updateData(newState) {
@@ -30,12 +30,12 @@ class App extends Component {
     localStorage.setItem(globals.LS, JSON.stringify(newState));
   }
 
-  toggleCCItem(id) {
-    let cc = this.state.cc;
-    this.state.cc[id] === 0 ? (cc[id] = 1) : (cc[id] = 0);
+  toggleItem(id, type) {
+    let newArr = this.state[type];
+    this.state[type][id] === 0 ? (newArr[id] = 1) : (newArr[id] = 0);
 
     let newState = this.state;
-    newState.cc = cc;
+    newState[type] = newArr;
     this.setState(newState);
     localStorage.setItem(globals.LS, JSON.stringify(newState));
   }
@@ -66,11 +66,11 @@ class App extends Component {
                 <Route
                   exact
                   path={globals.URLS.COMMUNITY_CENTER}
-                  render={() => <CC cc={cc} toggleCCItem={this.toggleCCItem} />}
+                  render={() => <CC cc={cc} toggleItem={this.toggleItem} />}
                 />
                 <Route
                   path={`${globals.URLS.COMMUNITY_CENTER}/:season`}
-                  render={() => <CC cc={cc} toggleCCItem={this.toggleCCItem} />}
+                  render={() => <CC cc={cc} toggleItem={this.toggleItem} />}
                 />
                 <Route path={globals.URLS.UPGRADES} component={Upgrades} />
                 <Route path={globals.URLS.CALENDAR} component={Calendar} />
