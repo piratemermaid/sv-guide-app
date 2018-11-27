@@ -17,7 +17,7 @@ const CC = props => {
           {ccItems.map(item => {
             if (item.season === season || item.season.includes(season)) {
               i++;
-              return <CCItem key={i} info={item} />;
+              return <CCItem key={i} info={item} checked={props.cc[i] === 1} />;
             }
           })}
         </div>

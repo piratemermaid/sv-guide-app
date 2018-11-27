@@ -9,13 +9,19 @@ const CCItem = props => {
     });
   }
 
+  function handleCheck() {
+    console.log("check!");
+  }
+
   return (
     <div>
       <label>
-        <input type="checkbox" />
-        <span className="checkbox" checked="checked">
-          {name}
-        </span>
+        <input
+          type="checkbox"
+          checked={props.checked ? "checked" : ""}
+          onChange={() => handleCheck()}
+        />
+        <span className="checkbox">{name}</span>
       </label>
       {season.constructor === Array ? renderSeasons(season) : null}
     </div>
