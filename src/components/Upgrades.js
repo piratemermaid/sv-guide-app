@@ -8,7 +8,7 @@ const Upgrades = props => {
   function renderUpgrades(group) {
     const range = upgradeGroups[group];
     let arr = [];
-    for (let i = range[0]; i < range[1]; i++) {
+    for (let i = range[0]; i <= range[1]; i++) {
       const id = getItemID(upgradeItems[i].name, "upgrades");
       arr.push(
         <UpgradeItem

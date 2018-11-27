@@ -1,5 +1,7 @@
 import React from "react";
 
+import { getImgUrl } from "../utils/utils";
+
 const UpgradeItem = props => {
   const { name } = props.info;
 
@@ -15,7 +17,14 @@ const UpgradeItem = props => {
           checked={props.checked ? "checked" : ""}
           onChange={() => handleCheck(props.id, name)}
         />
-        <span style={{ fontSize: "13px" }}>{name}</span>
+        <span>
+          <img
+            className="upgrade-img"
+            src={`/img/${getImgUrl(name)}.png`}
+            alt={name}
+            title={name}
+          />
+        </span>
       </label>
     </div>
   );
