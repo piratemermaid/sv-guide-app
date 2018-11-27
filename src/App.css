@@ -91,30 +91,16 @@ li.link-winter:hover {
 // CC PAGE STYLES
 ///////////////////////////////////////////////*/
 
-.season-dot {
-  height: 10px;
-  width: 10px;
-  border-radius: 10px;
-  display: inline-block;
-  margin: 1px;
+.ccItem-img {
+  width: 20px;
+  height: 20px;
 }
 
-.season-dot.spring {
-  background: rgb(147, 221, 141);
+span.ccItem-tip {
+  font-size: 11px;
 }
 
-.season-dot.summer {
-  background: rgb(223, 214, 95);
-}
-
-.season-dot.fall {
-  background: rgb(226, 172, 111);
-}
-
-.season-dot.winter {
-  background: rgb(157, 228, 228);
-}
-
+/* Checkbox styles */
 span.checkbox {
   color: black;
 }
@@ -122,4 +108,25 @@ span.checkbox {
 [type="checkbox"]:checked + span:not(.lever):before {
   border-right: 2px solid black;
   border-bottom: 2px solid black;
+}
+
+/* Season dot styles */
+.season-dot {
+  height: 10px;
+  width: 10px;
+  border-radius: 10px;
+  display: inline-block;
+  margin: 1px;
+}
+.season-dot.spring {
+  background: rgb(147, 221, 141);
+}
+.season-dot.summer {
+  background: rgb(223, 214, 95);
+}
+.season-dot.fall {
+  background: rgb(226, 172, 111);
+}
+.season-dot.winter {
+  background: rgb(157, 228, 228);
 }

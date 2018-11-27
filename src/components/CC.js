@@ -33,6 +33,8 @@ const CC = props => {
                   id={id}
                 />
               );
+            } else {
+              return null;
             }
           })}
         </div>

@@ -1,5 +1,7 @@
 import React from "react";
 
+import { getImgUrl } from "../utils/utils";
+
 const CCItem = props => {
   const { name, season, location, time, special } = props.info;
 
@@ -21,7 +23,17 @@ const CCItem = props => {
           checked={props.checked ? "checked" : ""}
           onChange={() => handleCheck(props.id, name)}
         />
-        <span className="checkbox">{name}</span>
+        <span className="ccItem-tip">
+          <img
+            src={`/img/${getImgUrl(name)}.png`}
+            title={name}
+            alt={name}
+            className="ccItem-img"
+          />
+          {location ? location : null}
+          {time ? time : null}
+          {special ? special : null}
+        </span>
       </label>
       {season.constructor === Array ? renderSeasons(season) : null}
     </div>
