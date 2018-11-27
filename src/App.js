@@ -8,6 +8,7 @@ import Nav from "./components/Nav";
 import Home from "./components/Home";
 import CC from "./components/CC";
 import Upgrades from "./components/Upgrades";
+import Calendar from "./components/Calendar";
 
 class App extends Component {
   constructor(props) {
@@ -48,14 +49,15 @@ class App extends Component {
                 <Route exact path="/" component={Home} />
                 <Route
                   exact
-                  path="/community_center"
+                  path={globals.URLS.COMMUNITY_CENTER}
                   render={() => <CC cc={cc} />}
                 />
                 <Route
-                  path="/community_center/:season"
+                  path={`${globals.URLS.COMMUNITY_CENTER}/:season`}
                   render={() => <CC cc={cc} />}
                 />
-                <Route path="/upgrades" component={Upgrades} />
+                <Route path={globals.URLS.UPGRADES} component={Upgrades} />
+                <Route path={globals.URLS.CALENDAR} component={Calendar} />
               </Switch>
             </div>
           </div>

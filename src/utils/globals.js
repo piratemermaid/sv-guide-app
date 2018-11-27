@@ -1,7 +1,10 @@
 export const LS = "stardew_data";
 
-export const URL_COMMUNITY_CENTER = "/community_center";
-export const URL_UPGRADES = "/upgrades";
+export const URLS = {
+  COMMUNITY_CENTER: "/community_center",
+  UPGRADES: "/upgrades",
+  CALENDAR: "/calendar"
+};
 
 let ccArr = [];
 for (let i = 0; i < 128; i++) {
