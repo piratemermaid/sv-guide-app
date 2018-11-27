@@ -31,8 +31,10 @@ const CCItem = props => {
             className="ccItem-img"
           />
           {location ? location : null}
+          {location && time ? " " : null}
           {time ? time : null}
-          {special ? special : null}
+          {time && special ? " " : null}
+          {special ? `(${special})` : null}
         </span>
       </label>
       {season.constructor === Array ? renderSeasons(season) : null}
