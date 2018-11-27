@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 
 import CCItem from "./CCItem";
-import { toTitleCase } from "../utils/utils";
+import { getItemID, toTitleCase } from "../utils/utils";
 import { ccItems } from "../utils/ccItems";
 import { ccBundles } from "../utils/ccBundles";
 
@@ -17,7 +17,15 @@ const CC = props => {
           {ccItems.map(item => {
             if (item.season === season || item.season.includes(season)) {
               i++;
-              return <CCItem key={i} info={item} checked={props.cc[i] === 1} />;
+              return (
+                <CCItem
+                  key={i}
+                  info={item}
+                  checked={props.cc[i] === 1}
+                  toggleCCItem={props.toggleCCItem}
+                  id={getItemID(item.name, "cc")}
+                />
+              );
             }
           })}
         </div>
@@ -31,6 +39,7 @@ const CC = props => {
     <div>
       <h2>CC</h2>
       <h3>All Seasons</h3>
+      {renderItems("all")}
       {renderItems("spring")}
       {renderItems("summer")}
       {renderItems("fall")}

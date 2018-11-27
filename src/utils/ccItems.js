@@ -4,6 +4,7 @@ const su = "summer";
 const f = "fall";
 const w = "winter";
 
+// TODO: handle duplicates
 export const ccItems = [
   {
     name: "Wild Horseradish",
@@ -71,7 +72,7 @@ export const ccItems = [
     season: x
   },
   {
-    name: "Wood", //duplicate
+    name: "Wood (#2)",
     amt: 99,
     season: x
   },
@@ -504,7 +505,7 @@ export const ccItems = [
     season: x
   },
   {
-    name: "Red Mushroom", //duplicate
+    name: "Red Mushroom (#2)",
     season: x
   },
   {
@@ -529,7 +530,7 @@ export const ccItems = [
     season: x
   },
   {
-    name: "Purple Mushroom", //duplicate
+    name: "Purple Mushroom (#2)",
     season: x
   },
   {
@@ -560,7 +561,7 @@ export const ccItems = [
     season: f
   },
   {
-    name: "Oak Resin", //duplicate
+    name: "Oak Resin (#2)",
     season: x
   },
   {
@@ -572,7 +573,7 @@ export const ccItems = [
     season: x
   },
   {
-    name: "Pomegranate", //duplicate
+    name: "Pomegranate (#2)",
     season: f
   },
   {
