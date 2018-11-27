@@ -3,7 +3,7 @@ import React from "react";
 import { getImgUrl } from "../utils/utils";
 
 const UpgradeItem = props => {
-  const { name } = props.info;
+  const { name, cost } = props.info;
 
   function handleCheck(id) {
     props.toggleItem(id, "upgrades");
@@ -24,6 +24,23 @@ const UpgradeItem = props => {
             alt={name}
             title={name}
           />
+          {cost.length > 0
+            ? cost.map(item => {
+                const type = Object.keys(item)[0];
+                const amt = item[type];
+                return (
+                  <span key={type}>
+                    <img
+                      src={`/img/${getImgUrl(type)}.png`}
+                      alt={type}
+                      title={type}
+                      className="cost-img"
+                    />
+                    {amt}
+                  </span>
+                );
+              })
+            : null}
         </span>
       </label>
     </div>
