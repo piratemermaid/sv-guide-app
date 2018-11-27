@@ -10,7 +10,6 @@ const CCItem = props => {
   }
 
   function handleCheck(id) {
-    console.log(id);
     props.toggleCCItem(id);
   }
 
@@ -20,7 +19,7 @@ const CCItem = props => {
         <input
           type="checkbox"
           checked={props.checked ? "checked" : ""}
-          onChange={() => handleCheck(props.id)}
+          onChange={() => handleCheck(props.id, name)}
         />
         <span className="checkbox">{name}</span>
       </label>

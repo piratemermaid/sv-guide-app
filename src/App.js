@@ -24,26 +24,31 @@ class App extends Component {
     localStorage.setItem(globals.LS, JSON.stringify(newState));
   }
 
+  updateLS(newData, type) {
+    let newState = this.state;
+    newState[type] = newData;
+    localStorage.setItem(globals.LS, JSON.stringify(newState));
+  }
+
   toggleCCItem(id) {
-    let newCc = this.state.cc;
-    newCc[id] = !newCc[id];
+    let cc = this.state.cc;
+    this.state.cc[id] === 0 ? (cc[id] = 1) : (cc[id] = 0);
 
     let newState = this.state;
-    newState.cc = newCc;
-    this.updateData(newState);
+    newState.cc = cc;
+    this.setState(newState);
+    localStorage.setItem(globals.LS, JSON.stringify(newState));
   }
 
   componentWillMount() {
     // get data from LS
     if (Object.keys(this.state).length === 0) {
-      //   if (localStorage.getItem(globals.LS)) {
-      //     this.setState(JSON.parse(localStorage.getItem(globals.LS)));
-      //   } else {
-      //     localStorage.setItem(globals.LS, JSON.stringify(globals.DEFAULT_STATE));
-      //   }
-      const { cc, upgrades } = globals.DEFAULT_STATE;
-      this.setState({ cc, upgrades });
-      localStorage.setItem(globals.LS, JSON.stringify({ cc, upgrades }));
+      if (localStorage.getItem(globals.LS)) {
+        this.setState(JSON.parse(localStorage.getItem(globals.LS)));
+      } else {
+        localStorage.setItem(globals.LS, JSON.stringify(globals.DEFAULT_STATE));
+        this.setState(globals.DEFAULT_STATE);
+      }
     }
   }
 
