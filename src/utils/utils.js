@@ -9,6 +9,8 @@ export function getItemID(itemName, itemType) {
 }
 
 export function getImgUrl(name) {
+  // TODO: Gold Star Crops
+
   // If it's an amount of gold, use gold.png
   if (name.includes(" g")) {
     return "gold";
