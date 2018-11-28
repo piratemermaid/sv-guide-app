@@ -17,17 +17,7 @@ class App extends Component {
     this.state = {};
 
     this.toggleItem = this.toggleItem.bind(this);
-  }
-
-  updateData(newState) {
-    this.setState(newState);
-    localStorage.setItem(globals.LS, JSON.stringify(newState));
-  }
-
-  updateLS(newData, type) {
-    let newState = this.state;
-    newState[type] = newData;
-    localStorage.setItem(globals.LS, JSON.stringify(newState));
+    this.reset = this.reset.bind(this);
   }
 
   toggleItem(id, type) {
@@ -36,6 +26,18 @@ class App extends Component {
 
     let newArr = this.state[type];
     this.state[type][id] === 0 ? (newArr[id] = 1) : (newArr[id] = 0);
+
+    let newState = this.state;
+    newState[type] = newArr;
+    this.setState(newState);
+    localStorage.setItem(globals.LS, JSON.stringify(newState));
+  }
+
+  reset(type) {
+    let newArr = this.state[type];
+    for (let i in newArr) {
+      newArr[i] = 0;
+    }
 
     let newState = this.state;
     newState[type] = newArr;
@@ -69,11 +71,23 @@ class App extends Component {
                 <Route
                   exact
                   path={globals.URLS.COMMUNITY_CENTER}
-                  render={() => <CC cc={cc} toggleItem={this.toggleItem} />}
+                  render={() => (
+                    <CC
+                      cc={cc}
+                      toggleItem={this.toggleItem}
+                      reset={this.reset}
+                    />
+                  )}
                 />
                 <Route
                   path={`${globals.URLS.COMMUNITY_CENTER}/:season`}
-                  render={() => <CC cc={cc} toggleItem={this.toggleItem} />}
+                  render={() => (
+                    <CC
+                      cc={cc}
+                      toggleItem={this.toggleItem}
+                      reset={this.reset}
+                    />
+                  )}
                 />
                 <Route
                   path={globals.URLS.UPGRADES}
@@ -81,6 +95,7 @@ class App extends Component {
                     <Upgrades
                       upgrades={upgrades}
                       toggleItem={this.toggleItem}
+                      reset={this.reset}
                     />
                   )}
                 />

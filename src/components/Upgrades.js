@@ -32,7 +32,17 @@ const Upgrades = props => {
 
   return (
     <div>
-      <h2>Upgrades</h2>
+      <div className="row">
+        <h2>
+          <span className="left">Upgrades</span>
+          <span
+            className="new badge left"
+            onClick={() => props.reset("upgrades")}
+          >
+            Reset
+          </span>
+        </h2>
+      </div>
       <div className="row">
         <div className="col s6">
           <h3>Tools</h3>

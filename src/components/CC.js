@@ -46,7 +46,14 @@ const CC = props => {
 
   return (
     <div>
-      <h2>CC</h2>
+      <div className="row">
+        <h2>
+          <span className="left">CC</span>
+          <span className="new badge left" onClick={() => props.reset("cc")}>
+            Reset
+          </span>
+        </h2>
+      </div>
       <div className="row">
         <div className="col s6">{renderItems("all")}</div>
         <div className="col s6">

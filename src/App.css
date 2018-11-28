@@ -150,3 +150,11 @@ span.checkbox {
 .unavail {
   opacity: 0.4;
 }
+
+span.new.badge:hover {
+  cursor: pointer;
+}
+
+span.new.badge::after {
+  display: none;
+}
