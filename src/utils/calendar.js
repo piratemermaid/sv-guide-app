@@ -1,4 +1,4 @@
-export default (calendarEvents = {
+export const calendarEvents = {
   spring: [
     { day: 4, name: "Kent", type: "birthday", loves: [], likes: [] },
     { day: 7, name: "Lewis", type: "birthday", loves: [], likes: [] },
@@ -48,4 +48,4 @@ export default (calendarEvents = {
     { day: 25, name: "Flower Dance", type: "event" },
     { day: 26, name: "Clint", type: "birthday", loves: [], likes: [] }
   ]
-});
+};

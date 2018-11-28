@@ -1,7 +1,18 @@
 import React from "react";
 
-const Calendar = () => {
-  return <h3>Calendar</h3>;
+import { calendarEvents } from "../utils/calendar";
+import SeasonFilterBtns from "./SeasonFilterBtns";
+
+const Calendar = props => {
+  return (
+    <div>
+      <h3>Calendar</h3>
+      <SeasonFilterBtns
+        seasonFilter={props.seasonFilter}
+        changeSeasonFilter={props.changeSeasonFilter}
+      />
+    </div>
+  );
 };
 
 export default Calendar;

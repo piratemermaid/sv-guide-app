@@ -19,5 +19,6 @@ export const DEFAULT_STATE = {
   cc,
   upgrades,
   toolPickup: false,
-  calendar: { luau: 0, fair: [0, 0, 0, 0, 0, 0, 0, 0, 0] }
+  calendar: { luau: 0, fair: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  seasonFilter: false
 };

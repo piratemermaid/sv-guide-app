@@ -19,6 +19,7 @@ class App extends Component {
     this.toggleItem = this.toggleItem.bind(this);
     this.reset = this.reset.bind(this);
     this.setToolPickup = this.setToolPickup.bind(this);
+    this.changeSeasonFilter = this.changeSeasonFilter.bind(this);
   }
 
   toggleItem(id, type) {
@@ -60,6 +61,17 @@ class App extends Component {
     localStorage.setItem(globals.LS, JSON.stringify(newState));
   }
 
+  changeSeasonFilter(season) {
+    let newState = this.state;
+    if (season === this.state.seasonFilter) {
+      newState.seasonFilter = false;
+    } else {
+      newState.seasonFilter = season;
+    }
+    this.setState(newState);
+    localStorage.setItem(globals.LS, JSON.stringify(newState));
+  }
+
   componentWillMount() {
     // get data from LS
     if (Object.keys(this.state).length === 0) {
@@ -73,7 +85,7 @@ class App extends Component {
   }
 
   render() {
-    const { cc, upgrades, toolPickup } = this.state;
+    const { cc, upgrades, toolPickup, seasonFilter } = this.state;
 
     return (
       <div className="App">
@@ -116,7 +128,15 @@ class App extends Component {
                     />
                   )}
                 />
-                <Route path={globals.URLS.CALENDAR} component={Calendar} />
+                <Route
+                  path={globals.URLS.CALENDAR}
+                  render={() => (
+                    <Calendar
+                      seasonFilter={seasonFilter}
+                      changeSeasonFilter={this.changeSeasonFilter}
+                    />
+                  )}
+                />
               </Switch>
             </div>
           </div>
