@@ -39,6 +39,8 @@ const Upgrades = props => {
           {renderUpgrades("animals")}
           <h3>Trees</h3>
           {renderUpgrades("trees")}
+          <h3>Home</h3>
+          {renderUpgrades("home")}
         </div>
       </div>
     </div>

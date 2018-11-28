@@ -24,7 +24,7 @@ const UpgradeItem = props => {
             alt={name}
             title={name}
           />
-          {cost.length > 0
+          {!props.checked
             ? cost.map(item => {
                 const type = Object.keys(item)[0];
                 const amt = item[type];

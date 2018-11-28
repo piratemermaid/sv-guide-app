@@ -1,3 +1,5 @@
+// TODO: add home upgrades
+
 export const upgradeItems = [
   {
     name: "Backpack Upgrade 1",
@@ -82,35 +84,35 @@ export const upgradeItems = [
   },
   {
     name: "Well",
-    cost: []
+    cost: [{ Gold: 1000 }, { Stone: 75 }]
   },
   {
     name: "Coop",
-    cost: []
+    cost: [{ Gold: 4000 }, { Wood: 300 }, { Stone: 100 }]
   },
   {
     name: "Big Coop",
-    cost: []
+    cost: [{ Gold: 10000 }, { Wood: 400 }, { Stone: 150 }]
   },
   {
     name: "Deluxe Coop",
-    cost: []
+    cost: [{ Gold: 20000 }, { Wood: 400 }, { Stone: 150 }]
   },
   {
     name: "Barn",
-    cost: []
+    cost: [{ Gold: 6000 }, { Wood: 350 }, { Stone: 150 }]
   },
   {
     name: "Big Barn",
-    cost: []
+    cost: [{ Gold: 12000 }, { Wood: 450 }, { Stone: 200 }]
   },
   {
     name: "Deluxe Barn",
-    cost: []
+    cost: [{ Gold: 25000 }, { Wood: 550 }, { Stone: 300 }]
   },
   {
     name: "Mill",
-    cost: []
+    cost: [{ Gold: 2500 }, { Stone: 50 }, { Wood: 150 }, { Cloth: 4 }]
   },
   {
     name: "Stable",
@@ -171,6 +173,10 @@ export const upgradeItems = [
   {
     name: "Pomegranate Tree",
     cost: []
+  },
+  {
+    name: "Home Expansion 1",
+    cost: []
   }
 ];
 
@@ -178,5 +184,6 @@ export const upgradeGroups = {
   tools: [0, 20],
   buildings: [21, 30],
   animals: [31, 37],
-  trees: [38, 43]
+  trees: [38, 43],
+  home: [44, 44]
 };
