@@ -47,6 +47,8 @@ const Upgrades = props => {
         <div className="col s6">
           <h3>Tools</h3>
           {renderUpgrades("tools")}
+          <h3>Home</h3>
+          {renderUpgrades("home")}
         </div>
         <div className="col s6">
           <h3>Buildings</h3>
@@ -55,8 +57,6 @@ const Upgrades = props => {
           {renderUpgrades("animals")}
           <h3>Trees</h3>
           {renderUpgrades("trees")}
-          <h3>Home</h3>
-          {renderUpgrades("home")}
         </div>
       </div>
     </div>
