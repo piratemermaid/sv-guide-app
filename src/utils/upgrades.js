@@ -5,7 +5,11 @@ export const upgradeItems = [
     name: "Backpack Upgrade 1",
     cost: { Gold: 2000 }
   },
-  { name: "Backpack Upgrade 2", cost: { Gold: 10000 } },
+  {
+    name: "Backpack Upgrade 2",
+    cost: { Gold: 10000 },
+    prereq: "Backpack Upgrade 1"
+  },
   {
     name: "Milk Pail",
     cost: { Gold: 1000 }
@@ -24,15 +28,18 @@ export const upgradeItems = [
   },
   {
     name: "Steel Pickaxe",
-    cost: { "Iron Bar": 5, Gold: 5000 }
+    cost: { "Iron Bar": 5, Gold: 5000 },
+    prereq: "Copper Pickaxe"
   },
   {
     name: "Gold Pickaxe",
-    cost: { "Gold Bar": 5, Gold: 10000 }
+    cost: { "Gold Bar": 5, Gold: 10000 },
+    prereq: "Steel Pickaxe"
   },
   {
     name: "Iridium Pickaxe",
-    cost: { "Iridium Bar": 5, Gold: 25000 }
+    cost: { "Iridium Bar": 5, Gold: 25000 },
+    prereq: "Gold Pickaxe"
   },
   {
     name: "Copper Watering Can",
@@ -40,15 +47,18 @@ export const upgradeItems = [
   },
   {
     name: "Steel Watering Can",
-    cost: { "Iron Bar": 5, Gold: 5000 }
+    cost: { "Iron Bar": 5, Gold: 5000 },
+    prereq: "Copper Watering Can"
   },
   {
     name: "Gold Watering Can",
-    cost: { "Gold Bar": 5, Gold: 10000 }
+    cost: { "Gold Bar": 5, Gold: 10000 },
+    prereq: "Steel Watering Can"
   },
   {
     name: "Iridium Watering Can",
-    cost: { "Iridium Bar": 5, Gold: 25000 }
+    cost: { "Iridium Bar": 5, Gold: 25000 },
+    prereq: "Gold Watering Can"
   },
   {
     name: "Copper Axe",
@@ -56,15 +66,18 @@ export const upgradeItems = [
   },
   {
     name: "Steel Axe",
-    cost: { "Iron Bar": 5, Gold: 5000 }
+    cost: { "Iron Bar": 5, Gold: 5000 },
+    prereq: "Copper Axe"
   },
   {
     name: "Gold Axe",
-    cost: { "Gold Bar": 5, Gold: 10000 }
+    cost: { "Gold Bar": 5, Gold: 10000 },
+    prereq: "Steel Axe"
   },
   {
     name: "Iridium Axe",
-    cost: { "Iridium Bar": 5, Gold: 25000 }
+    cost: { "Iridium Bar": 5, Gold: 25000 },
+    prereq: "Gold Axe"
   },
   {
     name: "Copper Hoe",
@@ -72,15 +85,18 @@ export const upgradeItems = [
   },
   {
     name: "Steel Hoe",
-    cost: { "Iron Bar": 5, Gold: 5000 }
+    cost: { "Iron Bar": 5, Gold: 5000 },
+    prereq: "Copper Hoe"
   },
   {
     name: "Gold Hoe",
-    cost: { "Gold Bar": 5, Gold: 10000 }
+    cost: { "Gold Bar": 5, Gold: 10000 },
+    prereq: "Steel Hoe"
   },
   {
     name: "Iridium Hoe",
-    cost: { "Iridium Bar": 5, Gold: 25000 }
+    cost: { "Iridium Bar": 5, Gold: 25000 },
+    prereq: "Gold Hoe"
   },
   {
     name: "Well",
@@ -92,11 +108,13 @@ export const upgradeItems = [
   },
   {
     name: "Big Coop",
-    cost: { Gold: 10000, Wood: 400, Stone: 150 }
+    cost: { Gold: 10000, Wood: 400, Stone: 150 },
+    prereq: "Coop"
   },
   {
     name: "Deluxe Coop",
-    cost: { Gold: 20000, Wood: 400, Stone: 150 }
+    cost: { Gold: 20000, Wood: 400, Stone: 150 },
+    prereq: "Big Coop"
   },
   {
     name: "Barn",
@@ -104,11 +122,13 @@ export const upgradeItems = [
   },
   {
     name: "Big Barn",
-    cost: { Gold: 12000, Wood: 450, Stone: 200 }
+    cost: { Gold: 12000, Wood: 450, Stone: 200 },
+    prereq: "Barn"
   },
   {
     name: "Deluxe Barn",
-    cost: { Gold: 25000, Wood: 550, Stone: 300 }
+    cost: { Gold: 25000, Wood: 550, Stone: 300 },
+    prereq: "Big Barn"
   },
   {
     name: "Mill",
@@ -116,39 +136,46 @@ export const upgradeItems = [
   },
   {
     name: "Stable",
-    cost: {}
+    cost: { Gold: 10000, Hardwood: 100, "Iron Bar": 5 }
   },
   {
     name: "Shed",
-    cost: {}
+    cost: { Gold: 15000, Wood: 300 }
   },
   {
     name: "Chicken",
-    cost: {}
+    cost: { Gold: 800 },
+    prereq: "Coop"
   },
   {
     name: "Duck",
-    cost: {}
+    cost: { Gold: 4000 },
+    prereq: "Big Coop"
   },
   {
     name: "Rabbit",
-    cost: {}
+    cost: { Gold: 8000 },
+    prereq: "Deluxe Coop"
   },
   {
     name: "Cow",
-    cost: {}
+    cost: { Gold: 1500 },
+    prereq: "Barn"
   },
   {
     name: "Goat",
-    cost: {}
+    cost: { Gold: 4000 },
+    prereq: "Big Barn"
   },
   {
     name: "Sheep",
-    cost: {}
+    cost: { Gold: 8000 },
+    prereq: "Deluxe Barn"
   },
   {
     name: "Pig",
-    cost: {}
+    cost: { Gold: 16000 },
+    required: "Deluxe Barn"
   },
   {
     name: "Peach Tree",
@@ -175,8 +202,18 @@ export const upgradeItems = [
     cost: {}
   },
   {
-    name: "Home Expansion 1",
-    cost: {}
+    name: "House Upgrade 1",
+    cost: { Gold: 10000, Wood: 450 }
+  },
+  {
+    name: "House Upgrade 2",
+    cost: { Gold: 50000, Hardwood: 150 },
+    prereq: "House Upgrade 1"
+  },
+  {
+    name: "House Upgrade 3",
+    cost: { Gold: 100000 },
+    prereq: "House Upgrade 2"
   }
 ];
 
@@ -185,5 +222,5 @@ export const upgradeGroups = {
   buildings: [21, 30],
   animals: [31, 37],
   trees: [38, 43],
-  home: [44, 44]
+  home: [44, 46]
 };
