@@ -5,11 +5,11 @@ export const calendarEvents = {
     { day: 10, name: "Vincent", type: "birthday", loves: [], likes: [] },
     { day: 13, name: "Egg Festival", type: "event" },
     { day: 14, name: "Haley", type: "birthday", loves: [], likes: [] },
-    { day: 14, name: "Haley", type: "birthday", loves: [], likes: [] },
-    { day: 14, name: "Haley", type: "birthday", loves: [], likes: [] },
-    { day: 13, name: "Flower Dance", type: "event" },
-    { day: 14, name: "Haley", type: "birthday", loves: [], likes: [] },
-    { day: 14, name: "Haley", type: "birthday", loves: [], likes: [] }
+    { day: 18, name: "Pam", type: "birthday", loves: [], likes: [] },
+    { day: 20, name: "Shane", type: "birthday", loves: [], likes: [] },
+    { day: 24, name: "Flower Dance", type: "event" },
+    { day: 26, name: "Pierre", type: "birthday", loves: [], likes: [] },
+    { day: 27, name: "Emily", type: "birthday", loves: [], likes: [] }
   ],
   summer: [
     { day: 4, name: "Jas", type: "birthday", loves: [], likes: [] },
