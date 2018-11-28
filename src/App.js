@@ -42,6 +42,9 @@ class App extends Component {
 
     let newState = this.state;
     newState[type] = newArr;
+    if (type === "upgrades") {
+      newState.toolPickup = false;
+    }
     this.setState(newState);
     localStorage.setItem(globals.LS, JSON.stringify(newState));
   }
