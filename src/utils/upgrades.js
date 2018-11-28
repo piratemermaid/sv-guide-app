@@ -178,28 +178,28 @@ export const upgradeItems = [
     required: "Deluxe Barn"
   },
   {
-    name: "Peach Tree",
-    cost: {}
-  },
-  {
     name: "Cherry Tree",
-    cost: {}
+    cost: { Gold: 3400 }
   },
   {
     name: "Apricot Tree",
-    cost: {}
+    cost: { Gold: 2000 }
   },
   {
     name: "Orange Tree",
-    cost: {}
+    cost: { Gold: 4000 }
+  },
+  {
+    name: "Peach Tree",
+    cost: { Gold: 6000 }
   },
   {
     name: "Apple Tree",
-    cost: {}
+    cost: { Gold: 4000 }
   },
   {
     name: "Pomegranate Tree",
-    cost: {}
+    cost: { Gold: 6000 }
   },
   {
     name: "House Upgrade 1",
