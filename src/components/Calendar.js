@@ -15,7 +15,6 @@ const Calendar = props => {
       <div>
         <h3 className={season.toLowerCase()}>{season}</h3>
         {eventList.map(event => {
-          console.log(event);
           return (
             <p key={event.name}>
               <b>{event.day}</b>: {event.name}
