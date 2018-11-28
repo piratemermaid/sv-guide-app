@@ -9,6 +9,25 @@ const UpgradeItem = props => {
     props.toggleItem(id, "upgrades");
   }
 
+  function renderCost(cost) {
+    let arr = [];
+    for (let type in cost) {
+      arr.push(
+        <span key={type}>
+          <img
+            src={`/img/${getImgUrl(type)}.png`}
+            alt={type}
+            title={type}
+            className="cost-img"
+          />
+          {cost[type]}
+        </span>
+      );
+    }
+
+    return arr;
+  }
+
   return (
     <div>
       <label>
@@ -24,7 +43,8 @@ const UpgradeItem = props => {
             alt={name}
             title={name}
           />
-          {!props.checked
+          {!props.checked ? renderCost(cost) : null}
+          {/* {!props.checked
             ? cost.map(item => {
                 const type = Object.keys(item)[0];
                 const amt = item[type];
@@ -40,7 +60,7 @@ const UpgradeItem = props => {
                   </span>
                 );
               })
-            : null}
+            : null} */}
         </span>
       </label>
     </div>
