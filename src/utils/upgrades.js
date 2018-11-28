@@ -175,7 +175,7 @@ export const upgradeItems = [
   {
     name: "Pig",
     cost: { Gold: 16000 },
-    required: "Deluxe Barn"
+    prereq: "Deluxe Barn"
   },
   {
     name: "Cherry Tree",

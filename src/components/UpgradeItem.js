@@ -4,8 +4,20 @@ import { getImgUrl } from "../utils/utils";
 
 const UpgradeItem = props => {
   const { name, cost } = props.info;
+  const { prereqStatus } = props;
+
+  // Check if we have prereq,
+  // if so we show it grayed out
+  // with no option to check it off
+  let unavail;
+  if (prereqStatus === 0) {
+    unavail = "unavail";
+  }
 
   function handleCheck(id) {
+    if (unavail === "unavail") {
+      return;
+    }
     props.toggleItem(id, "upgrades");
   }
 
@@ -33,10 +45,10 @@ const UpgradeItem = props => {
       <label>
         <input
           type="checkbox"
-          checked={props.checked ? "checked" : ""}
+          checked={props.checked && !unavail ? "checked" : ""}
           onChange={() => handleCheck(props.id, name)}
         />
-        <span>
+        <span className={unavail}>
           <img
             className="upgrade-img"
             src={`/img/${getImgUrl(name)}.png`}
@@ -44,23 +56,6 @@ const UpgradeItem = props => {
             title={name}
           />
           {!props.checked ? renderCost(cost) : null}
-          {/* {!props.checked
-            ? cost.map(item => {
-                const type = Object.keys(item)[0];
-                const amt = item[type];
-                return (
-                  <span key={type}>
-                    <img
-                      src={`/img/${getImgUrl(type)}.png`}
-                      alt={type}
-                      title={type}
-                      className="cost-img"
-                    />
-                    {amt}
-                  </span>
-                );
-              })
-            : null} */}
         </span>
       </label>
     </div>

@@ -10,6 +10,11 @@ const Upgrades = props => {
     let arr = [];
     for (let i = range[0]; i <= range[1]; i++) {
       const id = getItemID(upgradeItems[i].name, "upgrades");
+      let prereqID;
+      if (upgradeItems[i].prereq) {
+        prereqID = getItemID(upgradeItems[i].prereq, "upgrades");
+      }
+
       arr.push(
         <UpgradeItem
           key={id}
@@ -17,6 +22,7 @@ const Upgrades = props => {
           checked={props.upgrades[id] === 1}
           toggleItem={props.toggleItem}
           id={id}
+          prereqStatus={props.upgrades[prereqID]}
         />
       );
     }

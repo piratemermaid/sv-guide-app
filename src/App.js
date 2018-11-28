@@ -31,6 +31,9 @@ class App extends Component {
   }
 
   toggleItem(id, type) {
+    // TODO: for upgrades, if a prereq is unchecked,
+    // uncheck everything that relies on it
+
     let newArr = this.state[type];
     this.state[type][id] === 0 ? (newArr[id] = 1) : (newArr[id] = 0);
 
