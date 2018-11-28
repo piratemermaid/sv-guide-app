@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
+import SeasonFilterBtns from "./SeasonFilterBtns";
 import CCItem from "./CCItem";
 import { getItemID, toTitleCase } from "../utils/utils";
 import { ccItems } from "../utils/ccItems";
@@ -54,6 +55,10 @@ const CC = props => {
           </span>
         </h2>
       </div>
+      <SeasonFilterBtns
+        changeSeasonFilter={props.changeSeasonFilter}
+        seasonFilter={props.seasonFilter}
+      />
       <div className="row">
         <div className="col s6">{renderItems("all")}</div>
         <div className="col s6">

@@ -103,16 +103,8 @@ class App extends Component {
                       cc={cc}
                       toggleItem={this.toggleItem}
                       reset={this.reset}
-                    />
-                  )}
-                />
-                <Route
-                  path={`${globals.URLS.COMMUNITY_CENTER}/:season`}
-                  render={() => (
-                    <CC
-                      cc={cc}
-                      toggleItem={this.toggleItem}
-                      reset={this.reset}
+                      seasonFilter={seasonFilter}
+                      changeSeasonFilter={this.changeSeasonFilter}
                     />
                   )}
                 />
