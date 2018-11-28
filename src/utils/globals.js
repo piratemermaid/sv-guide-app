@@ -15,4 +15,4 @@ for (let i = 0; i < 44; i++) {
   upgrades.push(0);
 }
 
-export const DEFAULT_STATE = { cc, upgrades };
+export const DEFAULT_STATE = { cc, upgrades, toolPickup: false };

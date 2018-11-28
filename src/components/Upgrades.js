@@ -30,6 +30,33 @@ const Upgrades = props => {
     return arr;
   }
 
+  function getDay(day) {
+    let dayClass = "";
+    if (props.toolPickup === day) {
+      dayClass = "active";
+    }
+    return (
+      <a className={dayClass} onClick={() => props.setToolPickup(day)}>
+        {getDayLetter(day)}
+      </a>
+    );
+  }
+
+  function getDayLetter(day) {
+    switch (day) {
+      case "SU":
+        return "S";
+      case "SA":
+        return "S";
+      case "TU":
+        return "T";
+      case "TH":
+        return "T";
+      default:
+        return day;
+    }
+  }
+
   return (
     <div>
       <div className="row">
@@ -46,6 +73,15 @@ const Upgrades = props => {
       <div className="row">
         <div className="col s6">
           <h3>Tools</h3>
+          <div className="tool-pickup">
+            Pickup: {getDay("SU")}
+            {getDay("M")}
+            {getDay("TU")}
+            {getDay("W")}
+            {getDay("TH")}
+            {getDay("F")}
+            {getDay("SA")}
+          </div>
           {renderUpgrades("tools")}
           <h3>Home</h3>
           {renderUpgrades("home")}

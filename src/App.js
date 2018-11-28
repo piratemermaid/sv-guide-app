@@ -18,6 +18,7 @@ class App extends Component {
 
     this.toggleItem = this.toggleItem.bind(this);
     this.reset = this.reset.bind(this);
+    this.setToolPickup = this.setToolPickup.bind(this);
   }
 
   toggleItem(id, type) {
@@ -45,6 +46,17 @@ class App extends Component {
     localStorage.setItem(globals.LS, JSON.stringify(newState));
   }
 
+  setToolPickup(day) {
+    let newState = this.state;
+    if (day === this.state.toolPickup) {
+      newState.toolPickup = false;
+    } else {
+      newState.toolPickup = day;
+    }
+    this.setState(newState);
+    localStorage.setItem(globals.LS, JSON.stringify(newState));
+  }
+
   componentWillMount() {
     // get data from LS
     if (Object.keys(this.state).length === 0) {
@@ -58,7 +70,7 @@ class App extends Component {
   }
 
   render() {
-    const { cc, upgrades } = this.state;
+    const { cc, upgrades, toolPickup } = this.state;
 
     return (
       <div className="App">
@@ -94,8 +106,10 @@ class App extends Component {
                   render={() => (
                     <Upgrades
                       upgrades={upgrades}
+                      toolPickup={toolPickup}
                       toggleItem={this.toggleItem}
                       reset={this.reset}
+                      setToolPickup={this.setToolPickup}
                     />
                   )}
                 />

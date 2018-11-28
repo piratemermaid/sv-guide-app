@@ -158,3 +158,27 @@ span.new.badge:hover {
 span.new.badge::after {
   display: none;
 }
+
+.dropdown-trigger.btn {
+  margin-left: 20px;
+}
+
+.tool-pickup {
+  margin-bottom: 10px;
+}
+.tool-pickup:hover {
+  cursor: pointer;
+}
+.tool-pickup a {
+  margin: 5px;
+  opacity: 0.5;
+}
+.tool-pickup a:hover {
+  opacity: 1;
+  transition: 0.1s ease-in;
+  -webkit-transition: 0.1s ease-in;
+}
+.tool-pickup a.active {
+  color: purple;
+  opacity: 1;
+}
