@@ -11,10 +11,10 @@ const Header = () => {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to={URLS.COMMUNITY_CENTER}>Community Center</Link>
+          <Link to={URLS.UPGRADES}>Upgrades</Link>
         </li>
         <li>
-          <Link to={URLS.UPGRADES}>Upgrades</Link>
+          <Link to={URLS.COMMUNITY_CENTER}>Community Center</Link>
         </li>
         <li>
           <Link to={URLS.CALENDAR}>Calendar</Link>
