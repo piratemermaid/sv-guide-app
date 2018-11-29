@@ -9,10 +9,8 @@ import { ccItems } from "../utils/ccItems";
 
 const CC = props => {
   function renderItems(season) {
-    const { params } = props.match;
     if (
-      Object.keys(params).length === 0 ||
-      params.season === season ||
+      (props.seasonFilter && props.seasonFilter.toLowerCase() === season) ||
       season === "all"
     ) {
       let i = -1;
