@@ -19,11 +19,23 @@ const Calendar = props => {
             <p key={event.name}>
               <b>{event.day}</b>: {event.name}
               {event.type === "birthday" ? "'s birthday" : null}
+              {event.type === "birthday" ? (
+                <span className="gifts">
+                  <br />
+                  Loves: {formatGifts(event.loves)}
+                  <br />
+                  Likes: {formatGifts(event.likes)}
+                </span>
+              ) : null}
             </p>
           );
         })}
       </div>
     );
+  }
+
+  function formatGifts(items) {
+    return items.join(", ");
   }
 
   return (
