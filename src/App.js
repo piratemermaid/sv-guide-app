@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import * as globals from "./utils/globals";
+import { upgradeItems } from "./utils/upgrades";
 
 import Nav from "./components/Nav";
 import Home from "./components/Home";
@@ -22,10 +23,12 @@ class App extends Component {
     this.changeSeasonFilter = this.changeSeasonFilter.bind(this);
   }
 
+  /**
+   * @param {num} id
+   * @param {string} type 'upgrades' or 'cc'
+   * 1 = checked, 0 = unchecked
+   */
   toggleItem(id, type) {
-    // TODO: for upgrades, if a prereq is unchecked,
-    // uncheck everything that relies on it
-
     let newArr = this.state[type];
     this.state[type][id] === 0 ? (newArr[id] = 1) : (newArr[id] = 0);
 
@@ -33,6 +36,21 @@ class App extends Component {
     newState[type] = newArr;
     this.setState(newState);
     localStorage.setItem(globals.LS, JSON.stringify(newState));
+
+    // For upgrades, if a prereq is unchecked,
+    // uncheck everything that relies on it
+    if (type === "upgrades" && newArr[id] === 0) {
+      for (let item in upgradeItems) {
+        if (
+          upgradeItems[item].prereq === upgradeItems[id].name &&
+          this.state.upgrades[item] === 1
+        ) {
+          // If an item has the clicked item as a prereq,
+          // also toggle this item
+          this.toggleItem(item, "upgrades");
+        }
+      }
+    }
   }
 
   reset(type) {
