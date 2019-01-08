@@ -170,16 +170,20 @@ span.new.badge::after {
   cursor: pointer;
 }
 .tool-pickup a {
-  margin: 5px;
   opacity: 0.5;
+  padding: 6px;
+  font-weight: 600;
 }
 .tool-pickup a:hover {
   opacity: 1;
   transition: 0.1s ease-in;
   -webkit-transition: 0.1s ease-in;
+  background: rgb(161, 207, 228);
+  color: white;
 }
 .tool-pickup a.active {
-  color: purple;
+  background: rgb(47, 119, 153);
+  color: white;
   opacity: 1;
 }
 
