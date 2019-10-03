@@ -20,9 +20,35 @@ const CCBundles = props => {
                     <ul>
                         {bundles.map(
                             ({ name, reward, amt, required, items }) => {
+                                const completed = bundleComplete(
+                                    items,
+                                    required
+                                );
                                 return (
                                     <li key={name}>
-                                        {name} (Reward: {reward})
+                                        <span
+                                            onClick={() =>
+                                                checkAllBundleItems(
+                                                    items,
+                                                    completed
+                                                )
+                                            }
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                checked={completed}
+                                                onChange={() =>
+                                                    checkAllBundleItems(
+                                                        items,
+                                                        completed
+                                                    )
+                                                }
+                                            />
+                                            <span>
+                                                {name} (Reward: {reward}
+                                                {amt ? ` x${amt}` : null})
+                                            </span>
+                                        </span>
                                         <ul>
                                             {items.map(itemId => {
                                                 i++;
@@ -49,6 +75,55 @@ const CCBundles = props => {
                     </ul>
                 </div>
             );
+        });
+    }
+
+    /**
+     * Returns bool of whether room has been completed
+     * @param {*} items
+     * @param {*} req
+     */
+    // function roomComplete(bundles,req) {
+
+    // }
+
+    /**
+     * Returns bool of whether bundle has been completed
+     * e.g. true if 5 items are checked and 5 items are required,
+     * @param {} items
+     * @param {int} req: number of items required for bundle completion
+     */
+    function bundleComplete(items, required) {
+        let itemsHave = 0;
+        items.map(id => {
+            if (props.cc[id]) {
+                itemsHave++;
+            }
+        });
+        if (itemsHave >= required) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks all items in bundle,
+     * so user can check off a bundle to have all items automatically checked
+     * @param {array} items: array of item ids in bundle
+     * @param {bool} completed: if true, uncheck all, if false, check all
+     */
+    function checkAllBundleItems(items, completed) {
+        items.map(id => {
+            if (completed) {
+                if (props.cc[id]) {
+                    props.toggleItem(id, "cc");
+                }
+            } else {
+                if (!props.cc[id]) {
+                    props.toggleItem(id, "cc");
+                }
+            }
         });
     }
 
