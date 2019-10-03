@@ -1,3 +1,5 @@
+//TODO: add warnings like last day to buy fall trees,
+//last day to buy pig to get truffles before winter etc.
 export const calendarEvents = {
   spring: [
     {
