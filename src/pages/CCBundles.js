@@ -1,8 +1,8 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
-import SeasonFilterBtns from "./SeasonFilterBtns";
-import CCItem from "./CCItem";
+import SeasonFilterBtns from "../components/SeasonFilterBtns";
+import CCItem from "../components/CCItem";
 import { getItemID, toTitleCase } from "../utils/utils";
 import { ccBundles } from "../utils/ccBundles";
 import { ccItems } from "../utils/ccItems";

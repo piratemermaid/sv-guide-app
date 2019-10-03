@@ -6,11 +6,11 @@ import * as globals from "./utils/globals";
 import { upgradeItems } from "./utils/upgrades";
 
 import Nav from "./components/Nav";
-import Home from "./components/Home";
-import CCBundles from "./components/CCBundles";
-import CCList from "./components/CCList";
-import Upgrades from "./components/Upgrades";
-import Calendar from "./components/Calendar";
+import Home from "./pages/Home";
+import CCBundles from "./pages/CCBundles";
+import CCList from "./pages/CCList";
+import Upgrades from "./pages/Upgrades";
+import Calendar from "./pages/Calendar";
 
 class App extends Component {
     constructor(props) {
