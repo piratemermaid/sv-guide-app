@@ -6,7 +6,7 @@ import { URLS } from "../utils/globals";
 const Header = () => {
     return (
         <nav>
-            <div class="nav-wrapper">
+            <div className="nav-wrapper">
                 <ul className="yellow lighten-4">
                     <li>
                         <Link to="/">Home</Link>
