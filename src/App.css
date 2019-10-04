@@ -201,7 +201,7 @@ span.gifts {
 }
 
 /*///////////////////////////////////////////////
-// SEASON FILTER STYLES
+// BUTTON FILTER STYLES
 ///////////////////////////////////////////////*/
 
 .season-filter {
@@ -230,4 +230,13 @@ span.gifts {
 }
 .season-filter.Winter {
     background: rgb(157, 228, 228);
+}
+
+.cc-view-btn {
+    margin: 5px;
+    opacity: 0.6;
+}
+
+.cc-view-btn-active {
+    opacity: 1;
 }

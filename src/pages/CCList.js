@@ -2,6 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 
 import SeasonFilterBtns from "../components/SeasonFilterBtns";
+import CCViewBtns from "../components/CCViewBtns";
 import CCItem from "../components/CCItem";
 import { getItemID, toTitleCase } from "../utils/utils";
 import { ccItems } from "../utils/ccItems";
@@ -51,7 +52,7 @@ const CCList = props => {
         <div>
             <div className="row">
                 <h2>
-                    <span className="left">CC</span>
+                    <span className="left">Community Center</span>
                     <span
                         className="new badge left"
                         onClick={() => props.reset("cc")}
@@ -64,6 +65,7 @@ const CCList = props => {
                 changeSeasonFilter={props.changeSeasonFilter}
                 seasonFilter={props.seasonFilter}
             />
+            <CCViewBtns ccView="list" />
             <div className="row">
                 <div className="col s6">{renderItems("all")}</div>
                 <div className="col s6">
