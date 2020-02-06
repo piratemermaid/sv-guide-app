@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
 const accountRouter = require("./routes/account");
+const userRouter = require("./routes/user");
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use("/api/account", accountRouter);
+app.use("/api/user", userRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
@@ -18,10 +20,6 @@ app.use((err, req, res, next) => {
     type: "error",
     message: err.message
   });
-});
-
-app.get("/", (req, res) => {
-  res.send({ hi: "hello" });
 });
 
 const PORT = process.env.PORT || 3001;

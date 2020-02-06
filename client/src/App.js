@@ -19,13 +19,15 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = { characters: [] };
 
     this.toggleItem = this.toggleItem.bind(this);
     this.reset = this.reset.bind(this);
     this.setToolPickup = this.setToolPickup.bind(this);
     this.changeSeasonFilter = this.changeSeasonFilter.bind(this);
+
     this.authenticateUser = this.authenticateUser.bind(this);
+    this.addCharacter = this.addCharacter.bind(this);
   }
 
   /**
@@ -97,7 +99,40 @@ class App extends Component {
 
   authenticateUser(authenticated) {
     this.setState({ authenticated });
-    // this.props.fetchUserData();
+    if (authenticated) {
+      this.fetchUserData();
+    }
+  }
+
+  async addCharacter(name) {
+    return axios({
+      method: "post",
+      url: "/api/user/add_character",
+      params: { name }
+    }).then(res => {
+      if (res.data === "success") {
+        this.fetchUserData();
+      }
+    });
+  }
+
+  async fetchUserData() {
+    try {
+      let response = await fetch("/api/user/data", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }
+      });
+      const res = await response.json();
+
+      if (res) {
+        this.setState(res);
+      }
+    } catch (err) {
+      alert(err);
+    }
   }
 
   componentWillMount() {
@@ -118,7 +153,7 @@ class App extends Component {
       url: "/api/account/authenticated"
     }).then(res => {
       const { authenticated } = res.data;
-      this.setState({ authenticated: authenticated ? true : false });
+      this.authenticateUser(authenticated ? true : false);
     });
   }
 
@@ -128,7 +163,8 @@ class App extends Component {
       upgrades,
       toolPickup,
       seasonFilter,
-      authenticated
+      authenticated,
+      characters
     } = this.state;
 
     return (
@@ -144,7 +180,9 @@ class App extends Component {
                   render={() => (
                     <Home
                       authenticated={authenticated}
+                      characters={characters}
                       authenticateUser={this.authenticateUser}
+                      addCharacter={this.addCharacter}
                     />
                   )}
                 />

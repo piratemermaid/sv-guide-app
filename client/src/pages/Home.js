@@ -17,21 +17,44 @@ const Home = props => {
     }
   }
 
-  return (
-    <div className="container">
-      <h3>Home</h3>
-      {props.authenticated ? (
+  function addCharacter() {
+    const name = prompt("Character name:");
+    if (name) {
+      props.addCharacter(name);
+    }
+  }
+
+  if (props.authenticated) {
+    return (
+      <div className="container">
+        <h3>Home</h3>
         <div>
           <p>hi user</p>
+          Your characters:
+          {props.characters.length > 0 ? (
+            <ul>
+              {props.characters.map(({ name }) => {
+                return <li key={name}>{name}</li>;
+              })}
+            </ul>
+          ) : (
+            "You have no characters yet"
+          )}
+          <button onClick={() => addCharacter()}>Add Character</button>
           <a onClick={() => accountLogout()}>Log out</a>
         </div>
-      ) : (
+      </div>
+    );
+  } else {
+    return (
+      <div className="container">
+        <h3>Home</h3>
         <div>
           <Link to="/login">Log in</Link> | <Link to="/signup">Sign up</Link>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
 };
 
 export default Home;

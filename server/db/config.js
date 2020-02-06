@@ -7,8 +7,8 @@ if (!process.env.NODE_ENV) {
 }
 const knexconfig = require("../knexfile")[process.env.NODE_ENV];
 const knex = require("knex")(knexconfig);
-// const bookshelf = require("bookshelf")(knex);
+const bookshelf = require("bookshelf")(knex);
 // const jsonApiParams = require("bookshelf-jsonapi-params");
 // bookshelf.plugin(jsonApiParams);
 
-module.exports = { knex };
+module.exports = { knex, bookshelf };
