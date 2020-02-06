@@ -29,7 +29,6 @@ const Home = props => {
       <div className="container">
         <h3>Home</h3>
         <div>
-          <p>hi user</p>
           Your characters:
           {props.characters.length > 0 ? (
             <ul>
