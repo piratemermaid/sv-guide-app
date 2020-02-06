@@ -96,6 +96,7 @@ exports.up = async function(knex) {
       .inTable(TABLES.CHARACTERS)
       .onDelete("cascade")
       .notNullable();
+    table.boolean("selected");
   });
 
   await knex.schema.createTable(TABLES.CHARACTERS_ROOMS, table => {

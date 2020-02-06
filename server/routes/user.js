@@ -55,7 +55,6 @@ router.post("/add_character", async function(req, res, next) {
         withRelated: ["characters"]
       })
       .then(userData => {
-        // console.log(userData.toJSON());
         const { characters } = userData.toJSON();
         return _.find(characters, { name });
       });
@@ -79,7 +78,8 @@ router.post("/add_character", async function(req, res, next) {
       await knex(TABLES.USERS_CHARACTERS)
         .insert({
           user_id: userId,
-          character_id: characterId
+          character_id: characterId,
+          selected: false
         })
         .then(() => {
           res.send("success");
