@@ -20,4 +20,12 @@ const ITEM_TYPES = {
   MINING: "Mining"
 };
 
-module.exports = { SEASONS, ITEM_TYPES };
+const UPGRADE_TYPES = {
+  TOOL: "tool",
+  BUILDING: "building",
+  ANIMAL: "animal",
+  TREE: "tree",
+  HOME: "home"
+};
+
+module.exports = { SEASONS, ITEM_TYPES, UPGRADE_TYPES };
