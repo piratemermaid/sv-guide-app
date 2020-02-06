@@ -8,6 +8,8 @@ import { upgradeItems } from "./utils/upgrades";
 
 import Nav from "./components/Nav";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import CCBundles from "./pages/CCBundles";
 import CCList from "./pages/CCList";
 import Upgrades from "./pages/Upgrades";
@@ -23,6 +25,7 @@ class App extends Component {
     this.reset = this.reset.bind(this);
     this.setToolPickup = this.setToolPickup.bind(this);
     this.changeSeasonFilter = this.changeSeasonFilter.bind(this);
+    this.authenticateUser = this.authenticateUser.bind(this);
   }
 
   /**
@@ -92,6 +95,11 @@ class App extends Component {
     localStorage.setItem(globals.LS, JSON.stringify(newState));
   }
 
+  authenticateUser(authenticated) {
+    this.setState({ authenticated });
+    // this.props.fetchUserData();
+  }
+
   componentWillMount() {
     // get data from LS
     if (Object.keys(this.state).length === 0) {
@@ -135,6 +143,20 @@ class App extends Component {
                   path="/"
                   render={() => <Home authenticated={authenticated} />}
                 />
+                <Route
+                  path="/login"
+                  render={() => (
+                    <Login authenticateUser={this.authenticateUser} />
+                  )}
+                />
+                }
+                <Route
+                  path="/signup"
+                  render={() => (
+                    <Signup authenticateUser={this.authenticateUser} />
+                  )}
+                />
+                }
                 <Route
                   exact
                   path={globals.URLS.COMMUNITY_CENTER}

@@ -29,17 +29,6 @@ router.post("/signup", async (req, res, next) => {
           username,
           password: hash(password),
           email
-        }).then(async account => {
-          const options = await knex("options").select("*");
-          await knex("users_to_options").insert(
-            options.map(({ id, defaultValue }) => {
-              return {
-                user_id: account.id,
-                option_id: id,
-                value: defaultValue
-              };
-            })
-          );
         });
 
         await setSession({
