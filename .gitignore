@@ -7,6 +7,9 @@
 # production
 /client/build
 
+# secrets
+/server/secrets.js
+
 # misc
 .DS_Store
 .env.local
