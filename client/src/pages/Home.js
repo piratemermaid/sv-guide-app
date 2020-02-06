@@ -34,7 +34,20 @@ const Home = props => {
           {props.characters.length > 0 ? (
             <ul>
               {props.characters.map(({ name }) => {
-                return <li key={name}>{name}</li>;
+                // TODO: show some character stats
+                return (
+                  <li
+                    key={name}
+                    onClick={() => props.selectCharacter(name)}
+                    className={
+                      props.selectedCharacter === name
+                        ? "user-character selected-character"
+                        : "user-character"
+                    }
+                  >
+                    {name}
+                  </li>
+                );
               })}
             </ul>
           ) : (

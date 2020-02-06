@@ -19,7 +19,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { characters: [] };
+    this.state = { selectedCharacter: null, characters: [] };
 
     this.toggleItem = this.toggleItem.bind(this);
     this.reset = this.reset.bind(this);
@@ -27,6 +27,7 @@ class App extends Component {
     this.changeSeasonFilter = this.changeSeasonFilter.bind(this);
 
     this.authenticateUser = this.authenticateUser.bind(this);
+    this.selectCharacter = this.selectCharacter.bind(this);
     this.addCharacter = this.addCharacter.bind(this);
   }
 
@@ -104,6 +105,10 @@ class App extends Component {
     }
   }
 
+  selectCharacter = name => {
+    this.setState({ selectedCharacter: name });
+  };
+
   async addCharacter(name) {
     return axios({
       method: "post",
@@ -168,8 +173,10 @@ class App extends Component {
       toolPickup,
       seasonFilter,
       authenticated,
+      selectedCharacter,
       characters
     } = this.state;
+    console.log(selectedCharacter);
 
     return (
       <div className="App">
@@ -184,8 +191,10 @@ class App extends Component {
                   render={() => (
                     <Home
                       authenticated={authenticated}
+                      selectedCharacter={selectedCharacter}
                       characters={characters}
                       authenticateUser={this.authenticateUser}
+                      selectCharacter={this.selectCharacter}
                       addCharacter={this.addCharacter}
                     />
                   )}
