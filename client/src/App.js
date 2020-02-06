@@ -197,6 +197,10 @@ class App extends Component {
     } = this.state;
     console.log(appData);
 
+    if (!appData || !appData.bundles || !appData.upgrades) {
+      return <div>loading...</div>;
+    }
+
     return (
       <div className="App">
         <BrowserRouter>
