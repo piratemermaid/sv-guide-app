@@ -187,7 +187,7 @@ class App extends Component {
   render() {
     const {
       cc,
-      upgrades,
+      //   upgrades,
       toolPickup,
       seasonFilter,
       authenticated,
@@ -195,12 +195,12 @@ class App extends Component {
       characters,
       appData
     } = this.state;
-    console.log(appData);
 
     if (!appData || !appData.bundles || !appData.upgrades) {
       return <div>loading...</div>;
     }
 
+    const { upgrades } = appData;
     return (
       <div className="App">
         <BrowserRouter>
