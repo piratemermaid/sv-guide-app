@@ -112,6 +112,10 @@ class App extends Component {
     }).then(res => {
       if (res.data === "success") {
         this.fetchUserData();
+      } else {
+        if (res.data.error) {
+          alert(res.data.error);
+        }
       }
     });
   }

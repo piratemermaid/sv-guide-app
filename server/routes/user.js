@@ -1,3 +1,4 @@
+const _ = require("lodash");
 const { Router } = require("express");
 const { User } = require("../models/data");
 const { Session } = require("../models/account");
@@ -49,28 +50,41 @@ router.post("/add_character", async function(req, res, next) {
   } else {
     const { username } = Session.parse(sessionString);
 
-    const userId = await knex(TABLES.USERS)
-      .where({ username })
-      .first()
-      .then(user => {
-        return user.id;
-      });
-
-    const characterId = await knex(TABLES.CHARACTERS)
-      .insert({ name })
-      .returning("id")
-      .then(character => {
-        return character[0];
-      });
-
-    await knex(TABLES.USERS_CHARACTERS)
-      .insert({
-        user_id: userId,
-        character_id: characterId
+    const nameExists = await User.forge({ username })
+      .fetch({
+        withRelated: ["characters"]
       })
-      .then(() => {
-        res.send("success");
+      .then(userData => {
+        // console.log(userData.toJSON());
+        const { characters } = userData.toJSON();
+        return _.find(characters, { name });
       });
+    if (nameExists) {
+      res.send({ error: "user already has character with this name" });
+    } else {
+      const userId = await knex(TABLES.USERS)
+        .where({ username })
+        .first()
+        .then(user => {
+          return user.id;
+        });
+
+      const characterId = await knex(TABLES.CHARACTERS)
+        .insert({ name })
+        .returning("id")
+        .then(character => {
+          return character[0];
+        });
+
+      await knex(TABLES.USERS_CHARACTERS)
+        .insert({
+          user_id: userId,
+          character_id: characterId
+        })
+        .then(() => {
+          res.send("success");
+        });
+    }
   }
 });
 
