@@ -141,7 +141,12 @@ class App extends Component {
                 <Route
                   exact
                   path="/"
-                  render={() => <Home authenticated={authenticated} />}
+                  render={() => (
+                    <Home
+                      authenticated={authenticated}
+                      authenticateUser={this.authenticateUser}
+                    />
+                  )}
                 />
                 <Route
                   path="/login"
