@@ -1,4 +1,4 @@
-// const knex = require("../db/knex");
+const { knex } = require("../db/config");
 const uuid = require("uuid/v4");
 const bcrypt = require("bcrypt");
 const HASH = require("../secrets");
