@@ -372,8 +372,9 @@ const upgradeData = [
 const upgrades = upgradeData.map(({ name, type, cost, prereq }) => {
   return {
     name,
+    key: name,
     type,
-    cost, // TODO: iterate cost array if make table for cost items
+    cost: JSON.stringify(cost), // TODO: iterate cost array if make table for cost items
     prereq: prereq || null
   };
 });

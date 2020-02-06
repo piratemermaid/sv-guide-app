@@ -1015,11 +1015,18 @@ let items = [];
 
 for (let ROOM of bundleData) {
   const { room, reward, roomBundles } = ROOM;
-  rooms.push({ name: room, reward });
+  rooms.push({ name: room, key: room, reward });
   for (let i in roomBundles) {
     const BUNDLE = roomBundles[i];
     const { name, reward, rewardAmount, requiredItems, bundleItems } = BUNDLE;
-    bundles.push({ room, name, reward, rewardAmount, requiredItems });
+    bundles.push({
+      room,
+      name,
+      key: name,
+      reward,
+      rewardAmount: rewardAmount || 1,
+      requiredItems
+    });
     for (let i in bundleItems) {
       const {
         name,
@@ -1032,6 +1039,7 @@ for (let ROOM of bundleData) {
       } = bundleItems[i];
       items.push({
         name,
+        key: name, // TODO: key for duplicates e.g. Red Mushroom
         amount: amount || 1,
         spring: seasons.includes(SP),
         summer: seasons.includes(SU),
@@ -1047,4 +1055,4 @@ for (let ROOM of bundleData) {
   }
 }
 
-module.exports = { bundles: rooms, bundles, items };
+module.exports = { rooms, bundles, items };
