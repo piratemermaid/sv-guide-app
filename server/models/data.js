@@ -15,4 +15,26 @@ const Character = bookshelf.model("Character", {
   }
 });
 
-module.exports = { User };
+const Room = bookshelf.model("Room", {
+  tableName: TABLES.ROOMS,
+  bundles() {
+    return this.hasMany("Bundle");
+  }
+});
+
+const Bundle = bookshelf.model("Bundle", {
+  tableName: TABLES.BUNDLES,
+  items() {
+    return this.hasMany("BundleItem");
+  }
+});
+
+const BundleItem = bookshelf.model("BundleItem", {
+  tableName: TABLES.BUNDLE_ITEMS
+});
+
+const Upgrade = bookshelf.model("Upgrade", {
+  tableName: TABLES.UPGRADES
+});
+
+module.exports = { User, Room, Upgrade };

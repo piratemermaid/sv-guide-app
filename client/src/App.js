@@ -164,6 +164,24 @@ class App extends Component {
       const { authenticated } = res.data;
       this.authenticateUser(authenticated ? true : false);
     });
+
+    axios({
+      method: "get",
+      url: "/api/app/bundles"
+    }).then(res => {
+      const { bundles } = res.data;
+      const appData = this.state.appData;
+      this.setState({ appData: { ...appData, bundles } });
+    });
+
+    axios({
+      method: "get",
+      url: "/api/app/upgrades"
+    }).then(res => {
+      const { upgrades } = res.data;
+      const appData = this.state.appData;
+      this.setState({ appData: { ...appData, upgrades } });
+    });
   }
 
   render() {
@@ -174,9 +192,10 @@ class App extends Component {
       seasonFilter,
       authenticated,
       selectedCharacter,
-      characters
+      characters,
+      appData
     } = this.state;
-    console.log(selectedCharacter);
+    console.log(appData);
 
     return (
       <div className="App">

@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 
 const accountRouter = require("./routes/account");
 const userRouter = require("./routes/user");
+const appRouter = require("./routes/app");
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(cookieParser());
 
 app.use("/api/account", accountRouter);
 app.use("/api/user", userRouter);
+app.use("/api/app", appRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
