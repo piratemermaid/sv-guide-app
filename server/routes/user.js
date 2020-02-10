@@ -27,8 +27,18 @@ router.get("/data", function(req, res, next) {
         // console.log(userData.toJSON());
         const { characters } = userData.toJSON();
         res.send({
-          characters: characters.map(({ name }) => {
-            return { name };
+          characters: characters.map(({ name, upgrades }) => {
+            return {
+              name,
+              upgrades: upgrades.map(({ name, type, cost, prereq }) => {
+                return {
+                  name,
+                  type,
+                  cost,
+                  prereq
+                };
+              })
+            };
           })
         });
       });

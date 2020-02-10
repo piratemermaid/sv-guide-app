@@ -5,37 +5,14 @@ import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const Upgrades = props => {
-  function getDay(day) {
-    let dayClass = "";
-    if (props.toolPickup === day) {
-      dayClass = "active";
-    }
-    return (
-      <a className={dayClass} onClick={() => props.setToolPickup(day)}>
-        {getDayLetter(day)}
-      </a>
-    );
+  if (!props.userData || !props.userData.upgrades) {
+    return "Loading...";
   }
-
-  function getDayLetter(day) {
-    switch (day) {
-      case "SU":
-        return "S";
-      case "SA":
-        return "S";
-      case "TU":
-        return "T";
-      case "TH":
-        return "T";
-      default:
-        return day;
-    }
-  }
+  const userUpgrades = props.userData.upgrades;
 
   const upgradesByType = _.groupBy(props.upgrades, "type");
 
   const handleChange = (e, name) => {
-    // console.log(e.target.checked, name);
     props.toggleUpgrade({ upgradeName: name, value: e.target.checked });
   };
 
@@ -52,9 +29,9 @@ const Upgrades = props => {
               </h3>
               <ul>
                 {typeUpgrades.map(({ name, cost, prereq }) => {
-                  // TODO: get checked & prereqStatus from userData
-                  const checked = false;
-                  const prereqStatus = false;
+                  const checked = _.find(userUpgrades, { name }) ? true : false;
+                  // TODO: get prereqStatus
+                  const prereqStatus = true;
 
                   return (
                     <li key={name}>
@@ -64,6 +41,7 @@ const Upgrades = props => {
                             checked={checked && prereqStatus}
                             onChange={e => handleChange(e, name)}
                             value={name}
+                            color="secondary"
                           />
                         }
                         label={name}

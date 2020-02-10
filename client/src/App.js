@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React, { Component } from "react";
 import axios from "axios";
 import "./App.css";
@@ -18,12 +19,12 @@ import Upgrades from "./pages/Upgrades";
 import Calendar from "./pages/Calendar";
 
 import purple from "@material-ui/core/colors/purple";
-import teal from "@material-ui/core/colors/green";
+import teal from "@material-ui/core/colors/teal";
 
 const theme = createMuiTheme({
   palette: {
     primary: purple,
-    accent: teal
+    secondary: teal
   }
 });
 
@@ -150,7 +151,6 @@ class App extends Component {
       }
     }).then(res => {
       if (res.data === "success") {
-        console.log("res.data", res.data);
         this.fetchUserData();
       } else {
         if (res.data.error) {
@@ -161,22 +161,17 @@ class App extends Component {
   }
 
   async fetchUserData() {
-    try {
-      let response = await fetch("/api/user/data", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        }
+    // console.log("> FETCH USER DATA");
+    return axios({
+      method: "get",
+      url: "/api/user/data"
+    })
+      .then(res => {
+        this.setState({ characters: res.data.characters });
+      })
+      .catch(err => {
+        alert(err);
       });
-      const res = await response.json();
-
-      if (res) {
-        this.setState({ characters: res.characters });
-      }
-    } catch (err) {
-      alert(err);
-    }
   }
 
   componentWillMount() {
@@ -236,7 +231,7 @@ class App extends Component {
       appData
     } = this.state;
 
-    if (!appData || !appData.bundles || !appData.upgrades) {
+    if (!appData || !appData.bundles || !appData.upgrades || !characters) {
       return (
         <div className="App">
           <MuiThemeProvider theme={theme}>
@@ -251,6 +246,7 @@ class App extends Component {
       );
     } else {
       const { upgrades } = appData;
+      const userData = _.find(characters, { name: selectedCharacter });
 
       return (
         <div className="App">
@@ -318,6 +314,7 @@ class App extends Component {
                       render={() => (
                         <Upgrades
                           upgrades={upgrades}
+                          userData={userData}
                           toolPickup={toolPickup}
                           toggleUpgrade={this.toggleUpgrade}
                           reset={this.reset}
