@@ -17,14 +17,15 @@ exports.seed = async function(knex) {
   );
 
   const bundlesInsert = bundles.map(
-    ({ name, key, reward, rewardAmount, requiredItems, room }) => {
+    ({ name, key, reward, rewardAmount, requiredItems, room, order }) => {
       return {
         name,
         key,
         reward,
         rewardAmount,
         requiredItems,
-        room_id: roomsByKey[room].id
+        room_id: roomsByKey[room].id,
+        order
       };
     }
   );
@@ -48,7 +49,8 @@ exports.seed = async function(knex) {
       location,
       time,
       special,
-      bundle
+      bundle,
+      order
     }) => {
       return {
         name,
@@ -62,7 +64,8 @@ exports.seed = async function(knex) {
         location,
         time,
         special,
-        bundle_id: bundlesByKey[bundle].id
+        bundle_id: bundlesByKey[bundle].id,
+        order
       };
     }
   );

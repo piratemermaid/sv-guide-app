@@ -9,6 +9,7 @@ exports.up = async function(knex) {
     table.string("name").notNullable();
     table.string("key").notNullable();
     table.string("reward").notNullable();
+    table.integer("order");
   });
 
   await knex.schema.createTable(TABLES.BUNDLES, table => {
@@ -23,6 +24,7 @@ exports.up = async function(knex) {
       .references("id")
       .inTable(TABLES.ROOMS)
       .onDelete("cascade");
+    table.integer("order");
   });
 
   await knex.schema.createTable(TABLES.BUNDLE_ITEMS, table => {
@@ -43,6 +45,7 @@ exports.up = async function(knex) {
       .references("id")
       .inTable(TABLES.BUNDLES)
       .onDelete("cascade");
+    table.integer("order");
   });
 
   await knex.schema.createTable(TABLES.UPGRADES, table => {

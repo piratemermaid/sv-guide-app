@@ -1014,10 +1014,16 @@ let rooms = [];
 let bundles = [];
 let items = [];
 
+let roomIndex = 0;
+
 for (let ROOM of bundleData) {
+  roomIndex++;
+  let bundleIndex = 0;
   const { room, reward, roomBundles } = ROOM;
-  rooms.push({ name: room, key: room, reward });
+  rooms.push({ name: room, key: room, reward, order: roomIndex });
   for (let i in roomBundles) {
+    bundleIndex++;
+    let itemIndex = 0;
     const BUNDLE = roomBundles[i];
     const { name, reward, rewardAmount, requiredItems, bundleItems } = BUNDLE;
     bundles.push({
@@ -1026,9 +1032,11 @@ for (let ROOM of bundleData) {
       key: name,
       reward,
       rewardAmount: rewardAmount || 1,
-      requiredItems
+      requiredItems,
+      order: bundleIndex
     });
     for (let i in bundleItems) {
+      itemIndex++;
       const {
         name,
         amount,
@@ -1056,10 +1064,13 @@ for (let ROOM of bundleData) {
         location: location || null,
         time: time || null,
         special: special || null,
-        bundle: BUNDLE.name
+        bundle: BUNDLE.name,
+        order: itemIndex
       });
     }
   }
 }
+
+console.log(rooms);
 
 module.exports = { rooms, bundles, items };
