@@ -14,7 +14,17 @@ h3 {
 // NAV STYLES
 ///////////////////////////////////////////////*/
 
-.sidenav {
+.container {
+  padding-left: 300px;
+}
+
+@media only screen and (max-width: 992px) {
+  .container {
+    padding-left: 0;
+  }
+}
+
+/* .sidenav {
   -webkit-transform: translateX(0);
   transform: translateX(0);
   width: 200px;
@@ -27,7 +37,7 @@ h3 {
 .sidenav li:hover .subnav {
   display: block;
   max-height: 200px;
-}
+} */
 
 .subnav {
   overflow: hidden;
