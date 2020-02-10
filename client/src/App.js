@@ -41,6 +41,7 @@ class App extends Component {
     this.authenticateUser = this.authenticateUser.bind(this);
     this.selectCharacter = this.selectCharacter.bind(this);
     this.addCharacter = this.addCharacter.bind(this);
+    this.toggleUpgrade = this.toggleUpgrade.bind(this);
   }
 
   /**
@@ -118,6 +119,7 @@ class App extends Component {
   }
 
   selectCharacter = name => {
+    localStorage.setItem("selectedCharacter", name);
     this.setState({ selectedCharacter: name });
   };
 
@@ -128,6 +130,27 @@ class App extends Component {
       params: { name }
     }).then(res => {
       if (res.data === "success") {
+        this.fetchUserData();
+      } else {
+        if (res.data.error) {
+          alert(res.data.error);
+        }
+      }
+    });
+  }
+
+  async toggleUpgrade({ upgradeName, value }) {
+    return axios({
+      method: "post",
+      url: "/api/user/toggle_upgrade",
+      params: {
+        characterName: this.state.selectedCharacter,
+        upgradeName,
+        value
+      }
+    }).then(res => {
+      if (res.data === "success") {
+        console.log("res.data", res.data);
         this.fetchUserData();
       } else {
         if (res.data.error) {
@@ -149,7 +172,7 @@ class App extends Component {
       const res = await response.json();
 
       if (res) {
-        this.setState(res);
+        this.setState({ characters: res.characters });
       }
     } catch (err) {
       alert(err);
@@ -158,6 +181,11 @@ class App extends Component {
 
   componentWillMount() {
     // get data from LS
+    const selectedCharacter = localStorage.getItem("selectedCharacter");
+    if (selectedCharacter) {
+      this.setState({ selectedCharacter });
+    }
+
     if (Object.keys(this.state).length === 0) {
       if (localStorage.getItem(LS)) {
         this.setState(JSON.parse(localStorage.getItem(LS)));
@@ -291,7 +319,7 @@ class App extends Component {
                         <Upgrades
                           upgrades={upgrades}
                           toolPickup={toolPickup}
-                          toggleItem={this.toggleItem}
+                          toggleUpgrade={this.toggleUpgrade}
                           reset={this.reset}
                           setToolPickup={this.setToolPickup}
                         />

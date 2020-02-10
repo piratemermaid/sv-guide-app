@@ -21,7 +21,7 @@ router.get("/data", function(req, res, next) {
 
     User.forge({ username })
       .fetch({
-        withRelated: ["characters"]
+        withRelated: ["characters.upgrades"]
       })
       .then(userData => {
         // console.log(userData.toJSON());
@@ -84,6 +84,93 @@ router.post("/add_character", async function(req, res, next) {
         .then(() => {
           res.send("success");
         });
+    }
+  }
+});
+
+router.post("/toggle_upgrade", async function(req, res, next) {
+  const { characterName, upgradeName, value } = req.query;
+
+  const { sessionString } = req.cookies;
+
+  if (!sessionString || !Session.verify(sessionString)) {
+    const error = new Error("Invalid session");
+
+    error.status = 400;
+
+    return next(error);
+  } else {
+    const { username } = Session.parse(sessionString);
+
+    const ids = await User.forge({ username })
+      .fetch({
+        withRelated: ["characters"]
+      })
+      .then(userData => {
+        const selectedCharacter = _.find(userData.toJSON().characters, {
+          name: characterName
+        });
+        return {
+          user: userData.id,
+          character: selectedCharacter.id || null
+        };
+      });
+
+    if (!ids.character) {
+      res.send("Please select a character first");
+    } else {
+      const userCharacterId = await knex(TABLES.USERS_CHARACTERS)
+        .where({
+          user_id: ids.user,
+          character_id: ids.character
+        })
+        .first()
+        .then(char => {
+          return char.id;
+        });
+
+      const upgradeId = await knex(TABLES.UPGRADES)
+        .where({
+          name: upgradeName
+        })
+        .first()
+        .then(upgrade => {
+          return upgrade.id;
+        });
+
+      const upgradeExists = await knex(TABLES.CHARACTERS_UPGRADES)
+        .where({
+          character_id: userCharacterId,
+          upgrade_id: upgradeId
+        })
+        .first()
+        .then(userUpgrade => {
+          if (!userUpgrade) {
+            return false;
+          } else {
+            return true;
+          }
+        });
+
+      if (!upgradeExists) {
+        await knex(TABLES.CHARACTERS_UPGRADES)
+          .insert({
+            character_id: userCharacterId,
+            upgrade_id: upgradeId
+          })
+          .then(() => {
+            res.send("success");
+          });
+      } else {
+        await knex(TABLES.CHARACTERS_UPGRADES)
+          .del({
+            character_id: userCharacterId,
+            upgrade_id: upgradeId
+          })
+          .then(() => {
+            res.send("success");
+          });
+      }
     }
   }
 });

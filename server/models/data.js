@@ -12,6 +12,9 @@ const Character = bookshelf.model("Character", {
   tableName: TABLES.CHARACTERS,
   character() {
     return this.belongsTo("Character");
+  },
+  upgrades() {
+    return this.belongsToMany("Upgrade", TABLES.CHARACTERS_UPGRADES);
   }
 });
 

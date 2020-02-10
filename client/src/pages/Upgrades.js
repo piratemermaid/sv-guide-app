@@ -35,7 +35,8 @@ const Upgrades = props => {
   const upgradesByType = _.groupBy(props.upgrades, "type");
 
   const handleChange = (e, name) => {
-    console.log(e.target.checked, name);
+    // console.log(e.target.checked, name);
+    props.toggleUpgrade({ upgradeName: name, value: e.target.checked });
   };
 
   return (
