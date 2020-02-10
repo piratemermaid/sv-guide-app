@@ -245,7 +245,7 @@ class App extends Component {
         </div>
       );
     } else {
-      const { upgrades } = appData;
+      const { upgrades, bundles } = appData;
       const userData = _.find(characters, { name: selectedCharacter });
 
       return (
@@ -289,6 +289,7 @@ class App extends Component {
                       path={URLS["Community Center"]}
                       render={() => (
                         <CCBundles
+                          bundles={bundles}
                           cc={cc}
                           toggleItem={this.toggleItem}
                           reset={this.reset}
