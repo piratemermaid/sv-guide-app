@@ -4,18 +4,25 @@ import { withRouter } from "react-router-dom";
 
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import ErrorIcon from "@material-ui/icons/Error";
 
 const CCBundles = props => {
   if (!props.userData || !props.userData.bundleItems) {
     return "Loading...";
   }
 
-  const handleChange = (e, key) => {
+  const handleBundleChange = (e, name) => {
+    props.toggleBundle({ name, value: e.target.checked });
+  };
+
+  const handleBundleItemChange = (e, key) => {
     props.toggleBundleItem({
       key,
       value: e.target.checked
     });
   };
+
+  console.log(props.userData);
 
   return (
     <div>
@@ -34,9 +41,38 @@ const CCBundles = props => {
                   requiredItems,
                   items
                 } = bundle;
+                let completed = false;
+                let canComplete = false;
+                if (_.find(props.userData.bundles, { name })) {
+                  completed = true;
+                } else {
+                  let completedItems = 0;
+                  items.forEach(({ key }) => {
+                    if (_.find(props.userData.bundleItems, { key })) {
+                      completedItems++;
+                    }
+                    if (completedItems >= requiredItems) {
+                      canComplete = true;
+                    }
+                  });
+                }
+
                 return (
                   <div className="bundle" key={name}>
-                    <h4 key={name}>{name}</h4>
+                    <h4 key={name}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={completed}
+                            onChange={e => handleBundleChange(e, name)}
+                            value={name}
+                            color="secondary"
+                          />
+                        }
+                        label={name}
+                      />
+                      {canComplete ? <ErrorIcon color="secondary" /> : null}
+                    </h4>
                     <p>
                       Reward: {reward}
                       {rewardAmount ? ` x${rewardAmount}` : null}
@@ -68,13 +104,16 @@ const CCBundles = props => {
                           })
                             ? true
                             : false;
+
                           return (
                             <li key={key}>
                               <FormControlLabel
                                 control={
                                   <Checkbox
                                     checked={checked}
-                                    onChange={e => handleChange(e, key)}
+                                    onChange={e =>
+                                      handleBundleItemChange(e, key)
+                                    }
                                     value={name}
                                     color="secondary"
                                   />

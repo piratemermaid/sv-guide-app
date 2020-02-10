@@ -43,6 +43,8 @@ class App extends Component {
     this.selectCharacter = this.selectCharacter.bind(this);
     this.addCharacter = this.addCharacter.bind(this);
     this.toggleUpgrade = this.toggleUpgrade.bind(this);
+    this.toggleRoom = this.toggleRoom.bind(this);
+    this.toggleBundle = this.toggleBundle.bind(this);
     this.toggleBundleItem = this.toggleBundleItem.bind(this);
   }
 
@@ -148,6 +150,46 @@ class App extends Component {
       params: {
         characterName: this.state.selectedCharacter,
         upgradeName,
+        value
+      }
+    }).then(res => {
+      if (res.data === "success") {
+        this.fetchUserData();
+      } else {
+        if (res.data.error) {
+          alert(res.data.error);
+        }
+      }
+    });
+  }
+
+  async toggleRoom({ name, value }) {
+    return axios({
+      method: "post",
+      url: "/api/user/toggle_room",
+      params: {
+        characterName: this.state.selectedCharacter,
+        name,
+        value
+      }
+    }).then(res => {
+      if (res.data === "success") {
+        this.fetchUserData();
+      } else {
+        if (res.data.error) {
+          alert(res.data.error);
+        }
+      }
+    });
+  }
+
+  async toggleBundle({ name, value }) {
+    return axios({
+      method: "post",
+      url: "/api/user/toggle_bundle",
+      params: {
+        characterName: this.state.selectedCharacter,
+        name,
         value
       }
     }).then(res => {
@@ -312,6 +354,8 @@ class App extends Component {
                         <CCBundles
                           bundles={bundles}
                           userData={userData}
+                          toggleRoom={this.toggleRoom}
+                          toggleBundle={this.toggleBundle}
                           toggleBundleItem={this.toggleBundleItem}
                           cc={cc}
                           toggleItem={this.toggleItem}

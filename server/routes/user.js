@@ -21,30 +21,39 @@ router.get("/data", function(req, res, next) {
 
     User.forge({ username })
       .fetch({
-        withRelated: ["characters.upgrades", "characters.bundleItems"]
+        withRelated: [
+          "characters.upgrades",
+          "characters.bundles",
+          "characters.bundleItems"
+        ]
       })
       .then(userData => {
         const { characters } = userData.toJSON();
         res.send({
-          characters: characters.map(({ name, upgrades, bundleItems }) => {
-            return {
-              name,
-              upgrades: upgrades.map(({ name, type, cost, prereq }) => {
-                return {
-                  name,
-                  type,
-                  cost,
-                  prereq
-                };
-              }),
-              bundleItems: bundleItems.map(({ name, key }) => {
-                return {
-                  name,
-                  key
-                };
-              })
-            };
-          })
+          characters: characters.map(
+            ({ name, upgrades, bundles, bundleItems }) => {
+              return {
+                name,
+                upgrades: upgrades.map(({ name, type, cost, prereq }) => {
+                  return {
+                    name,
+                    type,
+                    cost,
+                    prereq
+                  };
+                }),
+                bundles: bundles.map(({ name }) => {
+                  return { name };
+                }),
+                bundleItems: bundleItems.map(({ name, key }) => {
+                  return {
+                    name,
+                    key
+                  };
+                })
+              };
+            }
+          )
         });
       });
   }
@@ -178,10 +187,98 @@ router.post("/toggle_upgrade", async function(req, res, next) {
           });
       } else {
         await knex(TABLES.CHARACTERS_UPGRADES)
-          .del({
+          .where({
             character_id: userCharacterId,
             upgrade_id: upgradeId
           })
+          .del()
+          .then(() => {
+            res.send("success");
+          });
+      }
+    }
+  }
+});
+
+// TODO: bundle true means all bundle items true
+router.post("/toggle_bundle", async function(req, res, next) {
+  const { characterName, name, value } = req.query;
+
+  const { sessionString } = req.cookies;
+
+  if (!sessionString || !Session.verify(sessionString)) {
+    const error = new Error("Invalid session");
+
+    error.status = 400;
+
+    return next(error);
+  } else {
+    const { username } = Session.parse(sessionString);
+
+    const ids = await User.forge({ username })
+      .fetch({
+        withRelated: ["characters"]
+      })
+      .then(userData => {
+        const selectedCharacter = _.find(userData.toJSON().characters, {
+          name: characterName
+        });
+        return {
+          user: userData.id,
+          character: selectedCharacter.id || null
+        };
+      });
+
+    if (!ids.character) {
+      res.send("Please select a character first");
+    } else {
+      const userCharacterId = await knex(TABLES.USERS_CHARACTERS)
+        .where({
+          user_id: ids.user,
+          character_id: ids.character
+        })
+        .first()
+        .then(char => {
+          return char.id;
+        });
+
+      const bundleId = await knex(TABLES.BUNDLES)
+        .where({ name })
+        .first()
+        .then(bundle => {
+          return bundle.id;
+        });
+
+      const bundleExists = await knex(TABLES.CHARACTERS_BUNDLES)
+        .where({
+          character_id: userCharacterId,
+          bundle_id: bundleId
+        })
+        .first()
+        .then(userBundle => {
+          if (!userBundle) {
+            return false;
+          } else {
+            return true;
+          }
+        });
+
+      if (!bundleExists) {
+        await knex(TABLES.CHARACTERS_BUNDLES)
+          .insert({
+            character_id: userCharacterId,
+            bundle_id: bundleId
+          })
+          .then(() => {
+            res.send("success");
+          });
+      } else {
+        await knex(TABLES.CHARACTERS_BUNDLES)
+          .where({
+            character_id: userCharacterId,
+            bundle_id: bundleId
+          })
+          .del()
           .then(() => {
             res.send("success");
           });
@@ -263,10 +360,11 @@ router.post("/toggle_bundle_item", async function(req, res, next) {
           });
       } else {
         await knex(TABLES.CHARACTERS_BUNDLE_ITEMS)
-          .del({
+          .where({
             character_id: userCharacterId,
             bundle_item_id: itemId
           })
+          .del()
           .then(() => {
             res.send("success");
           });
