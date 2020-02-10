@@ -1,3 +1,4 @@
+const _ = require("lodash");
 const { SEASONS, ITEM_TYPES } = require("./constants");
 const { SP, SU, F, W, ALL } = SEASONS;
 const {
@@ -1037,9 +1038,15 @@ for (let ROOM of bundleData) {
         time,
         special
       } = bundleItems[i];
+
+      let key = `${name}_${BUNDLE.name}`;
+      // differentiate duplicate items
+      if (_.find(items, { name })) {
+        key += `_${_.countBy(items, { name }).true}`;
+      }
       items.push({
         name,
-        key: name, // TODO: key for duplicates e.g. Red Mushroom
+        key,
         amount: amount || 1,
         spring: seasons.includes(SP),
         summer: seasons.includes(SU),

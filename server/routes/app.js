@@ -22,6 +22,7 @@ router.get("/bundles", function(req, res, next) {
                 items: items.map(
                   ({
                     name,
+                    key,
                     amount,
                     spring,
                     summer,
@@ -34,6 +35,7 @@ router.get("/bundles", function(req, res, next) {
                   }) => {
                     return {
                       name,
+                      key,
                       amount,
                       spring,
                       summer,
