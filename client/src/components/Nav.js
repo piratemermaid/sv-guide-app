@@ -1,4 +1,6 @@
 import React from "react";
+import { withRouter } from "react-router";
+import { URLS } from "../utils/globals";
 
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -99,12 +101,30 @@ const getIcon = text => {
     case "Calendar":
       return <TodayIcon />;
     default:
-      console.log(text);
+      console.log("need icon for", text);
       return <InboxIcon />;
   }
 };
 
-export default function Header() {
+const getPageName = path => {
+  switch (path) {
+    case "/":
+      return "Characters";
+    case "/upgrades":
+      return "Upgrades";
+    case "/community_center":
+      return "Community Center";
+    case "/account":
+      return "My Account";
+    case "/calendar":
+      return "Calendar";
+    default:
+      console.log("need page name for", path);
+      return "";
+  }
+};
+
+const Header = props => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -139,7 +159,7 @@ export default function Header() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Stardew Tracker | ( current page )
+            Stardew Tracker | {getPageName(props.location.pathname)}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -169,7 +189,7 @@ export default function Header() {
         <List>
           {["Characters", "Upgrades", "Community Center", "Calendar"].map(
             text => (
-              <ListItem button key={text}>
+              <ListItem href={URLS[text]} button key={text} component="a">
                 <ListItemIcon>{getIcon(text)}</ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
@@ -188,4 +208,6 @@ export default function Header() {
       </Drawer>
     </div>
   );
-}
+};
+
+export default withRouter(Header);
