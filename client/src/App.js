@@ -3,9 +3,11 @@ import axios from "axios";
 import "./App.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import * as globals from "./utils/globals";
+import { LS, URLS, DEFAULT_STATE } from "./utils/globals";
 import { upgradeItems } from "./utils/upgrades";
 
+import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
+import { createMuiTheme } from "@material-ui/core";
 import Nav from "./components/Nav";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -14,6 +16,16 @@ import CCBundles from "./pages/CCBundles";
 import CCList from "./pages/CCList";
 import Upgrades from "./pages/Upgrades";
 import Calendar from "./pages/Calendar";
+
+import purple from "@material-ui/core/colors/purple";
+import teal from "@material-ui/core/colors/green";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: purple,
+    accent: teal
+  }
+});
 
 class App extends Component {
   constructor(props) {
@@ -43,7 +55,7 @@ class App extends Component {
     let newState = this.state;
     newState[type] = newArr;
     this.setState(newState);
-    localStorage.setItem(globals.LS, JSON.stringify(newState));
+    localStorage.setItem(LS, JSON.stringify(newState));
 
     // For upgrades, if a prereq is unchecked,
     // uncheck everything that relies on it
@@ -73,7 +85,7 @@ class App extends Component {
       newState.toolPickup = false;
     }
     this.setState(newState);
-    localStorage.setItem(globals.LS, JSON.stringify(newState));
+    localStorage.setItem(LS, JSON.stringify(newState));
   }
 
   setToolPickup(day) {
@@ -84,7 +96,7 @@ class App extends Component {
       newState.toolPickup = day;
     }
     this.setState(newState);
-    localStorage.setItem(globals.LS, JSON.stringify(newState));
+    localStorage.setItem(LS, JSON.stringify(newState));
   }
 
   changeSeasonFilter(season) {
@@ -95,7 +107,7 @@ class App extends Component {
       newState.seasonFilter = season;
     }
     this.setState(newState);
-    localStorage.setItem(globals.LS, JSON.stringify(newState));
+    localStorage.setItem(LS, JSON.stringify(newState));
   }
 
   authenticateUser(authenticated) {
@@ -147,11 +159,11 @@ class App extends Component {
   componentWillMount() {
     // get data from LS
     if (Object.keys(this.state).length === 0) {
-      if (localStorage.getItem(globals.LS)) {
-        this.setState(JSON.parse(localStorage.getItem(globals.LS)));
+      if (localStorage.getItem(LS)) {
+        this.setState(JSON.parse(localStorage.getItem(LS)));
       } else {
-        localStorage.setItem(globals.LS, JSON.stringify(globals.DEFAULT_STATE));
-        this.setState(globals.DEFAULT_STATE);
+        localStorage.setItem(LS, JSON.stringify(DEFAULT_STATE));
+        this.setState(DEFAULT_STATE);
       }
     }
   }
@@ -201,91 +213,94 @@ class App extends Component {
     }
 
     const { upgrades } = appData;
+
     return (
       <div className="App">
-        <BrowserRouter>
-          <div>
-            <Nav />
-            <div className="container">
-              <Switch>
-                <Route
-                  exact
-                  path="/"
-                  render={() => (
-                    <Home
-                      authenticated={authenticated}
-                      selectedCharacter={selectedCharacter}
-                      characters={characters}
-                      authenticateUser={this.authenticateUser}
-                      selectCharacter={this.selectCharacter}
-                      addCharacter={this.addCharacter}
-                    />
-                  )}
-                />
-                <Route
-                  path="/login"
-                  render={() => (
-                    <Login authenticateUser={this.authenticateUser} />
-                  )}
-                />
-                }
-                <Route
-                  path="/signup"
-                  render={() => (
-                    <Signup authenticateUser={this.authenticateUser} />
-                  )}
-                />
-                }
-                <Route
-                  exact
-                  path={globals.URLS.COMMUNITY_CENTER}
-                  render={() => (
-                    <CCBundles
-                      cc={cc}
-                      toggleItem={this.toggleItem}
-                      reset={this.reset}
-                      seasonFilter={seasonFilter}
-                      changeSeasonFilter={this.changeSeasonFilter}
-                    />
-                  )}
-                />
-                <Route
-                  path={`${globals.URLS.COMMUNITY_CENTER}/list`}
-                  render={() => (
-                    <CCList
-                      cc={cc}
-                      toggleItem={this.toggleItem}
-                      reset={this.reset}
-                      seasonFilter={seasonFilter}
-                      changeSeasonFilter={this.changeSeasonFilter}
-                    />
-                  )}
-                />
-                <Route
-                  path={globals.URLS.UPGRADES}
-                  render={() => (
-                    <Upgrades
-                      upgrades={upgrades}
-                      toolPickup={toolPickup}
-                      toggleItem={this.toggleItem}
-                      reset={this.reset}
-                      setToolPickup={this.setToolPickup}
-                    />
-                  )}
-                />
-                <Route
-                  path={globals.URLS.CALENDAR}
-                  render={() => (
-                    <Calendar
-                      seasonFilter={seasonFilter}
-                      changeSeasonFilter={this.changeSeasonFilter}
-                    />
-                  )}
-                />
-              </Switch>
+        <MuiThemeProvider theme={theme}>
+          <BrowserRouter>
+            <div>
+              <Nav />
+              <main>
+                <Switch>
+                  <Route
+                    exact
+                    path={URLS["Characters"]}
+                    render={() => (
+                      <Home
+                        authenticated={authenticated}
+                        selectedCharacter={selectedCharacter}
+                        characters={characters}
+                        authenticateUser={this.authenticateUser}
+                        selectCharacter={this.selectCharacter}
+                        addCharacter={this.addCharacter}
+                      />
+                    )}
+                  />
+                  <Route
+                    path="/login"
+                    render={() => (
+                      <Login authenticateUser={this.authenticateUser} />
+                    )}
+                  />
+                  }
+                  <Route
+                    path="/signup"
+                    render={() => (
+                      <Signup authenticateUser={this.authenticateUser} />
+                    )}
+                  />
+                  }
+                  <Route
+                    exact
+                    path={URLS["Community Center"]}
+                    render={() => (
+                      <CCBundles
+                        cc={cc}
+                        toggleItem={this.toggleItem}
+                        reset={this.reset}
+                        seasonFilter={seasonFilter}
+                        changeSeasonFilter={this.changeSeasonFilter}
+                      />
+                    )}
+                  />
+                  <Route
+                    path={`${URLS["Community Center"]}/list`}
+                    render={() => (
+                      <CCList
+                        cc={cc}
+                        toggleItem={this.toggleItem}
+                        reset={this.reset}
+                        seasonFilter={seasonFilter}
+                        changeSeasonFilter={this.changeSeasonFilter}
+                      />
+                    )}
+                  />
+                  <Route
+                    path={URLS["Upgrades"]}
+                    render={() => (
+                      <Upgrades
+                        upgrades={upgrades}
+                        toolPickup={toolPickup}
+                        toggleItem={this.toggleItem}
+                        reset={this.reset}
+                        setToolPickup={this.setToolPickup}
+                      />
+                    )}
+                  />
+                  <Route
+                    path={URLS["Calendar"]}
+                    render={() => (
+                      <Calendar
+                        seasonFilter={seasonFilter}
+                        changeSeasonFilter={this.changeSeasonFilter}
+                      />
+                    )}
+                  />
+                </Switch>
+              </main>
             </div>
-          </div>
-        </BrowserRouter>
+          </BrowserRouter>
+        </MuiThemeProvider>
       </div>
     );
   }
