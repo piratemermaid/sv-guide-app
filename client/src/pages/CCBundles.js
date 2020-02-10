@@ -59,72 +59,77 @@ const CCBundles = props => {
 
                 return (
                   <div className="bundle" key={name}>
-                    <h4 key={name}>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={completed}
-                            onChange={e => handleBundleChange(e, name)}
-                            value={name}
-                            color="secondary"
-                          />
-                        }
-                        label={name}
-                      />
-                      {canComplete ? <ErrorIcon color="secondary" /> : null}
-                    </h4>
-                    <p>
-                      Reward: {reward}
-                      {rewardAmount ? ` x${rewardAmount}` : null}
-                    </p>
-                    <p>
-                      {requiredItems} of {items.length} items required
-                    </p>
-                    <ul>
-                      {items.map(
-                        ({
-                          name,
-                          key,
-                          amount,
-                          spring,
-                          summer,
-                          fall,
-                          winter,
-                          type,
-                          location,
-                          time,
-                          special
-                        }) => {
-                          let label = name;
-                          if (amount) {
-                            label += ` x${amount}`;
-                          }
-                          const checked = _.find(props.userData.bundleItems, {
-                            key
-                          })
-                            ? true
-                            : false;
-
-                          return (
-                            <li key={key}>
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    checked={checked}
-                                    onChange={e =>
-                                      handleBundleItemChange(e, key)
-                                    }
-                                    value={name}
-                                    color="secondary"
-                                  />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={completed}
+                          onChange={e => handleBundleChange(e, name)}
+                          value={name}
+                          color="secondary"
+                        />
+                      }
+                      label={name}
+                    />
+                    {canComplete ? <ErrorIcon color="secondary" /> : null}
+                    {!completed ? (
+                      <div>
+                        <p>
+                          Reward: {reward}
+                          {rewardAmount ? ` x${rewardAmount}` : null}
+                        </p>
+                        <p>
+                          {requiredItems} of {items.length} items required
+                        </p>
+                        <ul>
+                          {items.map(
+                            ({
+                              name,
+                              key,
+                              amount,
+                              spring,
+                              summer,
+                              fall,
+                              winter,
+                              type,
+                              location,
+                              time,
+                              special
+                            }) => {
+                              let label = name;
+                              if (amount) {
+                                label += ` x${amount}`;
+                              }
+                              const checked = _.find(
+                                props.userData.bundleItems,
+                                {
+                                  key
                                 }
-                                label={label}
-                              />
-                            </li>
-                          );
-                        }
-                      )}
-                    </ul>
+                              )
+                                ? true
+                                : false;
+
+                              return (
+                                <li key={key}>
+                                  <FormControlLabel
+                                    control={
+                                      <Checkbox
+                                        checked={checked}
+                                        onChange={e =>
+                                          handleBundleItemChange(e, key)
+                                        }
+                                        value={name}
+                                        color="secondary"
+                                      />
+                                    }
+                                    label={label}
+                                  />
+                                </li>
+                              );
+                            }
+                          )}
+                        </ul>
+                      </div>
+                    ) : null}
                   </div>
                 );
               })}
