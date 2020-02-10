@@ -203,7 +203,7 @@ const Header = props => {
         <Divider />
         <List>
           {["My Account"].map(text => (
-            <ListItem button key={text}>
+            <ListItem href={URLS[text]} button key={text} component="a">
               <ListItemIcon>{getIcon(text)}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>

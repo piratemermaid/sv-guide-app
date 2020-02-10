@@ -17,6 +17,7 @@ import CCBundles from "./pages/CCBundles";
 import CCList from "./pages/CCList";
 import Upgrades from "./pages/Upgrades";
 import Calendar from "./pages/Calendar";
+import Account from "./pages/Account";
 
 import purple from "@material-ui/core/colors/purple";
 import teal from "@material-ui/core/colors/teal";
@@ -398,6 +399,10 @@ class App extends Component {
                           changeSeasonFilter={this.changeSeasonFilter}
                         />
                       )}
+                    />
+                    <Route
+                      path={URLS["My Account"]}
+                      render={() => <Account characters={characters} />}
                     />
                   </Switch>
                 </main>
