@@ -44,8 +44,6 @@ const Upgrades = props => {
     props.toggleUpgrade({ upgradeName: name, value: e.target.checked });
   };
 
-  const classes = useStyles();
-
   const getIcon = text => {
     switch (text) {
       case "tool":
@@ -62,6 +60,8 @@ const Upgrades = props => {
         return <InboxIcon />;
     }
   };
+
+  const classes = useStyles();
 
   return (
     <div>
