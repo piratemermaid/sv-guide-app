@@ -26,7 +26,7 @@ const Home = props => {
 
   if (props.authenticated) {
     return (
-      <div className="container">
+      <div>
         <h3>Home</h3>
         <div>
           Your characters:
@@ -59,7 +59,7 @@ const Home = props => {
     );
   } else {
     return (
-      <div className="container">
+      <div>
         <h3>Home</h3>
         <div>
           <Link to="/login">Log in</Link> | <Link to="/signup">Sign up</Link>

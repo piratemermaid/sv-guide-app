@@ -50,7 +50,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div>
         <h3>Login</h3>
         <form id="login-form">
           <div className="input-field">

@@ -17,7 +17,7 @@ const SeasonFilterBtns = props => {
   }
 
   return (
-    <div className="row">
+    <div>
       {renderBtn("Spring")}
       {renderBtn("Summer")}
       {renderBtn("Fall")}

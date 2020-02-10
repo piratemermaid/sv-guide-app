@@ -71,7 +71,7 @@ const Upgrades = props => {
 
   return (
     <div>
-      <div className="row">
+      <div>
         <h2>
           <span className="left">Upgrades</span>
           <span
@@ -85,8 +85,8 @@ const Upgrades = props => {
       {_.map(upgradesByType, typeUpgrades => {
         const type = typeUpgrades[0].type;
         return (
-          <div className="row" key={type}>
-            <div className="col m6 s12">
+          <div key={type}>
+            <div>
               <h3>{type}</h3>
               <ul>
                 {typeUpgrades.map(({ name, cost, prereq }) => {
@@ -100,7 +100,7 @@ const Upgrades = props => {
       {/* {renderUpgrades(upgradesByType)} */}
     </div>
     // <div>
-    //     <div className="row">
+    //     <div >
     // <h2>
     //     <span className="left">Upgrades</span>
     //     <span

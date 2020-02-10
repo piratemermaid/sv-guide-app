@@ -89,7 +89,7 @@ class Signup extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div>
         <div id="signup-form">
           <h3>Sign Up</h3>
           <form>
