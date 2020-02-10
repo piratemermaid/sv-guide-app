@@ -118,6 +118,10 @@ const getPageName = path => {
       return "My Account";
     case "/calendar":
       return "Calendar";
+    case "/login":
+      return "Log In";
+    case "/signup":
+      return "Sign Up";
     default:
       console.log("need page name for", path);
       return "";
