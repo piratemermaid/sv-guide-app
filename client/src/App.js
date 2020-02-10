@@ -209,100 +209,111 @@ class App extends Component {
     } = this.state;
 
     if (!appData || !appData.bundles || !appData.upgrades) {
-      return <div>loading...</div>;
+      return (
+        <div className="App">
+          <MuiThemeProvider theme={theme}>
+            <BrowserRouter>
+              <div>
+                <Nav />
+                <main>Loading...</main>
+              </div>
+            </BrowserRouter>
+          </MuiThemeProvider>
+        </div>
+      );
+    } else {
+      const { upgrades } = appData;
+
+      return (
+        <div className="App">
+          <MuiThemeProvider theme={theme}>
+            <BrowserRouter>
+              <div>
+                <Nav />
+                <main>
+                  <Switch>
+                    <Route
+                      exact
+                      path={URLS["Characters"]}
+                      render={() => (
+                        <Home
+                          authenticated={authenticated}
+                          selectedCharacter={selectedCharacter}
+                          characters={characters}
+                          authenticateUser={this.authenticateUser}
+                          selectCharacter={this.selectCharacter}
+                          addCharacter={this.addCharacter}
+                        />
+                      )}
+                    />
+                    <Route
+                      path="/login"
+                      render={() => (
+                        <Login authenticateUser={this.authenticateUser} />
+                      )}
+                    />
+                    }
+                    <Route
+                      path="/signup"
+                      render={() => (
+                        <Signup authenticateUser={this.authenticateUser} />
+                      )}
+                    />
+                    }
+                    <Route
+                      exact
+                      path={URLS["Community Center"]}
+                      render={() => (
+                        <CCBundles
+                          cc={cc}
+                          toggleItem={this.toggleItem}
+                          reset={this.reset}
+                          seasonFilter={seasonFilter}
+                          changeSeasonFilter={this.changeSeasonFilter}
+                        />
+                      )}
+                    />
+                    <Route
+                      path={`${URLS["Community Center"]}/list`}
+                      render={() => (
+                        <CCList
+                          cc={cc}
+                          toggleItem={this.toggleItem}
+                          reset={this.reset}
+                          seasonFilter={seasonFilter}
+                          changeSeasonFilter={this.changeSeasonFilter}
+                        />
+                      )}
+                    />
+                    <Route
+                      path={URLS["Upgrades"]}
+                      render={() => (
+                        <Upgrades
+                          upgrades={upgrades}
+                          toolPickup={toolPickup}
+                          toggleItem={this.toggleItem}
+                          reset={this.reset}
+                          setToolPickup={this.setToolPickup}
+                        />
+                      )}
+                    />
+                    <Route
+                      path={URLS["Calendar"]}
+                      render={() => (
+                        <Calendar
+                          seasonFilter={seasonFilter}
+                          changeSeasonFilter={this.changeSeasonFilter}
+                        />
+                      )}
+                    />
+                  </Switch>
+                </main>
+              </div>
+            </BrowserRouter>
+          </MuiThemeProvider>
+        </div>
+      );
     }
-
-    const { upgrades } = appData;
-
-    return (
-      <div className="App">
-        <MuiThemeProvider theme={theme}>
-          <BrowserRouter>
-            <div>
-              <Nav />
-              <main>
-                <Switch>
-                  <Route
-                    exact
-                    path={URLS["Characters"]}
-                    render={() => (
-                      <Home
-                        authenticated={authenticated}
-                        selectedCharacter={selectedCharacter}
-                        characters={characters}
-                        authenticateUser={this.authenticateUser}
-                        selectCharacter={this.selectCharacter}
-                        addCharacter={this.addCharacter}
-                      />
-                    )}
-                  />
-                  <Route
-                    path="/login"
-                    render={() => (
-                      <Login authenticateUser={this.authenticateUser} />
-                    )}
-                  />
-                  }
-                  <Route
-                    path="/signup"
-                    render={() => (
-                      <Signup authenticateUser={this.authenticateUser} />
-                    )}
-                  />
-                  }
-                  <Route
-                    exact
-                    path={URLS["Community Center"]}
-                    render={() => (
-                      <CCBundles
-                        cc={cc}
-                        toggleItem={this.toggleItem}
-                        reset={this.reset}
-                        seasonFilter={seasonFilter}
-                        changeSeasonFilter={this.changeSeasonFilter}
-                      />
-                    )}
-                  />
-                  <Route
-                    path={`${URLS["Community Center"]}/list`}
-                    render={() => (
-                      <CCList
-                        cc={cc}
-                        toggleItem={this.toggleItem}
-                        reset={this.reset}
-                        seasonFilter={seasonFilter}
-                        changeSeasonFilter={this.changeSeasonFilter}
-                      />
-                    )}
-                  />
-                  <Route
-                    path={URLS["Upgrades"]}
-                    render={() => (
-                      <Upgrades
-                        upgrades={upgrades}
-                        toolPickup={toolPickup}
-                        toggleItem={this.toggleItem}
-                        reset={this.reset}
-                        setToolPickup={this.setToolPickup}
-                      />
-                    )}
-                  />
-                  <Route
-                    path={URLS["Calendar"]}
-                    render={() => (
-                      <Calendar
-                        seasonFilter={seasonFilter}
-                        changeSeasonFilter={this.changeSeasonFilter}
-                      />
-                    )}
-                  />
-                </Switch>
-              </main>
-            </div>
-          </BrowserRouter>
-        </MuiThemeProvider>
-      </div>
-    );
   }
 }
 
