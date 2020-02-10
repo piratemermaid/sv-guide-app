@@ -23,6 +23,7 @@ router.get("/data", function(req, res, next) {
       .fetch({
         withRelated: [
           "characters.upgrades",
+          "characters.rooms",
           "characters.bundles",
           "characters.bundleItems"
         ]
@@ -31,7 +32,7 @@ router.get("/data", function(req, res, next) {
         const { characters } = userData.toJSON();
         res.send({
           characters: characters.map(
-            ({ name, upgrades, bundles, bundleItems }) => {
+            ({ name, upgrades, rooms, bundles, bundleItems }) => {
               return {
                 name,
                 upgrades: upgrades.map(({ name, type, cost, prereq }) => {
@@ -41,6 +42,9 @@ router.get("/data", function(req, res, next) {
                     cost,
                     prereq
                   };
+                }),
+                rooms: rooms.map(({ name }) => {
+                  return { name };
                 }),
                 bundles: bundles.map(({ name }) => {
                   return { name };
@@ -190,6 +194,93 @@ router.post("/toggle_upgrade", async function(req, res, next) {
           .where({
             character_id: userCharacterId,
             upgrade_id: upgradeId
+          })
+          .del()
+          .then(() => {
+            res.send("success");
+          });
+      }
+    }
+  }
+});
+
+// TODO: room true means all rooms true
+router.post("/toggle_room", async function(req, res, next) {
+  const { characterName, name, value } = req.query;
+
+  const { sessionString } = req.cookies;
+
+  if (!sessionString || !Session.verify(sessionString)) {
+    const error = new Error("Invalid session");
+
+    error.status = 400;
+
+    return next(error);
+  } else {
+    const { username } = Session.parse(sessionString);
+
+    const ids = await User.forge({ username })
+      .fetch({
+        withRelated: ["characters"]
+      })
+      .then(userData => {
+        const selectedCharacter = _.find(userData.toJSON().characters, {
+          name: characterName
+        });
+        return {
+          user: userData.id,
+          character: selectedCharacter.id || null
+        };
+      });
+
+    if (!ids.character) {
+      res.send("Please select a character first");
+    } else {
+      const userCharacterId = await knex(TABLES.USERS_CHARACTERS)
+        .where({
+          user_id: ids.user,
+          character_id: ids.character
+        })
+        .first()
+        .then(char => {
+          return char.id;
+        });
+
+      const roomId = await knex(TABLES.ROOMS)
+        .where({ name })
+        .first()
+        .then(room => {
+          return room.id;
+        });
+
+      const roomExists = await knex(TABLES.CHARACTERS_ROOMS)
+        .where({
+          character_id: userCharacterId,
+          room_id: roomId
+        })
+        .first()
+        .then(userRoom => {
+          if (!userRoom) {
+            return false;
+          } else {
+            return true;
+          }
+        });
+
+      if (!roomExists) {
+        await knex(TABLES.CHARACTERS_ROOMS)
+          .insert({
+            character_id: userCharacterId,
+            room_id: roomId
+          })
+          .then(() => {
+            res.send("success");
+          });
+      } else {
+        await knex(TABLES.CHARACTERS_ROOMS)
+          .where({
+            character_id: userCharacterId,
+            room_id: roomId
           })
           .del()
           .then(() => {

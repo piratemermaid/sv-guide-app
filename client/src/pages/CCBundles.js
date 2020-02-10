@@ -11,6 +11,10 @@ const CCBundles = props => {
     return "Loading...";
   }
 
+  const handleRoomChange = (e, name) => {
+    props.toggleRoom({ name, value: e.target.checked });
+  };
+
   const handleBundleChange = (e, name) => {
     props.toggleBundle({ name, value: e.target.checked });
   };
@@ -22,16 +26,40 @@ const CCBundles = props => {
     });
   };
 
-  console.log(props.userData);
-
   return (
     <div>
       {props.bundles.map(({ name, reward, bundles }) => {
+        let completed = false;
+        let canComplete = false;
+        if (_.find(props.userData.rooms, { name })) {
+          completed = true;
+        } else {
+          let completedBundles = 0;
+          bundles.forEach(({ name }) => {
+            if (_.find(props.userData.bundles, { name })) {
+              completedBundles++;
+            }
+            if (completedBundles === bundles.length) {
+              canComplete = true;
+            }
+          });
+        }
+
         return (
           <div className="room" key={name}>
-            <h3>
-              {name} ({reward})
-            </h3>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={completed}
+                  onChange={e => handleRoomChange(e, name)}
+                  value={name}
+                  color="secondary"
+                />
+              }
+              label={name}
+            />
+            {canComplete ? <ErrorIcon color="secondary" /> : null}
+            <p>Reward: {reward}</p>
             <div className="bundles">
               {bundles.map(bundle => {
                 const {

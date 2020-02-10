@@ -16,6 +16,9 @@ const Character = bookshelf.model("Character", {
   upgrades() {
     return this.belongsToMany("Upgrade", TABLES.CHARACTERS_UPGRADES);
   },
+  rooms() {
+    return this.belongsToMany("Room", TABLES.CHARACTERS_ROOMS);
+  },
   bundles() {
     return this.belongsToMany("Bundle", TABLES.CHARACTERS_BUNDLES);
   },
