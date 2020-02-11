@@ -77,6 +77,30 @@ const CCBundles = props => {
     });
   };
 
+  const itemMatchesSeasonFilter = item => {
+    const filters = props.seasonFilters;
+    let filteredSeasons = 0;
+    let match = false;
+    for (let season in filters) {
+      if (filters[season]) {
+        filteredSeasons++;
+        // If we get a match, display this item
+        if (item[season]) {
+          return true;
+        }
+      }
+    }
+
+    // If nothing is being filtered, display everything
+    if (filteredSeasons === 0) {
+      return true;
+    } else {
+      if (!match) {
+        return false;
+      }
+    }
+  };
+
   const classes = useStyles();
 
   return (
@@ -219,9 +243,20 @@ const CCBundles = props => {
                                   ? true
                                   : false;
 
+                                const displayItem = itemMatchesSeasonFilter(
+                                  item
+                                );
+
+                                const allSeasons =
+                                  item.spring &&
+                                  item.summer &&
+                                  item.fall &&
+                                  item.winter;
+
                                 return (
                                   <li key={key} className="bundle-item">
                                     <FormControlLabel
+                                      className={!displayItem ? "gray-out" : ""}
                                       control={
                                         <Checkbox
                                           checked={checked}
@@ -234,16 +269,18 @@ const CCBundles = props => {
                                       }
                                       label={label}
                                     />
-                                    {seasons.map(season => {
-                                      if (item[season]) {
-                                        return (
-                                          <SeasonCircle
-                                            key={`${key} ${season}`}
-                                            season={season}
-                                          />
-                                        );
-                                      }
-                                    })}
+                                    {!allSeasons
+                                      ? seasons.map(season => {
+                                          if (item[season]) {
+                                            return (
+                                              <SeasonCircle
+                                                key={`${key} ${season}`}
+                                                season={season}
+                                              />
+                                            );
+                                          }
+                                        })
+                                      : null}
                                   </li>
                                 );
                               })}
