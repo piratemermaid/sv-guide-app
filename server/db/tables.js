@@ -11,7 +11,9 @@ const TABLES = {
   BUNDLE_ITEMS: "bundle_items",
   UPGRADES: "upgrades",
   BIRTHDAYS: "birthdays",
-  FESTIVALS: "festivals"
+  FESTIVALS: "festivals",
+  FAIR_ITEMS: "fair_items",
+  CHARACTERS_FAIR_ITEMS: "characters_fair_items"
 };
 
 module.exports = TABLES;

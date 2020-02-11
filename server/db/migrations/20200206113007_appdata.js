@@ -75,6 +75,12 @@ exports.up = async function(knex) {
     table.integer("day");
   });
 
+  await knex.schema.createTable(TABLES.FAIR_ITEMS, table => {
+    table.increments("id");
+    table.string("name").notNullable();
+    table.string("key").notNullable();
+  });
+
   /////////////////////////////////////////
   // user tables
   /////////////////////////////////////////
@@ -195,6 +201,25 @@ exports.up = async function(knex) {
       .onDelete("cascade")
       .notNullable();
   });
+
+  await knex.schema.createTable(TABLES.CHARACTERS_FAIR_ITEMS, table => {
+    table
+      .increments("id")
+      .unsigned()
+      .primary();
+    table
+      .integer("character_id")
+      .references("id")
+      .inTable(TABLES.CHARACTERS)
+      .onDelete("cascade")
+      .notNullable();
+    table
+      .integer("fair_item_id")
+      .references("id")
+      .inTable(TABLES.FAIR_ITEMS)
+      .onDelete("cascade")
+      .notNullable();
+  });
 };
 
 exports.down = async function(knex) {
@@ -205,13 +230,15 @@ exports.down = async function(knex) {
     TABLES.UPGRADES,
     TABLES.BIRTHDAYS,
     TABLES.FESTIVALS,
+    TABLES.FAIR_ITEMS,
     TABLES.USERS,
     TABLES.CHARACTERS,
     TABLES.USERS_CHARACTERS,
     TABLES.CHARACTERS_ROOMS,
     TABLES.CHARACTERS_BUNDLES,
     TABLES.CHARACTERS_BUNDLE_ITEMS,
-    TABLES.CHARACTERS_UPGRADES
+    TABLES.CHARACTERS_UPGRADES,
+    TABLES.CHARACTERS_FAIR_ITEMS
   ];
   for (let i = tableOrder.length; i >= 0; i--) {
     await knex.schema.dropTableIfExists(tableOrder[i]);

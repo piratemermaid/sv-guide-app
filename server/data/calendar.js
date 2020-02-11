@@ -447,17 +447,6 @@ const birthdays = [
   }
 ];
 
-// items: [
-//     "Animal Product",
-//     "Artisan Good",
-//     "Cooking",
-//     "Fish",
-//     "Foraging",
-//     "Fruit",
-//     "Vegetable",
-//     "Mineral"
-//   ]
-
 const festivals = [
   { name: "Egg Festival", season: "spring", day: 13 },
   { name: "Flower Dance", season: "spring", day: 24 },
@@ -469,11 +458,26 @@ const festivals = [
   { name: "Feast of the Winter Star", season: "winter", day: 25 }
 ];
 
+const fairItems = [
+  "Animal Product",
+  "Artisan Good",
+  "Cooking",
+  "Fish",
+  "Foraging",
+  "Fruit",
+  "Vegetable",
+  "Mineral",
+  "Any"
+];
+
 module.exports = {
   birthdays: birthdays.map(({ name, season, day, loves, likes }) => {
     return { name, key: name, season, day, loves, likes };
   }),
   festivals: festivals.map(({ name, season, day }) => {
     return { name, key: name, season, day };
+  }),
+  fairItems: fairItems.map(item => {
+    return { name: item, key: item };
   })
 };
