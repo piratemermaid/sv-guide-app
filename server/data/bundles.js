@@ -1071,6 +1071,4 @@ for (let ROOM of bundleData) {
   }
 }
 
-console.log(rooms);
-
 module.exports = { rooms, bundles, items };
