@@ -286,6 +286,17 @@ class App extends Component {
       const appData = this.state.appData;
       this.setState({ appData: { ...appData, upgrades } });
     });
+
+    console.log("get events");
+    axios({
+      method: "get",
+      url: "/api/app/events"
+    }).then(res => {
+      console.log(res.data);
+      // const { upgrades } = res.data;
+      // const appData = this.state.appData;
+      // this.setState({ appData: { ...appData, upgrades } });
+    });
   }
 
   render() {

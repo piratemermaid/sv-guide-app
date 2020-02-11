@@ -49,4 +49,12 @@ const Upgrade = bookshelf.model("Upgrade", {
   tableName: TABLES.UPGRADES
 });
 
-module.exports = { User, Room, Upgrade };
+const Birthday = bookshelf.model("Birthday", {
+  tableName: TABLES.BIRTHDAYS
+});
+
+const Festival = bookshelf.model("Festival", {
+  tableName: TABLES.FESTIVALS
+});
+
+module.exports = { User, Room, Upgrade, Birthday, Festival };
