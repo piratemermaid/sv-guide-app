@@ -402,7 +402,17 @@ class App extends Component {
                     />
                     <Route
                       path={URLS["My Account"]}
-                      render={() => <Account characters={characters} />}
+                      render={() => (
+                        <Account
+                          appData={appData}
+                          characters={characters}
+                          addCharacter={this.addCharacter}
+                          toggleUpgrade={this.toggleUpgrade}
+                          toggleRoom={this.toggleRoom}
+                          toggleBundle={this.toggleBundle}
+                          toggleBundleItem={this.toggleBundleItem}
+                        />
+                      )}
                     />
                   </Switch>
                 </main>
