@@ -1,6 +1,12 @@
 const _ = require("lodash");
 const { Router } = require("express");
-const { Room, Upgrade, Birthday, Festival } = require("../models/data");
+const {
+  Room,
+  Upgrade,
+  Birthday,
+  Festival,
+  FairItem
+} = require("../models/data");
 
 const router = new Router();
 
@@ -68,7 +74,7 @@ router.get("/upgrades", function(req, res, next) {
   });
 });
 
-router.get("/events", async function(req, res, next) {
+router.get("/calendar", async function(req, res, next) {
   const birthdays = await Birthday.fetchAll().then(birthdaysResult => {
     return birthdaysResult
       .toJSON()
@@ -89,6 +95,16 @@ router.get("/events", async function(req, res, next) {
   );
 
   res.send({ calendar });
+});
+
+router.get("/fair_items", function(req, res, next) {
+  FairItem.fetchAll().then(fairItems => {
+    res.send({
+      fairItems: fairItems.toJSON().map(({ name }) => {
+        return { name };
+      })
+    });
+  });
 });
 
 module.exports = router;

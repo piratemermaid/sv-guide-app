@@ -260,8 +260,8 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
-    axios({
+  async componentDidMount() {
+    await axios({
       method: "get",
       url: "/api/account/authenticated"
     }).then(res => {
@@ -269,7 +269,7 @@ class App extends Component {
       this.authenticateUser(authenticated ? true : false);
     });
 
-    axios({
+    await axios({
       method: "get",
       url: "/api/app/bundles"
     }).then(res => {
@@ -278,7 +278,7 @@ class App extends Component {
       this.setState({ appData: { ...appData, bundles } });
     });
 
-    axios({
+    await axios({
       method: "get",
       url: "/api/app/upgrades"
     }).then(res => {
@@ -287,15 +287,22 @@ class App extends Component {
       this.setState({ appData: { ...appData, upgrades } });
     });
 
-    console.log("get events");
-    axios({
+    await axios({
       method: "get",
-      url: "/api/app/events"
+      url: "/api/app/calendar"
     }).then(res => {
-      console.log(res.data);
-      // const { upgrades } = res.data;
-      // const appData = this.state.appData;
-      // this.setState({ appData: { ...appData, upgrades } });
+      const { calendar } = res.data;
+      const appData = this.state.appData;
+      this.setState({ appData: { ...appData, calendar } });
+    });
+
+    await axios({
+      method: "get",
+      url: "/api/app/fair_items"
+    }).then(res => {
+      const { fairItems } = res.data;
+      const appData = this.state.appData;
+      this.setState({ appData: { ...appData, fairItems } });
     });
   }
 
@@ -327,7 +334,7 @@ class App extends Component {
         </div>
       );
     } else {
-      const { upgrades, bundles } = appData;
+      const { upgrades, bundles, calendar, fairItems } = appData;
       const userData = _.find(characters, { name: selectedCharacter });
 
       return (
@@ -417,6 +424,8 @@ class App extends Component {
                         <Calendar
                           seasonFilters={seasonFilters}
                           changeSeasonFilters={this.changeSeasonFilters}
+                          calendar={calendar}
+                          fairItems={fairItems}
                         />
                       )}
                     />

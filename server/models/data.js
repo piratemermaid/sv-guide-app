@@ -24,6 +24,9 @@ const Character = bookshelf.model("Character", {
   },
   bundleItems() {
     return this.belongsToMany("BundleItem", TABLES.CHARACTERS_BUNDLE_ITEMS);
+  },
+  fairItems() {
+    return this.belongsToMany("FairItem", TABLES.CHARACTERS_FAIR_ITEMS);
   }
 });
 
@@ -57,4 +60,8 @@ const Festival = bookshelf.model("Festival", {
   tableName: TABLES.FESTIVALS
 });
 
-module.exports = { User, Room, Upgrade, Birthday, Festival };
+const FairItem = bookshelf.model("Fair Item", {
+  tableName: TABLES.FAIR_ITEMS
+});
+
+module.exports = { User, Room, Upgrade, Birthday, Festival, FairItem };

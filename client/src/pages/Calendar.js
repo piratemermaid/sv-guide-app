@@ -1,56 +1,59 @@
+import _ from "lodash";
 import React from "react";
 
-import { calendarEvents } from "../utils/calendar";
 import SeasonFilterBtns from "../components/SeasonFilterBtns";
+import Grid from "@material-ui/core/Grid";
+import Divider from "@material-ui/core/Divider";
 
 const Calendar = props => {
-    function renderCalendarItems(season) {
-        if (props.seasonFilter && season !== props.seasonFilter) {
-            return;
-        }
+  const { seasonFilters, calendar, fairItems } = props;
 
-        const eventList = calendarEvents[season.toLowerCase()];
+  // use first selected season
+  let currentSeason;
+  for (let season in seasonFilters) {
+    if (seasonFilters[season]) {
+      currentSeason = season;
+      break;
+    }
+  }
 
-        return (
-            <div>
-                <h3 className={season.toLowerCase()}>{season}</h3>
-                {eventList.map(event => {
-                    return (
-                        <p key={event.name}>
-                            <b>{event.day}</b>: {event.name}
-                            {event.type === "birthday" ? "'s birthday" : null}
-                            {event.type === "birthday" ? (
-                                <span className="gifts">
-                                    <br />
-                                    Loves: {formatGifts(event.loves)}
-                                    <br />
-                                    Likes: {formatGifts(event.likes)}
-                                </span>
-                            ) : null}
-                        </p>
-                    );
-                })}
+  const renderCalendar = season => {
+    return calendar[season].map(event => {
+      const { name, type, day, likes, loves } = event;
+      return (
+        <Grid container spacing={2}>
+          <Grid item xs={1}>
+            <div className="calendar-day">{day}</div>
+          </Grid>
+          <Grid item xs={11}>
+            <div className="calendar-desc">
+              <p className="calendar-event-name">
+                {name}
+                {type === "birthday" ? "'s birthday" : null}
+              </p>
+              {loves ? <p>Loves: {loves.join(", ")}</p> : null}
+              {likes ? <p>Likes: {likes.join(", ")}</p> : null}
             </div>
-        );
-    }
+            <Divider />
+          </Grid>
+        </Grid>
+      );
+    });
+  };
 
-    function formatGifts(items) {
-        return items.join(", ");
-    }
-
-    return (
-        <div>
-            <h2>Calendar</h2>
-            <SeasonFilterBtns
-                seasonFilter={props.seasonFilter}
-                changeSeasonFilter={props.changeSeasonFilter}
-            />
-            {renderCalendarItems("Spring")}
-            {renderCalendarItems("Summer")}
-            {renderCalendarItems("Fall")}
-            {renderCalendarItems("Winter")}
-        </div>
-    );
+  return (
+    <div>
+      <SeasonFilterBtns
+        seasonFilters={seasonFilters}
+        changeSeasonFilters={props.changeSeasonFilters}
+      />
+      {!currentSeason ? (
+        "No season selected"
+      ) : (
+        <div>{renderCalendar(currentSeason)}</div>
+      )}
+    </div>
+  );
 };
 
 export default Calendar;
