@@ -566,7 +566,8 @@ const bundleData = [
             seasons: [F],
             type: FISH,
             location: "River & Lake",
-            time: "12pm - 2am"
+            time: "12pm - 2am",
+            special: "rain"
           },
           {
             name: "Bream",

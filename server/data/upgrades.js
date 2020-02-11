@@ -169,15 +169,61 @@ const upgradeData = [
     ],
     prereq: "Gold Hoe"
   },
+
   {
-    name: "Fishing Rod 1",
+    name: "Copper Trash Can",
     type: TOOL,
-    cost: [{ name: "Gold", amount: null }]
+    cost: [
+      { name: "Copper Bar", amount: 5 },
+      { name: "Gold", amount: 1000 }
+    ]
   },
   {
-    name: "Fishing Rod 2",
+    name: "Steel Trash Can",
     type: TOOL,
-    cost: [{ name: "Gold", amount: null }]
+    cost: [
+      { name: "Iron Bar", amount: 5 },
+      { name: "Gold", amount: 2500 }
+    ],
+    prereq: "Copper Trash Can"
+  },
+  {
+    name: "Gold Trash Can",
+    type: TOOL,
+    cost: [
+      { name: "Gold Bar", amount: 5 },
+      { name: "Gold", amount: 5000 }
+    ],
+    prereq: "Steel Trash Can"
+  },
+  {
+    name: "Iridium Trash Can",
+    type: TOOL,
+    cost: [
+      { name: "Iridium Bar", amount: 5 },
+      { name: "Gold", amount: 12500 }
+    ],
+    prereq: "Gold Trash Can"
+  },
+  {
+    name: "Fiberglass Rod",
+    type: TOOL,
+    cost: [{ name: "Gold", amount: 1800 }]
+  },
+  {
+    name: "Iridium Rod",
+    type: TOOL,
+    cost: [{ name: "Gold", amount: 7500 }]
+  },
+  {
+    name: "Silo",
+    type: BUILDING,
+    cost: [
+      { name: "Gold", amount: 100 },
+      { name: "Stone", amount: 100 },
+      { name: "Clay", amount: 10 },
+      { name: "Copper Bar", amount: 5 }
+    ]
   },
   {
     name: "Well",
@@ -185,6 +231,16 @@ const upgradeData = [
     cost: [
       { name: "Gold", amount: 1000 },
       { name: "Stone", amount: 75 }
+    ]
+  },
+  {
+    name: "Fish Pond",
+    type: BUILDING,
+    cost: [
+      { name: "Gold", amount: 5000 },
+      { name: "Stone", amount: 200 },
+      { name: "Seaweed", amount: 5 },
+      { name: "Green Algae", amount: 5 }
     ]
   },
   {
@@ -271,6 +327,16 @@ const upgradeData = [
       { name: "Gold", amount: 15000 },
       { name: "Wood", amount: 300 }
     ]
+  },
+  {
+    name: "Big Shed",
+    type: BUILDING,
+    cost: [
+      { name: "Gold", amount: 20000 },
+      { name: "Wood", amount: 550 },
+      { name: "Stone", amount: 300 }
+    ],
+    prereq: "Shed"
   },
   {
     name: "Chicken",
