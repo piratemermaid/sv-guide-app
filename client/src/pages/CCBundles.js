@@ -38,22 +38,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const getIcon = text => {
+const getIcon = (text, found) => {
+  let color = "";
+  found ? (color = "inherit") : (color = "secondary");
   switch (text) {
     case "Crafts Room":
-      return <BuildIcon />;
+      return <BuildIcon color={color} />;
     case "Pantry":
-      return <KitchenIcon />;
+      return <KitchenIcon color={color} />;
     case "Fish Tank":
-      return <PetsIcon />;
+      return <PetsIcon color={color} />;
     case "Boiler Room":
-      return <ShoppingCartIcon />;
+      return <ShoppingCartIcon color={color} />;
     case "Bulletin Board":
-      return <DashboardIcon />;
+      return <DashboardIcon color={color} />;
     case "Vault":
-      return <LockIcon />;
+      return <LockIcon color={color} />;
     default:
-      return <InboxIcon />;
+      return <InboxIcon color={color} />;
   }
 };
 
@@ -118,7 +120,6 @@ const CCBundles = props => {
         anchor="right"
       >
         <div className={classes.toolbar} />
-        <Divider />
         <List>
           {[
             "Crafts Room",
@@ -128,8 +129,20 @@ const CCBundles = props => {
             "Bulletin Board",
             "Vault"
           ].map((text, index) => (
-            <ListItem button key={text} href={`#${text}`} component="a">
-              <ListItemIcon>{getIcon(text)}</ListItemIcon>
+            <ListItem
+              button
+              key={text}
+              href={`#${text}`}
+              component="a"
+              className={
+                _.find(props.userData.rooms, { name: text })
+                  ? "room-complete"
+                  : null
+              }
+            >
+              <ListItemIcon>
+                {getIcon(text, _.find(props.userData.rooms, { name: text }))}
+              </ListItemIcon>
             </ListItem>
           ))}
         </List>

@@ -46,6 +46,10 @@ label {
   color: black;
 }
 
+/* a.room-complete {
+  color: green !important;
+} */
+
 .room-header span {
   font-size: 22px;
 }
