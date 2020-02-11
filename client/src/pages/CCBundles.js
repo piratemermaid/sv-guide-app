@@ -1,6 +1,7 @@
 import _ from "lodash";
 import React from "react";
 
+import SeasonFilterBtns from "../components/SeasonFilterBtns";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import ErrorIcon from "@material-ui/icons/Error";
@@ -78,6 +79,10 @@ const CCBundles = props => {
 
   return (
     <div>
+      <SeasonFilterBtns
+        seasonFilters={props.seasonFilters}
+        changeSeasonFilters={props.changeSeasonFilters}
+      />
       <Drawer
         className={classes.drawer}
         variant="permanent"

@@ -71,3 +71,27 @@ label {
 .bundle-item {
   margin-left: 30px;
 }
+
+/*///////////////////////////////////////////////
+// SEASON STYLES
+///////////////////////////////////////////////*/
+
+.season-filter-btn:hover {
+  cursor: pointer;
+}
+
+.season-filter-btn {
+  height: 40px !important;
+  width: 40px !important;
+}
+
+.season-filter-container {
+  height: 50px;
+  width: 50px;
+  padding: 5px;
+  background: rgb(247, 247, 247);
+}
+
+.season-filter-active {
+  background: rgb(189, 189, 189);
+}

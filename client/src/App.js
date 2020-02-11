@@ -34,12 +34,21 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { selectedCharacter: null, characters: [] };
+    this.state = {
+      selectedCharacter: null,
+      characters: [],
+      seasonFilters: {
+        spring: false,
+        summer: false,
+        fall: false,
+        winter: false
+      }
+    };
 
     this.toggleItem = this.toggleItem.bind(this);
     this.reset = this.reset.bind(this);
     this.setToolPickup = this.setToolPickup.bind(this);
-    this.changeSeasonFilter = this.changeSeasonFilter.bind(this);
+    this.changeSeasonFilters = this.changeSeasonFilters.bind(this);
 
     this.authenticateUser = this.authenticateUser.bind(this);
     this.selectCharacter = this.selectCharacter.bind(this);
@@ -106,15 +115,10 @@ class App extends Component {
     localStorage.setItem(LS, JSON.stringify(newState));
   }
 
-  changeSeasonFilter(season) {
-    let newState = this.state;
-    if (season === this.state.seasonFilter) {
-      newState.seasonFilter = false;
-    } else {
-      newState.seasonFilter = season;
-    }
-    this.setState(newState);
-    localStorage.setItem(LS, JSON.stringify(newState));
+  changeSeasonFilters(season) {
+    let { seasonFilters } = this.state;
+    seasonFilters[season] = !seasonFilters[season];
+    this.setState({ seasonFilters });
   }
 
   authenticateUser(authenticated) {
@@ -289,7 +293,7 @@ class App extends Component {
       cc,
       //   upgrades,
       toolPickup,
-      seasonFilter,
+      seasonFilters,
       authenticated,
       selectedCharacter,
       characters,
@@ -364,8 +368,8 @@ class App extends Component {
                           cc={cc}
                           toggleItem={this.toggleItem}
                           reset={this.reset}
-                          seasonFilter={seasonFilter}
-                          changeSeasonFilter={this.changeSeasonFilter}
+                          seasonFilters={seasonFilters}
+                          changeSeasonFilters={this.changeSeasonFilters}
                         />
                       )}
                     />
@@ -376,8 +380,8 @@ class App extends Component {
                           cc={cc}
                           toggleItem={this.toggleItem}
                           reset={this.reset}
-                          seasonFilter={seasonFilter}
-                          changeSeasonFilter={this.changeSeasonFilter}
+                          seasonFilters={seasonFilters}
+                          changeSeasonFilters={this.changeSeasonFilters}
                         />
                       )}
                     />
@@ -398,8 +402,8 @@ class App extends Component {
                       path={URLS["Calendar"]}
                       render={() => (
                         <Calendar
-                          seasonFilter={seasonFilter}
-                          changeSeasonFilter={this.changeSeasonFilter}
+                          seasonFilters={seasonFilters}
+                          changeSeasonFilters={this.changeSeasonFilters}
                         />
                       )}
                     />
