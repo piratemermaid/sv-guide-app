@@ -30,6 +30,8 @@ export function toTitleCase(str) {
   });
 }
 
+export const seasons = ["spring", "summer", "fall", "winter"];
+
 export const seasonColors = {
   spring: "#b2ff59",
   summer: "#fff59d",

@@ -19,6 +19,8 @@ import LockIcon from "@material-ui/icons/Lock";
 import KitchenIcon from "@material-ui/icons/Kitchen";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Loading from "../components/Loading";
+import SeasonCircle from "../components/SeasonCircle";
+import { seasons } from "../utils/utils";
 
 const drawerWidth = 50;
 
@@ -194,52 +196,57 @@ const CCBundles = props => {
                               {completedItems}/{requiredItems})
                             </p>
                             <ul>
-                              {items.map(
-                                ({
+                              {items.map(item => {
+                                const {
                                   name,
                                   key,
                                   amount,
-                                  spring,
-                                  summer,
-                                  fall,
-                                  winter,
                                   type,
                                   location,
                                   time,
                                   special
-                                }) => {
-                                  let label = name;
-                                  if (amount) {
-                                    label += ` x${amount}`;
-                                  }
-                                  const checked = _.find(
-                                    props.userData.bundleItems,
-                                    {
-                                      key
-                                    }
-                                  )
-                                    ? true
-                                    : false;
-
-                                  return (
-                                    <li key={key} className="bundle-item">
-                                      <FormControlLabel
-                                        control={
-                                          <Checkbox
-                                            checked={checked}
-                                            onChange={e =>
-                                              handleBundleItemChange(e, key)
-                                            }
-                                            value={name}
-                                            color="secondary"
-                                          />
-                                        }
-                                        label={label}
-                                      />
-                                    </li>
-                                  );
+                                } = item;
+                                let label = name;
+                                if (amount) {
+                                  label += ` x${amount}`;
                                 }
-                              )}
+                                const checked = _.find(
+                                  props.userData.bundleItems,
+                                  {
+                                    key
+                                  }
+                                )
+                                  ? true
+                                  : false;
+
+                                return (
+                                  <li key={key} className="bundle-item">
+                                    <FormControlLabel
+                                      control={
+                                        <Checkbox
+                                          checked={checked}
+                                          onChange={e =>
+                                            handleBundleItemChange(e, key)
+                                          }
+                                          value={name}
+                                          color="secondary"
+                                        />
+                                      }
+                                      label={label}
+                                    />
+                                    {seasons.map(season => {
+                                      if (item[season]) {
+                                        return (
+                                          <SeasonCircle
+                                            key={`${key} ${season}`}
+                                            season={season}
+                                          />
+                                        );
+                                      }
+                                    })}
+                                  </li>
+                                );
+                              })}
                             </ul>
                           </div>
                         ) : null}
