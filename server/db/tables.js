@@ -10,7 +10,8 @@ const TABLES = {
   BUNDLES: "bundles",
   BUNDLE_ITEMS: "bundle_items",
   UPGRADES: "upgrades",
-  BIRTHDAYS: "birthdays"
+  BIRTHDAYS: "birthdays",
+  FESTIVALS: "festivals"
 };
 
 module.exports = TABLES;

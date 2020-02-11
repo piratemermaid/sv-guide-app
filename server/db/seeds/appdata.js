@@ -1,7 +1,7 @@
 const { keyBy } = require("lodash");
 const TABLES = require("../tables");
 const { rooms, bundles, items } = require("../../data/bundles");
-const { birthdays } = require("../../data/calendar");
+const { birthdays, festivals } = require("../../data/calendar");
 const upgrades = require("../../data/upgrades");
 
 exports.seed = async function(knex) {
@@ -79,6 +79,8 @@ exports.seed = async function(knex) {
     .returning("*");
 
   await knex(TABLES.BIRTHDAYS).insert(birthdays);
+
+  await knex(TABLES.FESTIVALS).insert(festivals);
 };
 
 // delete table and reset to start at id 1

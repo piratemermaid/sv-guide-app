@@ -67,6 +67,14 @@ exports.up = async function(knex) {
     table.specificType("likes", "text ARRAY");
   });
 
+  await knex.schema.createTable(TABLES.FESTIVALS, table => {
+    table.increments("id");
+    table.string("name").notNullable();
+    table.string("key").notNullable();
+    table.string("season");
+    table.integer("day");
+  });
+
   /////////////////////////////////////////
   // user tables
   /////////////////////////////////////////
@@ -196,6 +204,7 @@ exports.down = async function(knex) {
     TABLES.BUNDLE_ITEMS,
     TABLES.UPGRADES,
     TABLES.BIRTHDAYS,
+    TABLES.FESTIVALS,
     TABLES.USERS,
     TABLES.CHARACTERS,
     TABLES.USERS_CHARACTERS,
