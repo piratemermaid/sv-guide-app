@@ -17,6 +17,7 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import LockIcon from "@material-ui/icons/Lock";
 import KitchenIcon from "@material-ui/icons/Kitchen";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import Loading from "../components/Loading";
 
 const drawerWidth = 50;
 
@@ -55,7 +56,7 @@ const getIcon = text => {
 
 const CCBundles = props => {
   if (!props.userData || !props.userData.bundleItems) {
-    return "Loading...";
+    return <Loading />;
   }
 
   const handleRoomChange = (e, name) => {

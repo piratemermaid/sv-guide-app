@@ -15,6 +15,7 @@ import PetsIcon from "@material-ui/icons/Pets";
 import HomeIcon from "@material-ui/icons/Home";
 import BusinessIcon from "@material-ui/icons/Business";
 import NatureIcon from "@material-ui/icons/Nature";
+import Loading from "../components/Loading";
 
 const drawerWidth = 50;
 
@@ -34,7 +35,7 @@ const useStyles = makeStyles(theme => ({
 
 const Upgrades = props => {
   if (!props.userData || !props.userData.upgrades) {
-    return "Loading...";
+    return <Loading />;
   }
   const userUpgrades = props.userData.upgrades;
 

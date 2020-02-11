@@ -18,6 +18,7 @@ import CCList from "./pages/CCList";
 import Upgrades from "./pages/Upgrades";
 import Calendar from "./pages/Calendar";
 import Account from "./pages/Account";
+import Loading from "./components/Loading";
 
 import purple from "@material-ui/core/colors/purple";
 import teal from "@material-ui/core/colors/teal";
@@ -302,7 +303,9 @@ class App extends Component {
             <BrowserRouter>
               <div>
                 <Nav />
-                <main>Loading...</main>
+                <main>
+                  <Loading />
+                </main>
               </div>
             </BrowserRouter>
           </MuiThemeProvider>

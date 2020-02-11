@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+
 import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Loading from "../components/Loading";
 
 class Account extends Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class Account extends Component {
 
   render() {
     if (!this.props.appData) {
-      return <CircularProgress />;
+      return <Loading />;
     } else {
       return (
         <div>
@@ -59,7 +60,7 @@ class Account extends Component {
               <Button onClick={this.importFromLS}>Import Data from LS</Button>
             </div>
           ) : (
-            <CircularProgress />
+            <Loading />
           )}
         </div>
       );
