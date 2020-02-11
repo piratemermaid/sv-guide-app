@@ -97,6 +97,10 @@ const Upgrades = props => {
                   const checked = _.find(userUpgrades, { name }) ? true : false;
                   // TODO: get prereqStatus
                   const prereqStatus = true;
+                  const costStringArr = cost.map(({ name, amount }) => {
+                    return `${amount} ${name}`;
+                  });
+                  const costString = costStringArr.join(", ");
 
                   return (
                     <li key={name}>
@@ -109,7 +113,7 @@ const Upgrades = props => {
                             color="secondary"
                           />
                         }
-                        label={name}
+                        label={`${name} (${costString})`}
                       />
                     </li>
                   );
