@@ -61,7 +61,10 @@ const SeasonFilterBtns = props => {
           containerClass += " season-filter-active";
         }
         return (
-          <ListItemIcon onClick={() => props.changeSeasonFilters(season)}>
+          <ListItemIcon
+            onClick={() => props.changeSeasonFilters(season)}
+            key={season}
+          >
             <div className={containerClass} key={season}>
               {getSeasonIcon(season)}
             </div>
