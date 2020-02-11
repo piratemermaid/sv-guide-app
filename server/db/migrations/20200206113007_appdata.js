@@ -57,6 +57,16 @@ exports.up = async function(knex) {
     table.string("prereq");
   });
 
+  await knex.schema.createTable(TABLES.BIRTHDAYS, table => {
+    table.increments("id");
+    table.string("name").notNullable();
+    table.string("key").notNullable();
+    table.string("season");
+    table.integer("day");
+    table.specificType("loves", "text ARRAY");
+    table.specificType("likes", "text ARRAY");
+  });
+
   /////////////////////////////////////////
   // user tables
   /////////////////////////////////////////
@@ -185,6 +195,7 @@ exports.down = async function(knex) {
     TABLES.BUNDLES,
     TABLES.BUNDLE_ITEMS,
     TABLES.UPGRADES,
+    TABLES.BIRTHDAYS,
     TABLES.USERS,
     TABLES.CHARACTERS,
     TABLES.USERS_CHARACTERS,

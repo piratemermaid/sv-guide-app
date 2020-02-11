@@ -9,7 +9,8 @@ const TABLES = {
   ROOMS: "rooms",
   BUNDLES: "bundles",
   BUNDLE_ITEMS: "bundle_items",
-  UPGRADES: "upgrades"
+  UPGRADES: "upgrades",
+  BIRTHDAYS: "birthdays"
 };
 
 module.exports = TABLES;
