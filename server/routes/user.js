@@ -36,12 +36,7 @@ router.get("/data", function(req, res, next) {
               return {
                 name,
                 upgrades: upgrades.map(({ name, type, cost, prereq }) => {
-                  return {
-                    name,
-                    type,
-                    cost,
-                    prereq
-                  };
+                  return { name };
                 }),
                 rooms: rooms.map(({ name }) => {
                   return { name };
@@ -50,10 +45,7 @@ router.get("/data", function(req, res, next) {
                   return { name };
                 }),
                 bundleItems: bundleItems.map(({ name, key }) => {
-                  return {
-                    name,
-                    key
-                  };
+                  return { key };
                 })
               };
             }
@@ -180,7 +172,7 @@ router.post("/toggle_upgrade", async function(req, res, next) {
           }
         });
 
-      if (!upgradeExists) {
+      if (!upgradeExists && value === "true") {
         await knex(TABLES.CHARACTERS_UPGRADES)
           .insert({
             character_id: userCharacterId,
@@ -189,7 +181,7 @@ router.post("/toggle_upgrade", async function(req, res, next) {
           .then(() => {
             res.send("success");
           });
-      } else {
+      } else if (upgradeExists && value === "false") {
         await knex(TABLES.CHARACTERS_UPGRADES)
           .where({
             character_id: userCharacterId,
@@ -267,7 +259,7 @@ router.post("/toggle_room", async function(req, res, next) {
           }
         });
 
-      if (!roomExists) {
+      if (!roomExists && value === "true") {
         await knex(TABLES.CHARACTERS_ROOMS)
           .insert({
             character_id: userCharacterId,
@@ -276,7 +268,7 @@ router.post("/toggle_room", async function(req, res, next) {
           .then(() => {
             res.send("success");
           });
-      } else {
+      } else if (roomExists && value === "false") {
         await knex(TABLES.CHARACTERS_ROOMS)
           .where({
             character_id: userCharacterId,
@@ -354,7 +346,7 @@ router.post("/toggle_bundle", async function(req, res, next) {
           }
         });
 
-      if (!bundleExists) {
+      if (!bundleExists && value === "true") {
         await knex(TABLES.CHARACTERS_BUNDLES)
           .insert({
             character_id: userCharacterId,
@@ -363,7 +355,7 @@ router.post("/toggle_bundle", async function(req, res, next) {
           .then(() => {
             res.send("success");
           });
-      } else {
+      } else if (bundleExists && value === "false") {
         await knex(TABLES.CHARACTERS_BUNDLES)
           .where({
             character_id: userCharacterId,
@@ -440,7 +432,7 @@ router.post("/toggle_bundle_item", async function(req, res, next) {
           }
         });
 
-      if (!itemExists) {
+      if (!itemExists && value === "true") {
         await knex(TABLES.CHARACTERS_BUNDLE_ITEMS)
           .insert({
             character_id: userCharacterId,
@@ -449,7 +441,7 @@ router.post("/toggle_bundle_item", async function(req, res, next) {
           .then(() => {
             res.send("success");
           });
-      } else {
+      } else if (itemExists && value === "false") {
         await knex(TABLES.CHARACTERS_BUNDLE_ITEMS)
           .where({
             character_id: userCharacterId,
