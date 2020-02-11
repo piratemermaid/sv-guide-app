@@ -95,8 +95,17 @@ const Upgrades = props => {
               <ul>
                 {typeUpgrades.map(({ name, cost, prereq }) => {
                   const checked = _.find(userUpgrades, { name }) ? true : false;
-                  // TODO: get prereqStatus
-                  const prereqStatus = true;
+
+                  // checkbox is disabled if user does not have prereq
+                  // e.g. can't get Gold Pickaxe without Steel Pickaxe
+                  let prereqStatus = true;
+                  if (prereq) {
+                    if (!_.find(userUpgrades, { name: prereq })) {
+                      prereqStatus = false;
+                    }
+                  }
+
+                  // format cost
                   const costStringArr = cost.map(({ name, amount }) => {
                     return `${amount} ${name}`;
                   });
@@ -111,6 +120,7 @@ const Upgrades = props => {
                             onChange={e => handleChange(e, name)}
                             value={name}
                             color="secondary"
+                            disabled={!prereqStatus}
                           />
                         }
                         label={`${name} (${costString})`}
