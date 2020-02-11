@@ -60,7 +60,7 @@ const Festival = bookshelf.model("Festival", {
   tableName: TABLES.FESTIVALS
 });
 
-const FairItem = bookshelf.model("Fair Item", {
+const FairItem = bookshelf.model("FairItem", {
   tableName: TABLES.FAIR_ITEMS
 });
 

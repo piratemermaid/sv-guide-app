@@ -4,6 +4,8 @@ import React from "react";
 import SeasonFilterBtns from "../components/SeasonFilterBtns";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const Calendar = props => {
   const { seasonFilters, calendar, fairItems } = props;
@@ -17,11 +19,35 @@ const Calendar = props => {
     }
   }
 
+  const handleChange = (e, name) => {
+    props.toggleFairItem({ name, value: e.target.checked });
+  };
+
+  const renderFairItems = () => {
+    return fairItems.map(({ name }) => {
+      const checked = _.find(props.userData.fairItems, { name }) ? true : false;
+      return (
+        <FormControlLabel
+          key={name}
+          control={
+            <Checkbox
+              checked={checked}
+              onChange={e => handleChange(e, name)}
+              value={name}
+              color="secondary"
+            />
+          }
+          label={name}
+        />
+      );
+    });
+  };
+
   const renderCalendar = season => {
     return calendar[season].map(event => {
       const { name, type, day, likes, loves } = event;
       return (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} key={name}>
           <Grid item xs={1}>
             <div className="calendar-day">{day}</div>
           </Grid>
@@ -33,6 +59,7 @@ const Calendar = props => {
               </p>
               {loves ? <p>Loves: {loves.join(", ")}</p> : null}
               {likes ? <p>Likes: {likes.join(", ")}</p> : null}
+              {name === "Stardew Valley Fair" ? renderFairItems() : null}
             </div>
             <Divider />
           </Grid>

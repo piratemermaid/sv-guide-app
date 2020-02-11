@@ -57,6 +57,7 @@ class App extends Component {
     this.toggleRoom = this.toggleRoom.bind(this);
     this.toggleBundle = this.toggleBundle.bind(this);
     this.toggleBundleItem = this.toggleBundleItem.bind(this);
+    this.toggleFairItem = this.toggleFairItem.bind(this);
   }
 
   /**
@@ -216,6 +217,26 @@ class App extends Component {
       params: {
         characterName: this.state.selectedCharacter,
         key,
+        value
+      }
+    }).then(res => {
+      if (res.data === "success") {
+        this.fetchUserData();
+      } else {
+        if (res.data.error) {
+          alert(res.data.error);
+        }
+      }
+    });
+  }
+
+  async toggleFairItem({ name, value }) {
+    return axios({
+      method: "post",
+      url: "/api/user/toggle_fair_item",
+      params: {
+        characterName: this.state.selectedCharacter,
+        name,
         value
       }
     }).then(res => {
@@ -424,8 +445,10 @@ class App extends Component {
                         <Calendar
                           seasonFilters={seasonFilters}
                           changeSeasonFilters={this.changeSeasonFilters}
+                          userData={userData}
                           calendar={calendar}
                           fairItems={fairItems}
+                          toggleFairItem={this.toggleFairItem}
                         />
                       )}
                     />

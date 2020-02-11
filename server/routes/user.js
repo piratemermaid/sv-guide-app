@@ -25,14 +25,15 @@ router.get("/data", function(req, res, next) {
           "characters.upgrades",
           "characters.rooms",
           "characters.bundles",
-          "characters.bundleItems"
+          "characters.bundleItems",
+          "characters.fairItems"
         ]
       })
       .then(userData => {
         const { characters } = userData.toJSON();
         res.send({
           characters: characters.map(
-            ({ name, upgrades, rooms, bundles, bundleItems }) => {
+            ({ name, upgrades, rooms, bundles, bundleItems, fairItems }) => {
               return {
                 name,
                 upgrades: upgrades.map(({ name, type, cost, prereq }) => {
@@ -44,8 +45,11 @@ router.get("/data", function(req, res, next) {
                 bundles: bundles.map(({ name }) => {
                   return { name };
                 }),
-                bundleItems: bundleItems.map(({ name, key }) => {
+                bundleItems: bundleItems.map(({ key }) => {
                   return { key };
+                }),
+                fairItems: fairItems.map(({ name }) => {
+                  return { name };
                 })
               };
             }
@@ -446,6 +450,92 @@ router.post("/toggle_bundle_item", async function(req, res, next) {
           .where({
             character_id: userCharacterId,
             bundle_item_id: itemId
+          })
+          .del()
+          .then(() => {
+            res.send("success");
+          });
+      }
+    }
+  }
+});
+
+router.post("/toggle_fair_item", async function(req, res, next) {
+  const { characterName, name, value } = req.query;
+
+  const { sessionString } = req.cookies;
+
+  if (!sessionString || !Session.verify(sessionString)) {
+    const error = new Error("Invalid session");
+
+    error.status = 400;
+
+    return next(error);
+  } else {
+    const { username } = Session.parse(sessionString);
+
+    const ids = await User.forge({ username })
+      .fetch({
+        withRelated: ["characters"]
+      })
+      .then(userData => {
+        const selectedCharacter = _.find(userData.toJSON().characters, {
+          name: characterName
+        });
+        return {
+          user: userData.id,
+          character: selectedCharacter.id || null
+        };
+      });
+
+    if (!ids.character) {
+      res.send("Please select a character first");
+    } else {
+      const userCharacterId = await knex(TABLES.USERS_CHARACTERS)
+        .where({
+          user_id: ids.user,
+          character_id: ids.character
+        })
+        .first()
+        .then(char => {
+          return char.id;
+        });
+
+      const fairItemId = await knex(TABLES.FAIR_ITEMS)
+        .where({ name })
+        .first()
+        .then(fairItem => {
+          return fairItem.id;
+        });
+
+      const fairItemExists = await knex(TABLES.CHARACTERS_FAIR_ITEMS)
+        .where({
+          character_id: userCharacterId,
+          fair_item_id: fairItemId
+        })
+        .first()
+        .then(userFairItem => {
+          if (!userFairItem) {
+            return false;
+          } else {
+            return true;
+          }
+        });
+
+      if (!fairItemExists && value === "true") {
+        await knex(TABLES.CHARACTERS_FAIR_ITEMS)
+          .insert({
+            character_id: userCharacterId,
+            fair_item_id: fairItemId
+          })
+          .then(() => {
+            res.send("success");
+          });
+      } else if (fairItemExists && value === "false") {
+        await knex(TABLES.CHARACTERS_FAIR_ITEMS)
+          .where({
+            character_id: userCharacterId,
+            fair_item_id: fairItemId
           })
           .del()
           .then(() => {
