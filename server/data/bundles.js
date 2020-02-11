@@ -93,7 +93,7 @@ const bundleData = [
             type: "Blackberry"
           },
           {
-            name: "Common Mushroom",
+            name: "Blackberry",
             seasons: [F],
             type: FORAGE
           }

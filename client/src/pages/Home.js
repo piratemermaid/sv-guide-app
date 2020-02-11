@@ -1,8 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-// TODO: show list of user characters & allow them
-// to switch or create new
+import Landing from "./Landing";
 
 const Home = props => {
   async function accountLogout() {
@@ -58,14 +56,7 @@ const Home = props => {
       </div>
     );
   } else {
-    return (
-      <div>
-        <h3>Home</h3>
-        <div>
-          <Link to="/login">Log in</Link> | <Link to="/signup">Sign up</Link>
-        </div>
-      </div>
-    );
+    return <Landing />;
   }
 };
 

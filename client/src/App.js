@@ -10,9 +10,9 @@ import { upgradeItems } from "./utils/upgrades";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import { createMuiTheme } from "@material-ui/core";
 import Nav from "./components/Nav";
-import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Home from "./pages/Home";
 import CCBundles from "./pages/CCBundles";
 import CCList from "./pages/CCList";
 import Upgrades from "./pages/Upgrades";
@@ -360,6 +360,7 @@ class App extends Component {
                       path={URLS["Community Center"]}
                       render={() => (
                         <CCBundles
+                          authenticated={authenticated}
                           bundles={bundles}
                           userData={userData}
                           toggleRoom={this.toggleRoom}
@@ -389,6 +390,7 @@ class App extends Component {
                       path={URLS["Upgrades"]}
                       render={() => (
                         <Upgrades
+                          authenticated={authenticated}
                           upgrades={upgrades}
                           userData={userData}
                           toolPickup={toolPickup}
@@ -411,6 +413,7 @@ class App extends Component {
                       path={URLS["My Account"]}
                       render={() => (
                         <Account
+                          authenticated={authenticated}
                           appData={appData}
                           characters={characters}
                           addCharacter={this.addCharacter}

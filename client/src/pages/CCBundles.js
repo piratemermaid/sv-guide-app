@@ -21,6 +21,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Loading from "../components/Loading";
 import SeasonCircle from "../components/SeasonCircle";
 import { seasons } from "../utils/utils";
+import Landing from "./Landing";
 
 const drawerWidth = 50;
 
@@ -60,7 +61,9 @@ const getIcon = (text, found) => {
 };
 
 const CCBundles = props => {
-  if (!props.userData || !props.userData.bundleItems) {
+  if (!props.authenticated) {
+    return <Landing />;
+  } else if (!props.userData || !props.userData.bundleItems) {
     return <Loading />;
   }
 

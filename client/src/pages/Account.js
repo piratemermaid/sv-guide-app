@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import Button from "@material-ui/core/Button";
 import Loading from "../components/Loading";
+import Landing from "./Landing";
 
 class Account extends Component {
   constructor(props) {
@@ -51,6 +52,8 @@ class Account extends Component {
   render() {
     if (!this.props.appData) {
       return <Loading />;
+    } else if (!this.props.authenticated) {
+      return <Landing />;
     } else {
       return (
         <div>

@@ -16,6 +16,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import BusinessIcon from "@material-ui/icons/Business";
 import NatureIcon from "@material-ui/icons/Nature";
 import Loading from "../components/Loading";
+import Landing from "./Landing";
 
 const drawerWidth = 50;
 
@@ -34,9 +35,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Upgrades = props => {
-  if (!props.userData || !props.userData.upgrades) {
+  if (!props.authenticated) {
+    return <Landing />;
+  } else if (!props.userData || !props.userData.upgrades) {
     return <Loading />;
   }
+
   const userUpgrades = props.userData.upgrades;
 
   const upgradesByType = _.groupBy(props.upgrades, "type");
