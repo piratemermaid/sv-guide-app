@@ -271,6 +271,14 @@ class App extends Component {
     } catch (err) {
       this.tempAppData();
     }
+
+    if (!this.state.selectedCharacter) {
+      if (localStorage.getItem("selectedCharacter")) {
+        this.setState({
+          selectedCharacter: localStorage.getItem("selectedCharacter")
+        });
+      }
+    }
   }
 
   // TODO: delete this if I someday deploy the database for real
