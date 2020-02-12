@@ -4,8 +4,7 @@ import axios from "axios";
 import "./App.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import { LS, URLS, DEFAULT_STATE } from "./utils/globals";
-import { upgradeItems } from "./utils/upgrades";
+import { LS, URLS } from "./utils/globals";
 import bundles from "./data/bundles";
 import upgrades from "./data/upgrades";
 import calendar from "./data/calendar";
@@ -217,23 +216,6 @@ class App extends Component {
       .catch(err => {
         alert(err);
       });
-  }
-
-  componentWillMount() {
-    // get data from LS
-    const selectedCharacter = localStorage.getItem("selectedCharacter");
-    if (selectedCharacter) {
-      this.setState({ selectedCharacter });
-    }
-
-    if (Object.keys(this.state).length === 0) {
-      if (localStorage.getItem(LS)) {
-        this.setState(JSON.parse(localStorage.getItem(LS)));
-      } else {
-        localStorage.setItem(LS, JSON.stringify(DEFAULT_STATE));
-        this.setState(DEFAULT_STATE);
-      }
-    }
   }
 
   async componentDidMount() {

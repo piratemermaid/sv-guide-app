@@ -1,13 +1,3 @@
-import { ccItems } from "./ccItems";
-import { upgradeItems } from "./upgrades";
-
-export function getItemID(itemName, itemType) {
-  let arr;
-  itemType === "cc" ? (arr = ccItems) : (arr = upgradeItems);
-
-  return arr.findIndex(item => item.name === itemName);
-}
-
 export function getImgUrl(name) {
   // TODO: Gold Star Crops
 
