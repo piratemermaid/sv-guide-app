@@ -284,7 +284,6 @@ class App extends Component {
   // TODO: delete this if I someday deploy the database for real
   tempAppData() {
     // get app data from FE
-    console.log(calendar);
     this.setState({
       appData: {
         bundles: bundles.bundles,
