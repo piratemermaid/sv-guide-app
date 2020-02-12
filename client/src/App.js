@@ -211,6 +211,7 @@ class App extends Component {
       url: "/api/user/data"
     })
       .then(res => {
+        localStorage.setItem("svData", JSON.stringify(res.data.characters));
         this.setState({ characters: res.data.characters });
       })
       .catch(err => {
