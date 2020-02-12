@@ -17,7 +17,6 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import CCBundles from "./pages/CCBundles";
-import CCList from "./pages/CCList";
 import Upgrades from "./pages/Upgrades";
 import Calendar from "./pages/Calendar";
 import Account from "./pages/Account";
@@ -48,8 +47,6 @@ class App extends Component {
       }
     };
 
-    this.toggleItem = this.toggleItem.bind(this);
-    this.reset = this.reset.bind(this);
     this.setToolPickup = this.setToolPickup.bind(this);
     this.changeSeasonFilters = this.changeSeasonFilters.bind(this);
 
@@ -61,51 +58,6 @@ class App extends Component {
     this.toggleBundle = this.toggleBundle.bind(this);
     this.toggleBundleItem = this.toggleBundleItem.bind(this);
     this.toggleFairItem = this.toggleFairItem.bind(this);
-  }
-
-  /**
-   * @param {num} id
-   * @param {string} type 'upgrades' or 'cc'
-   * 1 = checked, 0 = unchecked
-   */
-  toggleItem(id, type) {
-    let newArr = this.state[type];
-    this.state[type][id] === 0 ? (newArr[id] = 1) : (newArr[id] = 0);
-
-    let newState = this.state;
-    newState[type] = newArr;
-    this.setState(newState);
-    localStorage.setItem(LS, JSON.stringify(newState));
-
-    // For upgrades, if a prereq is unchecked,
-    // uncheck everything that relies on it
-    if (type === "upgrades" && newArr[id] === 0) {
-      for (let item in upgradeItems) {
-        if (
-          upgradeItems[item].prereq === upgradeItems[id].name &&
-          this.state.upgrades[item] === 1
-        ) {
-          // If an item has the clicked item as a prereq,
-          // also toggle this item
-          this.toggleItem(item, "upgrades");
-        }
-      }
-    }
-  }
-
-  reset(type) {
-    let newArr = this.state[type];
-    for (let i in newArr) {
-      newArr[i] = 0;
-    }
-
-    let newState = this.state;
-    newState[type] = newArr;
-    if (type === "upgrades") {
-      newState.toolPickup = false;
-    }
-    this.setState(newState);
-    localStorage.setItem(LS, JSON.stringify(newState));
   }
 
   setToolPickup(day) {
@@ -354,8 +306,6 @@ class App extends Component {
 
   render() {
     const {
-      cc,
-      //   upgrades,
       toolPickup,
       seasonFilters,
       authenticated,
@@ -430,26 +380,20 @@ class App extends Component {
                           toggleRoom={this.toggleRoom}
                           toggleBundle={this.toggleBundle}
                           toggleBundleItem={this.toggleBundleItem}
-                          cc={cc}
-                          toggleItem={this.toggleItem}
-                          reset={this.reset}
                           seasonFilters={seasonFilters}
                           changeSeasonFilters={this.changeSeasonFilters}
                         />
                       )}
                     />
-                    <Route
+                    {/* <Route
                       path={`${URLS["Community Center"]}/list`}
                       render={() => (
                         <CCList
-                          cc={cc}
-                          toggleItem={this.toggleItem}
-                          reset={this.reset}
                           seasonFilters={seasonFilters}
                           changeSeasonFilters={this.changeSeasonFilters}
                         />
                       )}
-                    />
+                    /> */}
                     <Route
                       path={URLS["Upgrades"]}
                       render={() => (
@@ -459,7 +403,6 @@ class App extends Component {
                           userData={userData}
                           toolPickup={toolPickup}
                           toggleUpgrade={this.toggleUpgrade}
-                          reset={this.reset}
                           setToolPickup={this.setToolPickup}
                         />
                       )}
