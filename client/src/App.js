@@ -470,6 +470,7 @@ class App extends Component {
                         <Calendar
                           seasonFilters={seasonFilters}
                           changeSeasonFilters={this.changeSeasonFilters}
+                          authenticated={authenticated}
                           userData={userData}
                           calendar={calendar}
                           fairItems={fairItems}

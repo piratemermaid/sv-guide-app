@@ -8,7 +8,6 @@ import ErrorIcon from "@material-ui/icons/Error";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
@@ -22,6 +21,7 @@ import Loading from "../components/Loading";
 import SeasonCircle from "../components/SeasonCircle";
 import { seasons } from "../utils/utils";
 import Landing from "./Landing";
+import CharacterSelect from "./CharacterSelect";
 
 const drawerWidth = 50;
 
@@ -63,8 +63,10 @@ const getIcon = (text, found) => {
 const CCBundles = props => {
   if (!props.authenticated) {
     return <Landing />;
-  } else if (!props.userData || !props.userData.bundleItems) {
+  } else if (!props.bundles) {
     return <Loading />;
+  } else if (!props.userData) {
+    return <CharacterSelect />;
   }
 
   const handleRoomChange = (e, name) => {

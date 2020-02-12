@@ -6,8 +6,19 @@ import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Loading from "../components/Loading";
+import Landing from "./Landing";
+import CharacterSelect from "./CharacterSelect";
 
 const Calendar = props => {
+  if (!props.authenticated) {
+    return <Landing />;
+  } else if (!props.calendar) {
+    return <Loading />;
+  } else if (!props.userData) {
+    return <CharacterSelect />;
+  }
+
   const { seasonFilters, calendar, fairItems } = props;
 
   // use first selected season
