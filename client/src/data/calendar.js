@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 //TODO: add warnings like last day to buy fall trees,
 //last day to buy pig to get truffles before winter etc.
 
@@ -470,15 +472,20 @@ const fairItems = [
   "Any"
 ];
 
-const calendarFormat = {
-  birthdays: birthdays.map(({ name, season, day, loves, likes }) => {
-    return { name, season, day, loves, likes };
-  }),
-  festivals: festivals.map(({ name, season, day }) => {
-    return { name, season, day };
-  }),
-  fairItems: fairItems.map(item => {
-    return { name: item };
+const birthdaysFormat = birthdays.map(({ name, season, day, loves, likes }) => {
+  return { name, season, day, loves, likes, type: "birthday" };
+});
+
+const festivalsFormat = festivals.map(({ name, season, day }) => {
+  return { name, season, day, type: "festival" };
+});
+
+export default {
+  calendar: _.groupBy(
+    _.sortBy(_.concat(birthdaysFormat, festivalsFormat), "day"),
+    "season"
+  ),
+  fairItems: fairItems.map(name => {
+    return { name };
   })
 };
-export default calendarFormat;
