@@ -6,6 +6,9 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import { LS, URLS, DEFAULT_STATE } from "./utils/globals";
 import { upgradeItems } from "./utils/upgrades";
+import bundles from "./data/bundles";
+import upgrades from "./data/upgrades";
+import calendar from "./data/calendar";
 
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import { createMuiTheme } from "@material-ui/core";
@@ -282,49 +285,71 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    await axios({
-      method: "get",
-      url: "/api/account/authenticated"
-    }).then(res => {
-      const { authenticated } = res.data;
-      this.authenticateUser(authenticated ? true : false);
+    try {
+      await axios({
+        method: "get",
+        url: "/api/account/authenticated"
+      }).then(res => {
+        const { authenticated } = res.data;
+        this.authenticateUser(authenticated ? true : false);
+      });
+    } catch (err) {
+      this.setState({ authenticated: false });
+    }
+
+    try {
+      await axios({
+        method: "get",
+        url: "/api/app/bundles"
+      }).then(res => {
+        const { bundles } = res.data;
+        const appData = this.state.appData;
+        this.setState({ appData: { ...appData, bundles } });
+      });
+
+      await axios({
+        method: "get",
+        url: "/api/app/upgrades"
+      }).then(res => {
+        const { upgrades } = res.data;
+        const appData = this.state.appData;
+        this.setState({ appData: { ...appData, upgrades } });
+      });
+
+      await axios({
+        method: "get",
+        url: "/api/app/calendar"
+      }).then(res => {
+        const { calendar } = res.data;
+        const appData = this.state.appData;
+        this.setState({ appData: { ...appData, calendar } });
+      });
+
+      await axios({
+        method: "get",
+        url: "/api/app/fair_items"
+      }).then(res => {
+        const { fairItems } = res.data;
+        const appData = this.state.appData;
+        this.setState({ appData: { ...appData, fairItems } });
+      });
+    } catch (err) {
+      this.tempAppData();
+    }
+  }
+
+  // TODO: delete this if I someday deploy the database for real
+  tempAppData() {
+    // get app data from FE
+    this.setState({
+      appData: { bundles: bundles.bundles, upgrades, calendar }
     });
 
-    await axios({
-      method: "get",
-      url: "/api/app/bundles"
-    }).then(res => {
-      const { bundles } = res.data;
-      const appData = this.state.appData;
-      this.setState({ appData: { ...appData, bundles } });
-    });
-
-    await axios({
-      method: "get",
-      url: "/api/app/upgrades"
-    }).then(res => {
-      const { upgrades } = res.data;
-      const appData = this.state.appData;
-      this.setState({ appData: { ...appData, upgrades } });
-    });
-
-    await axios({
-      method: "get",
-      url: "/api/app/calendar"
-    }).then(res => {
-      const { calendar } = res.data;
-      const appData = this.state.appData;
-      this.setState({ appData: { ...appData, calendar } });
-    });
-
-    await axios({
-      method: "get",
-      url: "/api/app/fair_items"
-    }).then(res => {
-      const { fairItems } = res.data;
-      const appData = this.state.appData;
-      this.setState({ appData: { ...appData, fairItems } });
-    });
+    // get user data from LS if exists
+    const userData = JSON.parse(localStorage.getItem("svData"));
+    if (userData) {
+      this.setState({ authenticated: true, characters: userData });
+    }
   }
 
   render() {
