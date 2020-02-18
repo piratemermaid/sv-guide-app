@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 
+import Button from "@material-ui/core/Button";
+
 class Login extends Component {
   async loginUser(e, { username, password }) {
     e.preventDefault();
@@ -72,8 +74,9 @@ class Login extends Component {
             />
           </div>
           <div className="form-error">{this.state.errorMessage}</div>
-          <button
-            className="btn"
+          <Button
+            variant="contained"
+            color="secondary"
             type="submit"
             onClick={e =>
               this.loginUser(e, {
@@ -83,10 +86,14 @@ class Login extends Component {
             }
           >
             Login
-          </button>
+          </Button>
         </form>
         <div style={{ paddingTop: "20px" }}>
-          No account yet? <a href="/signup">Sign up</a>
+          {/* No account yet? <a href="/signup">Sign up</a> */}
+          No account yet?{" "}
+          <Button color="primary" href="/signup">
+            Sign up
+          </Button>
         </div>
         {/* <div style={{ paddingTop: "20px" }}>
           Forgot username/password? <a href="/login_help">Help me log in</a>

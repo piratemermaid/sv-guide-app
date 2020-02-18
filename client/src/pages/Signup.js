@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 
+import Button from "@material-ui/core/Button";
+
 class Signup extends Component {
   constructor(props) {
     super(props);
@@ -130,8 +132,9 @@ class Signup extends Component {
               />
             </div>
             <div className="form-error">{this.state.errorMessage}</div>
-            <button
-              className="btn"
+            <Button
+              variant="contained"
+              color="secondary"
               type="submit"
               onClick={e =>
                 this.signupUser(e, {
@@ -143,11 +146,14 @@ class Signup extends Component {
               }
             >
               Sign Up
-            </button>
+            </Button>
           </form>
         </div>
         <div style={{ paddingTop: "20px" }}>
-          Already have an account? <a href="/login">Log in</a>
+          Already have an account?{" "}
+          <Button color="primary" href="/login">
+            Log in
+          </Button>
         </div>
       </div>
     );
