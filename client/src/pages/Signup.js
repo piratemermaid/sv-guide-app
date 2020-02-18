@@ -146,6 +146,9 @@ class Signup extends Component {
             </button>
           </form>
         </div>
+        <div style={{ paddingTop: "20px" }}>
+          Already have an account? <a href="/login">Log in</a>
+        </div>
       </div>
     );
   }
