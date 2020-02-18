@@ -1,6 +1,11 @@
 import React from "react";
 
 import Landing from "./Landing";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
 
 const Home = props => {
   async function accountLogout() {
@@ -27,30 +32,34 @@ const Home = props => {
       <div>
         <h3>Home</h3>
         <div>
-          Your characters:
+          <p>Your characters:</p>
           {props.characters.length > 0 ? (
-            <ul>
+            <Grid container spacing={2}>
               {props.characters.map(({ name }) => {
                 // TODO: show some character stats
                 return (
-                  <li
-                    key={name}
-                    onClick={() => props.selectCharacter(name)}
-                    className={
-                      props.selectedCharacter === name
-                        ? "user-character selected-character"
-                        : "user-character"
-                    }
-                  >
-                    {name}
-                  </li>
+                  <Grid item l={6} m={4} xs={3}>
+                    <Card
+                      key={name}
+                      onClick={() => props.selectCharacter(name)}
+                      className={
+                        props.selectedCharacter === name
+                          ? "user-character selected-character"
+                          : "user-character"
+                      }
+                    >
+                      <CardContent>{name}</CardContent>
+                    </Card>
+                  </Grid>
                 );
               })}
-            </ul>
+            </Grid>
           ) : (
             "You have no characters yet"
           )}
-          <button onClick={() => addCharacter()}>Add Character</button>
+          <br />
+          <Button onClick={() => addCharacter()}>Add Character</Button>
+          <br />
           <a onClick={() => accountLogout()}>Log out</a>
         </div>
       </div>
