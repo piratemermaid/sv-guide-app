@@ -38,16 +38,20 @@ class App extends Component {
     this.state = {
       selectedCharacter: null,
       characters: [],
-      seasonFilters: {
+      CCSeasonFilters: {
         spring: false,
         summer: false,
         fall: false,
         winter: false
-      }
+      },
+      calendarSeasonFilter: null
     };
 
     this.setToolPickup = this.setToolPickup.bind(this);
-    this.changeSeasonFilters = this.changeSeasonFilters.bind(this);
+    this.changeCCSeasonFilters = this.changeCCSeasonFilters.bind(this);
+    this.changeCalendarSeasonFilter = this.changeCalendarSeasonFilter.bind(
+      this
+    );
 
     this.authenticateUser = this.authenticateUser.bind(this);
     this.selectCharacter = this.selectCharacter.bind(this);
@@ -70,10 +74,28 @@ class App extends Component {
     localStorage.setItem(LS, JSON.stringify(newState));
   }
 
-  changeSeasonFilters(season) {
-    let { seasonFilters } = this.state;
-    seasonFilters[season] = !seasonFilters[season];
-    this.setState({ seasonFilters });
+  changeCCSeasonFilters(season) {
+    let { CCSeasonFilters } = this.state;
+    CCSeasonFilters[season] = !CCSeasonFilters[season];
+    this.setState({ CCSeasonFilters });
+
+    let data = JSON.parse(localStorage.getItem(LS));
+    localStorage.setItem(LS, JSON.stringify({ ...data, CCSeasonFilters }));
+  }
+
+  changeCalendarSeasonFilter(season) {
+    let { calendarSeasonFilter } = this.state;
+    let newCalendarSeasonFilter = season;
+    if (calendarSeasonFilter === season) {
+      newCalendarSeasonFilter = null;
+    }
+
+    this.setState({ calendarSeasonFilter: newCalendarSeasonFilter });
+    let data = JSON.parse(localStorage.getItem(LS));
+    localStorage.setItem(
+      LS,
+      JSON.stringify({ ...data, calendarSeasonFilter: newCalendarSeasonFilter })
+    );
   }
 
   authenticateUser(authenticated) {
@@ -220,6 +242,16 @@ class App extends Component {
   }
 
   async componentDidMount() {
+    const data = JSON.parse(localStorage.getItem(LS));
+    if (data) {
+      if (data.CCSeasonFilters) {
+        this.setState({ CCSeasonFilters: data.CCSeasonFilters });
+      }
+      if (data.calendarSeasonFilter) {
+        this.setState({ calendarSeasonFilter: data.calendarSeasonFilter });
+      }
+    }
+
     try {
       await axios({
         method: "get",
@@ -303,7 +335,8 @@ class App extends Component {
   render() {
     const {
       toolPickup,
-      seasonFilters,
+      calendarSeasonFilter,
+      CCSeasonFilters,
       authenticated,
       selectedCharacter,
       characters,
@@ -376,8 +409,8 @@ class App extends Component {
                           toggleRoom={this.toggleRoom}
                           toggleBundle={this.toggleBundle}
                           toggleBundleItem={this.toggleBundleItem}
-                          seasonFilters={seasonFilters}
-                          changeSeasonFilters={this.changeSeasonFilters}
+                          seasonFilters={CCSeasonFilters}
+                          changeCCSeasonFilters={this.changeCCSeasonFilters}
                         />
                       )}
                     />
@@ -385,8 +418,8 @@ class App extends Component {
                       path={`${URLS["Community Center"]}/list`}
                       render={() => (
                         <CCList
-                          seasonFilters={seasonFilters}
-                          changeSeasonFilters={this.changeSeasonFilters}
+                          seasonFilters={CCSeasonFilters}
+                          changeCCSeasonFilters={this.changeCCSeasonFilters}
                         />
                       )}
                     /> */}
@@ -407,8 +440,10 @@ class App extends Component {
                       path={URLS["Calendar"]}
                       render={() => (
                         <Calendar
-                          seasonFilters={seasonFilters}
-                          changeSeasonFilters={this.changeSeasonFilters}
+                          calendarSeasonFilter={calendarSeasonFilter}
+                          changeCalendarSeasonFilter={
+                            this.changeCalendarSeasonFilter
+                          }
                           authenticated={authenticated}
                           userData={userData}
                           calendar={calendar}

@@ -19,16 +19,7 @@ const Calendar = props => {
     return <CharacterSelect />;
   }
 
-  const { seasonFilters, calendar, fairItems } = props;
-
-  // use first selected season
-  let currentSeason;
-  for (let season in seasonFilters) {
-    if (seasonFilters[season]) {
-      currentSeason = season;
-      break;
-    }
-  }
+  const { calendarSeasonFilter, calendar, fairItems } = props;
 
   const handleChange = (e, name) => {
     props.toggleFairItem({ name, value: e.target.checked });
@@ -82,13 +73,13 @@ const Calendar = props => {
   return (
     <div>
       <SeasonFilterBtns
-        seasonFilters={seasonFilters}
-        changeSeasonFilters={props.changeSeasonFilters}
+        seasonFilters={{ [calendarSeasonFilter]: true }}
+        changeSeasonFilters={props.changeCalendarSeasonFilter}
       />
-      {!currentSeason ? (
+      {!calendarSeasonFilter ? (
         "No season selected"
       ) : (
-        <div>{renderCalendar(currentSeason)}</div>
+        <div>{renderCalendar(calendarSeasonFilter)}</div>
       )}
     </div>
   );

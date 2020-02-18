@@ -114,7 +114,7 @@ const CCBundles = props => {
     <div>
       <SeasonFilterBtns
         seasonFilters={props.seasonFilters}
-        changeSeasonFilters={props.changeSeasonFilters}
+        changeSeasonFilters={props.changeCCSeasonFilters}
       />
       <Drawer
         className={classes.drawer}
