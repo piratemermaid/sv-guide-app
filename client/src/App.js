@@ -129,7 +129,7 @@ class App extends Component {
     }
 
     this.setState({ characters });
-    // localStorage.setItem(LS, JSON.stringify())
+    localStorage.setItem(LS, JSON.stringify(characters[0]));
   }
 
   async toggleUpgrade({ upgradeName, value }) {
@@ -183,6 +183,13 @@ class App extends Component {
       characters: [userData],
       selectedCharacter: "Star Dew"
     });
+
+    // or use LS if it exists
+    if (localStorage.getItem(LS)) {
+      this.setState({ characters: [JSON.parse(localStorage.getItem(LS))] });
+    } else {
+      localStorage.setItem(LS, JSON.stringify(userData));
+    }
   }
 
   render() {
