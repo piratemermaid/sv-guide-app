@@ -1,7 +1,6 @@
 import React from "react";
 
 import Landing from "./Landing";
-import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -9,22 +8,13 @@ import Button from "@material-ui/core/Button";
 
 const Home = props => {
   async function accountLogout() {
-    try {
-      let response = await fetch("/api/account/logout");
-      let success = await response.json();
-      if (success) {
-        props.authenticateUser(false);
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    alert("This is where you'd log out in the non-demo version!");
   }
 
   function addCharacter() {
-    const name = prompt("Character name:");
-    if (name) {
-      props.addCharacter(name);
-    }
+    const name = alert(
+      "This is where you'd add a character in the non-demo version!"
+    );
   }
 
   if (props.authenticated) {

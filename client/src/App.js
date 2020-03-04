@@ -1,10 +1,10 @@
 import _ from "lodash";
 import React, { Component } from "react";
-import axios from "axios";
 import "./App.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import { LS, URLS } from "./utils/globals";
+import userData from "./demoData";
 import bundles from "./data/bundles";
 import upgrades from "./data/upgrades";
 import calendar from "./data/calendar";
@@ -55,7 +55,6 @@ class App extends Component {
 
     this.authenticateUser = this.authenticateUser.bind(this);
     this.selectCharacter = this.selectCharacter.bind(this);
-    this.addCharacter = this.addCharacter.bind(this);
     this.toggleUpgrade = this.toggleUpgrade.bind(this);
     this.toggleRoom = this.toggleRoom.bind(this);
     this.toggleBundle = this.toggleBundle.bind(this);
@@ -110,135 +109,47 @@ class App extends Component {
     this.setState({ selectedCharacter: name });
   };
 
-  async addCharacter(name) {
-    return axios({
-      method: "post",
-      url: "/api/user/add_character",
-      params: { name }
-    }).then(res => {
-      if (res.data === "success") {
-        this.fetchUserData();
+  updateData({ type, name, value }) {
+    let { characters } = this.state;
+
+    if (type !== "bundleItems") {
+      if (value) {
+        characters[0][type].push({ name });
       } else {
-        if (res.data.error) {
-          alert(res.data.error);
-        }
+        const index = _.findIndex(characters[0][type], { name });
+        characters[0][type].splice(index, 1);
       }
-    });
+    } else {
+      if (value) {
+        characters[0][type].push({ key: name });
+      } else {
+        const index = _.findIndex(characters[0][type], { key: name });
+        characters[0][type].splice(index, 1);
+      }
+    }
+
+    this.setState({ characters });
+    // localStorage.setItem(LS, JSON.stringify())
   }
 
   async toggleUpgrade({ upgradeName, value }) {
-    return axios({
-      method: "post",
-      url: "/api/user/toggle_upgrade",
-      params: {
-        characterName: this.state.selectedCharacter,
-        upgradeName,
-        value
-      }
-    }).then(res => {
-      if (res.data === "success") {
-        this.fetchUserData();
-      } else {
-        if (res.data.error) {
-          alert(res.data.error);
-        }
-      }
-    });
+    this.updateData({ type: "upgrades", name: upgradeName, value });
   }
 
   async toggleRoom({ name, value }) {
-    return axios({
-      method: "post",
-      url: "/api/user/toggle_room",
-      params: {
-        characterName: this.state.selectedCharacter,
-        name,
-        value
-      }
-    }).then(res => {
-      if (res.data === "success") {
-        this.fetchUserData();
-      } else {
-        if (res.data.error) {
-          alert(res.data.error);
-        }
-      }
-    });
+    this.updateData({ type: "rooms", name, value });
   }
 
   async toggleBundle({ name, value }) {
-    return axios({
-      method: "post",
-      url: "/api/user/toggle_bundle",
-      params: {
-        characterName: this.state.selectedCharacter,
-        name,
-        value
-      }
-    }).then(res => {
-      if (res.data === "success") {
-        this.fetchUserData();
-      } else {
-        if (res.data.error) {
-          alert(res.data.error);
-        }
-      }
-    });
+    this.updateData({ type: "bundles", name, value });
   }
 
   async toggleBundleItem({ key, value }) {
-    return axios({
-      method: "post",
-      url: "/api/user/toggle_bundle_item",
-      params: {
-        characterName: this.state.selectedCharacter,
-        key,
-        value
-      }
-    }).then(res => {
-      if (res.data === "success") {
-        this.fetchUserData();
-      } else {
-        if (res.data.error) {
-          alert(res.data.error);
-        }
-      }
-    });
+    this.updateData({ type: "bundleItems", name: key, value });
   }
 
   async toggleFairItem({ name, value }) {
-    return axios({
-      method: "post",
-      url: "/api/user/toggle_fair_item",
-      params: {
-        characterName: this.state.selectedCharacter,
-        name,
-        value
-      }
-    }).then(res => {
-      if (res.data === "success") {
-        this.fetchUserData();
-      } else {
-        if (res.data.error) {
-          alert(res.data.error);
-        }
-      }
-    });
-  }
-
-  async fetchUserData() {
-    // console.log("> FETCH USER DATA");
-    return axios({
-      method: "get",
-      url: "/api/user/data"
-    })
-      .then(res => {
-        localStorage.setItem("svData", JSON.stringify(res.data.characters));
-        this.setState({ characters: res.data.characters });
-      })
-      .catch(err => {
-        alert(err);
-      });
+    this.updateData({ type: "fairItems", name, value });
   }
 
   async componentDidMount() {
@@ -252,69 +163,10 @@ class App extends Component {
       }
     }
 
-    try {
-      await axios({
-        method: "get",
-        url: "/api/account/authenticated"
-      }).then(res => {
-        const { authenticated } = res.data;
-        this.authenticateUser(authenticated ? true : false);
-      });
-    } catch (err) {
-      this.setState({ authenticated: false });
-    }
-
-    try {
-      await axios({
-        method: "get",
-        url: "/api/app/bundles"
-      }).then(res => {
-        const { bundles } = res.data;
-        const appData = this.state.appData;
-        this.setState({ appData: { ...appData, bundles } });
-      });
-
-      await axios({
-        method: "get",
-        url: "/api/app/upgrades"
-      }).then(res => {
-        const { upgrades } = res.data;
-        const appData = this.state.appData;
-        this.setState({ appData: { ...appData, upgrades } });
-      });
-
-      await axios({
-        method: "get",
-        url: "/api/app/calendar"
-      }).then(res => {
-        const { calendar } = res.data;
-        const appData = this.state.appData;
-        this.setState({ appData: { ...appData, calendar } });
-      });
-
-      await axios({
-        method: "get",
-        url: "/api/app/fair_items"
-      }).then(res => {
-        const { fairItems } = res.data;
-        const appData = this.state.appData;
-        this.setState({ appData: { ...appData, fairItems } });
-      });
-    } catch (err) {
-      this.tempAppData();
-    }
-
-    if (!this.state.selectedCharacter) {
-      if (localStorage.getItem("selectedCharacter")) {
-        this.setState({
-          selectedCharacter: localStorage.getItem("selectedCharacter")
-        });
-      }
-    }
+    this.getDemoData();
   }
 
-  // TODO: delete this if I someday deploy the database for real
-  tempAppData() {
+  getDemoData() {
     // get app data from FE
     this.setState({
       appData: {
@@ -325,11 +177,12 @@ class App extends Component {
       }
     });
 
-    // get user data from LS if exists
-    const userData = JSON.parse(localStorage.getItem("svData"));
-    if (userData) {
-      this.setState({ authenticated: true, characters: userData });
-    }
+    // get demo user data
+    this.setState({
+      authenticated: true,
+      characters: [userData],
+      selectedCharacter: "Star Dew"
+    });
   }
 
   render() {
@@ -380,7 +233,6 @@ class App extends Component {
                           characters={characters}
                           authenticateUser={this.authenticateUser}
                           selectCharacter={this.selectCharacter}
-                          addCharacter={this.addCharacter}
                         />
                       )}
                     />
