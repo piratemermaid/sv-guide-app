@@ -4,9 +4,6 @@
 /client/node_modules
 /server/node_modules
 
-# production
-/client/build
-
 # secrets
 /server/secrets.js
 
