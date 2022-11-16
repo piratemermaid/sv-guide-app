@@ -104,8 +104,8 @@ const Nav = () => {
         <Divider />
         <List>
           {navList.map(({ text, url, icon }) => (
-            <Link to={url}>
-              <ListItem key={text} disablePadding sx={{ display: "block" }}>
+            <Link to={url} key={text}>
+              <ListItem disablePadding sx={{ display: "block" }}>
                 <ListItemButton
                   sx={{
                     minHeight: 48,
