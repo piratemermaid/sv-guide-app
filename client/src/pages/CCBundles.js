@@ -121,7 +121,7 @@ const CCBundles = (props) => {
         sx={styles.drawer}
         variant="permanent"
         classes={{
-          paper: style.drawerPaper
+          paper: styles.drawerPaper
         }}
         anchor="right"
       >
