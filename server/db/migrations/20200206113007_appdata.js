@@ -90,6 +90,7 @@ exports.up = async function (knex) {
     table.string("password").notNullable();
     table.string("email").notNullable();
     table.string("sessionId");
+    table.integer("selected_character_id");
   });
 
   await knex.schema.createTable(TABLES.CHARACTERS, (table) => {
