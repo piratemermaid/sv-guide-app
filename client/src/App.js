@@ -7,7 +7,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 import { LS, URLS } from "./utils/globals";
 import bundles from "./data/bundles";
-import upgrades from "./data/upgrades";
 import calendar from "./data/calendar";
 import Nav from "./components/Nav";
 import Login from "./pages/Login";
@@ -24,7 +23,6 @@ import "./App.css";
 const App = () => {
   const [appData, setAppData] = useState({
     bundles: [],
-    upgrades: [],
     calendar: [],
     fairItems: []
   });
@@ -247,14 +245,6 @@ const App = () => {
 
         await axios({
           method: "get",
-          url: "/api/app/upgrades"
-        }).then((res) => {
-          const { upgrades } = res.data;
-          setAppData({ ...appData, upgrades });
-        });
-
-        await axios({
-          method: "get",
           url: "/api/app/calendar"
         }).then((res) => {
           const { calendar } = res.data;
@@ -298,7 +288,6 @@ const App = () => {
     setAppData({
       appData: {
         bundles: bundles.bundles,
-        upgrades,
         calendar: calendar.calendar,
         fairItems: calendar.fairItems
       }
@@ -312,7 +301,7 @@ const App = () => {
     }
   };
 
-  if (!appData || !appData.bundles || !appData.upgrades || !characters) {
+  if (!appData || !appData.bundles || !characters) {
     return (
       <div className="App">
         <QueryClientProvider client={new QueryClient()}>
@@ -330,7 +319,7 @@ const App = () => {
       </div>
     );
   } else {
-    const { upgrades, bundles, calendar, fairItems } = appData;
+    const { bundles, calendar, fairItems } = appData;
     const userData = _.find(characters, { name: selectedCharacter });
 
     return (
@@ -398,7 +387,6 @@ const App = () => {
                       render={() => (
                         <Upgrades
                           authenticated={authenticated}
-                          upgrades={upgrades}
                           userData={userData}
                           toolPickup={toolPickupDay}
                           toggleUpgrade={toggleUpgrade}
