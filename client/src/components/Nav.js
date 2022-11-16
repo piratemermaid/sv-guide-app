@@ -27,32 +27,32 @@ import {
 } from "@mui/icons-material";
 
 import { Drawer, DrawerHeader, AppBar } from "./NavComponents";
-import { URLS } from "../utils/globals";
+import ROUTES from "../constants/routes";
 
 const navList = [
   {
     text: "Characters",
-    url: URLS.Characters,
+    url: ROUTES.CHARACTERS,
     icon: <SupervisorAccountIcon />
   },
   {
     text: "Upgrades",
-    url: URLS.Upgrades,
+    url: ROUTES.UPGRADES,
     icon: <ArrowUpwardIcon />
   },
   {
     text: "Community Center",
-    url: URLS["Community Center"],
+    url: ROUTES.COMMUNITY_CENTER,
     icon: <StoreIcon />
   },
   {
     text: "Calendar",
-    url: URLS.Calendar,
+    url: ROUTES.CALENDAR,
     icon: <TodayIcon />
   },
   {
     text: "My Account",
-    url: URLS["My Account"],
+    url: ROUTES.ACCOUNT,
     icon: <AccountBoxIcon />
   }
 ];

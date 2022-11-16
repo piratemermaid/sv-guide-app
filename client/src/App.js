@@ -5,7 +5,8 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "react-query";
 
-import { LS, URLS } from "./utils/globals";
+import { LS } from "./utils/globals";
+import ROUTES from "./constants/routes";
 import bundles from "./data/bundles";
 import calendar from "./data/calendar";
 import Nav from "./components/Nav";
@@ -333,7 +334,7 @@ const App = () => {
                   <Switch>
                     <Route
                       exact
-                      path={URLS["Characters"]}
+                      path={ROUTES.CHARACTERS}
                       render={() => (
                         <Home
                           authenticated={authenticated}
@@ -359,7 +360,7 @@ const App = () => {
                     />
                     <Route
                       exact
-                      path={URLS["Community Center"]}
+                      path={ROUTES.COMMUNITY_CENTER}
                       render={() => (
                         <CCBundles
                           authenticated={authenticated}
@@ -374,7 +375,7 @@ const App = () => {
                       )}
                     />
                     {/* <Route
-                      path={`${URLS["Community Center"]}/list`}
+                      path={`${ROUTES."Community Center"]}/list}
                       render={() => (
                         <CCList
                           seasonFilters={CCSeasonFilters}
@@ -383,7 +384,7 @@ const App = () => {
                       )}
                     /> */}
                     <Route
-                      path={URLS["Upgrades"]}
+                      path={ROUTES.UPGRADES}
                       render={() => (
                         <Upgrades
                           authenticated={authenticated}
@@ -395,7 +396,7 @@ const App = () => {
                       )}
                     />
                     <Route
-                      path={URLS["Calendar"]}
+                      path={ROUTES.CALENDAR}
                       render={() => (
                         <Calendar
                           calendarSeasonFilter={calendarSeasonFilter}
@@ -411,7 +412,7 @@ const App = () => {
                       )}
                     />
                     <Route
-                      path={URLS["My Account"]}
+                      path={ROUTES.ACCOUNT}
                       render={() => (
                         <Account
                           authenticated={authenticated}

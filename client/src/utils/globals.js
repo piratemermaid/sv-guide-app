@@ -1,13 +1,5 @@
 export const LS = "stardew_data";
 
-export const URLS = {
-  Characters: "/",
-  "Community Center": "/community_center",
-  Upgrades: "/upgrades",
-  Calendar: "/calendar",
-  "My Account": "/account"
-};
-
 let cc = [];
 for (let i = 0; i < 128; i++) {
   cc.push(0);
