@@ -1,7 +1,6 @@
 import _ from "lodash";
-import React, { Component } from "react";
 import axios from "axios";
-import "./App.css";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
 
@@ -19,202 +18,195 @@ import Calendar from "./pages/Calendar";
 import Account from "./pages/Account";
 import Loading from "./components/Loading";
 import { theme } from "./theme";
+import "./App.css";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+const App = () => {
+  const [appData, setAppData] = useState({
+    bundles: [],
+    upgrades: [],
+    calendar: [],
+    fairItems: []
+  });
+  const [authenticated, setAuthenticated] = useState(false);
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
+  const [characters, setCharacters] = useState([]);
+  const [CCSeasonFilters, setCCSeasonFilters] = useState({
+    spring: false,
+    summer: false,
+    fall: false,
+    winter: false
+  });
+  const [calendarSeasonFilter, setCalendarSeasonFilter] = useState(null);
+  const [toolPickupDay, setToolPickupDay] = useState(null);
 
-    this.state = {
-      selectedCharacter: null,
-      characters: [],
-      CCSeasonFilters: {
-        spring: false,
-        summer: false,
-        fall: false,
-        winter: false
-      },
-      calendarSeasonFilter: null
-    };
+  const setToolPickup = (day) => {
+    setToolPickupDay(day === toolPickupDay ? null : day);
 
-    this.setToolPickup = this.setToolPickup.bind(this);
-    this.changeCCSeasonFilters = this.changeCCSeasonFilters.bind(this);
-    this.changeCalendarSeasonFilter =
-      this.changeCalendarSeasonFilter.bind(this);
-
-    this.authenticateUser = this.authenticateUser.bind(this);
-    this.selectCharacter = this.selectCharacter.bind(this);
-    this.addCharacter = this.addCharacter.bind(this);
-    this.toggleUpgrade = this.toggleUpgrade.bind(this);
-    this.toggleRoom = this.toggleRoom.bind(this);
-    this.toggleBundle = this.toggleBundle.bind(this);
-    this.toggleBundleItem = this.toggleBundleItem.bind(this);
-    this.toggleFairItem = this.toggleFairItem.bind(this);
-  }
-
-  setToolPickup(day) {
-    let newState = this.state;
-    if (day === this.state.toolPickup) {
-      newState.toolPickup = false;
+    // TODO: remove LS related code
+    let newState = JSON.parse(localStorage.getItem(LS));
+    if (day === toolPickupDay) {
+      setToolPickup(false);
     } else {
-      newState.toolPickup = day;
+      setToolPickup(day);
     }
-    this.setState(newState);
     localStorage.setItem(LS, JSON.stringify(newState));
-  }
-
-  changeCCSeasonFilters(season) {
-    let { CCSeasonFilters } = this.state;
-    CCSeasonFilters[season] = !CCSeasonFilters[season];
-    this.setState({ CCSeasonFilters });
-
-    let data = JSON.parse(localStorage.getItem(LS));
-    localStorage.setItem(LS, JSON.stringify({ ...data, CCSeasonFilters }));
-  }
-
-  changeCalendarSeasonFilter(season) {
-    let { calendarSeasonFilter } = this.state;
-    let newCalendarSeasonFilter = season;
-    if (calendarSeasonFilter === season) {
-      newCalendarSeasonFilter = null;
-    }
-
-    this.setState({ calendarSeasonFilter: newCalendarSeasonFilter });
-    let data = JSON.parse(localStorage.getItem(LS));
-    localStorage.setItem(
-      LS,
-      JSON.stringify({ ...data, calendarSeasonFilter: newCalendarSeasonFilter })
-    );
-  }
-
-  authenticateUser(authenticated) {
-    this.setState({ authenticated });
-    if (authenticated) {
-      this.fetchUserData();
-    }
-  }
-
-  selectCharacter = (name) => {
-    localStorage.setItem("selectedCharacter", name);
-    this.setState({ selectedCharacter: name });
   };
 
-  async addCharacter(name) {
+  // TODO: test
+  const changeCCSeasonFilters = (season) => {
+    let newCCSeasonFilters = CCSeasonFilters;
+    newCCSeasonFilters[season] = !newCCSeasonFilters[season];
+    setCCSeasonFilters(CCSeasonFilters);
+
+    // TODO: remove LS
+    let data = JSON.parse(localStorage.getItem(LS));
+    localStorage.setItem(LS, JSON.stringify({ ...data, CCSeasonFilters }));
+  };
+
+  // TODO
+  const changeCalendarSeasonFilter = (season) => {
+    // let { calendarSeasonFilter } = this.state;
+    // let newCalendarSeasonFilter = calendarSeasonFilter[season];
+    // if (calendarSeasonFilter === season) {
+    //   newCalendarSeasonFilter = null;
+    // }
+    // this.setState({ calendarSeasonFilter: newCalendarSeasonFilter });
+    // let data = JSON.parse(localStorage.getItem(LS));
+    // localStorage.setItem(
+    //   LS,
+    //   JSON.stringify({ ...data, calendarSeasonFilter: newCalendarSeasonFilter })
+    // );
+  };
+
+  const authenticateUser = (authenticated) => {
+    setAuthenticated(authenticated);
+    if (authenticated) {
+      fetchUserData();
+    }
+  };
+
+  const selectCharacter = (name) => {
+    localStorage.setItem("selectedCharacter", name);
+    setSelectedCharacter(name);
+  };
+
+  const addCharacter = async (name) => {
     return axios({
       method: "post",
       url: "/api/user/add_character",
       params: { name }
     }).then((res) => {
       if (res.data === "success") {
-        this.fetchUserData();
+        fetchUserData();
       } else {
         if (res.data.error) {
           alert(res.data.error);
         }
       }
     });
-  }
+  };
 
-  async toggleUpgrade({ upgradeName, value }) {
+  const toggleUpgrade = async ({ upgradeName, value }) => {
     return axios({
       method: "post",
       url: "/api/user/toggle_upgrade",
       params: {
-        characterName: this.state.selectedCharacter,
+        characterName: selectedCharacter,
         upgradeName,
         value
       }
     }).then((res) => {
       if (res.data === "success") {
-        this.fetchUserData();
+        fetchUserData();
       } else {
         if (res.data.error) {
           alert(res.data.error);
         }
       }
     });
-  }
+  };
 
-  async toggleRoom({ name, value }) {
+  const toggleRoom = async ({ name, value }) => {
     return axios({
       method: "post",
       url: "/api/user/toggle_room",
       params: {
-        characterName: this.state.selectedCharacter,
+        characterName: selectedCharacter,
         name,
         value
       }
     }).then((res) => {
       if (res.data === "success") {
-        this.fetchUserData();
+        fetchUserData();
       } else {
         if (res.data.error) {
           alert(res.data.error);
         }
       }
     });
-  }
+  };
 
-  async toggleBundle({ name, value }) {
+  const toggleBundle = ({ name, value }) => {
     return axios({
       method: "post",
       url: "/api/user/toggle_bundle",
       params: {
-        characterName: this.state.selectedCharacter,
+        characterName: selectedCharacter,
         name,
         value
       }
     }).then((res) => {
       if (res.data === "success") {
-        this.fetchUserData();
+        fetchUserData();
       } else {
         if (res.data.error) {
           alert(res.data.error);
         }
       }
     });
-  }
+  };
 
-  async toggleBundleItem({ key, value }) {
+  const toggleBundleItem = ({ key, value }) => {
     return axios({
       method: "post",
       url: "/api/user/toggle_bundle_item",
       params: {
-        characterName: this.state.selectedCharacter,
+        characterName: selectedCharacter,
         key,
         value
       }
     }).then((res) => {
       if (res.data === "success") {
-        this.fetchUserData();
+        fetchUserData();
       } else {
         if (res.data.error) {
           alert(res.data.error);
         }
       }
     });
-  }
+  };
 
-  async toggleFairItem({ name, value }) {
+  const toggleFairItem = ({ name, value }) => {
     return axios({
       method: "post",
       url: "/api/user/toggle_fair_item",
       params: {
-        characterName: this.state.selectedCharacter,
+        characterName: selectedCharacter,
         name,
         value
       }
     }).then((res) => {
       if (res.data === "success") {
-        this.fetchUserData();
+        fetchUserData();
       } else {
         if (res.data.error) {
           alert(res.data.error);
         }
       }
     });
-  }
+  };
 
-  async fetchUserData() {
+  const fetchUserData = () => {
     // console.log("> FETCH USER DATA");
     return axios({
       method: "get",
@@ -222,89 +214,87 @@ class App extends Component {
     })
       .then((res) => {
         localStorage.setItem("svData", JSON.stringify(res.data.characters));
-        this.setState({ characters: res.data.characters });
+        setCharacters(res.data.characters);
       })
       .catch((err) => {
         alert(err);
       });
-  }
+  };
 
-  async componentDidMount() {
+  useEffect(() => {
+    const fetchAllData = async () => {
+      try {
+        await axios({
+          method: "get",
+          url: "/api/account/authenticated"
+        }).then((res) => {
+          const { authenticated } = res.data;
+          authenticateUser(authenticated ? true : false);
+        });
+      } catch (err) {
+        setAuthenticated(false);
+      }
+
+      try {
+        await axios({
+          method: "get",
+          url: "/api/app/bundles"
+        }).then((res) => {
+          const { bundles } = res.data;
+          setAppData({ ...appData, bundles });
+        });
+
+        await axios({
+          method: "get",
+          url: "/api/app/upgrades"
+        }).then((res) => {
+          const { upgrades } = res.data;
+          setAppData({ ...appData, upgrades });
+        });
+
+        await axios({
+          method: "get",
+          url: "/api/app/calendar"
+        }).then((res) => {
+          const { calendar } = res.data;
+          setAppData({ ...appData, calendar });
+        });
+
+        await axios({
+          method: "get",
+          url: "/api/app/fair_items"
+        }).then((res) => {
+          const { fairItems } = res.data;
+          setAppData({ ...appData, fairItems });
+        });
+      } catch (err) {
+        tempAppData();
+      }
+
+      if (selectedCharacter) {
+        if (localStorage.getItem("selectedCharacter")) {
+          setSelectedCharacter(localStorage.getItem("selectedCharacter"));
+        }
+      }
+    };
+
+    fetchAllData();
+
     const data = JSON.parse(localStorage.getItem(LS));
     if (data) {
       if (data.CCSeasonFilters) {
-        this.setState({ CCSeasonFilters: data.CCSeasonFilters });
+        setCCSeasonFilters(data.CCSeasonFilters);
       }
       if (data.calendarSeasonFilter) {
-        this.setState({ calendarSeasonFilter: data.calendarSeasonFilter });
+        setCalendarSeasonFilter(data.calendarSeasonFilter);
       }
     }
-
-    try {
-      await axios({
-        method: "get",
-        url: "/api/account/authenticated"
-      }).then((res) => {
-        const { authenticated } = res.data;
-        this.authenticateUser(authenticated ? true : false);
-      });
-    } catch (err) {
-      this.setState({ authenticated: false });
-    }
-
-    try {
-      await axios({
-        method: "get",
-        url: "/api/app/bundles"
-      }).then((res) => {
-        const { bundles } = res.data;
-        const appData = this.state.appData;
-        this.setState({ appData: { ...appData, bundles } });
-      });
-
-      await axios({
-        method: "get",
-        url: "/api/app/upgrades"
-      }).then((res) => {
-        const { upgrades } = res.data;
-        const appData = this.state.appData;
-        this.setState({ appData: { ...appData, upgrades } });
-      });
-
-      await axios({
-        method: "get",
-        url: "/api/app/calendar"
-      }).then((res) => {
-        const { calendar } = res.data;
-        const appData = this.state.appData;
-        this.setState({ appData: { ...appData, calendar } });
-      });
-
-      await axios({
-        method: "get",
-        url: "/api/app/fair_items"
-      }).then((res) => {
-        const { fairItems } = res.data;
-        const appData = this.state.appData;
-        this.setState({ appData: { ...appData, fairItems } });
-      });
-    } catch (err) {
-      this.tempAppData();
-    }
-
-    if (!this.state.selectedCharacter) {
-      if (localStorage.getItem("selectedCharacter")) {
-        this.setState({
-          selectedCharacter: localStorage.getItem("selectedCharacter")
-        });
-      }
-    }
-  }
+  }, []);
 
   // TODO: delete this if I someday deploy the database for real
-  tempAppData() {
+  const tempAppData = () => {
     // get app data from FE
-    this.setState({
+    setAppData({
       appData: {
         bundles: bundles.bundles,
         upgrades,
@@ -316,91 +306,81 @@ class App extends Component {
     // get user data from LS if exists
     const userData = JSON.parse(localStorage.getItem("svData"));
     if (userData) {
-      this.setState({ authenticated: true, characters: userData });
+      setAuthenticated(true);
+      setCharacters(userData);
     }
-  }
+  };
 
-  render() {
-    const {
-      toolPickup,
-      calendarSeasonFilter,
-      CCSeasonFilters,
-      authenticated,
-      selectedCharacter,
-      characters,
-      appData
-    } = this.state;
+  if (!appData || !appData.bundles || !appData.upgrades || !characters) {
+    return (
+      <div className="App">
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <div>
+              <Nav />
+              <main>
+                <Loading />
+              </main>
+            </div>
+          </BrowserRouter>
+        </ThemeProvider>
+      </div>
+    );
+  } else {
+    const { upgrades, bundles, calendar, fairItems } = appData;
+    const userData = _.find(characters, { name: selectedCharacter });
 
-    if (!appData || !appData.bundles || !appData.upgrades || !characters) {
-      return (
-        <div className="App">
-          <ThemeProvider theme={theme}>
-            <BrowserRouter>
-              <div>
-                <Nav />
-                <main>
-                  <Loading />
-                </main>
-              </div>
-            </BrowserRouter>
-          </ThemeProvider>
-        </div>
-      );
-    } else {
-      const { upgrades, bundles, calendar, fairItems } = appData;
-      const userData = _.find(characters, { name: selectedCharacter });
-
-      return (
-        <div className="App">
-          <ThemeProvider theme={theme}>
-            <BrowserRouter>
-              <div>
-                <Nav />
-                <main>
-                  <Switch>
-                    <Route
-                      exact
-                      path={URLS["Characters"]}
-                      render={() => (
-                        <Home
-                          authenticated={authenticated}
-                          selectedCharacter={selectedCharacter}
-                          characters={characters}
-                          authenticateUser={this.authenticateUser}
-                          selectCharacter={this.selectCharacter}
-                          addCharacter={this.addCharacter}
-                        />
-                      )}
-                    />
-                    <Route
-                      path="/login"
-                      render={() => (
-                        <Login authenticateUser={this.authenticateUser} />
-                      )}
-                    />
-                    <Route
-                      path="/signup"
-                      render={() => (
-                        <Signup authenticateUser={this.authenticateUser} />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path={URLS["Community Center"]}
-                      render={() => (
-                        <CCBundles
-                          authenticated={authenticated}
-                          bundles={bundles}
-                          userData={userData}
-                          toggleRoom={this.toggleRoom}
-                          toggleBundle={this.toggleBundle}
-                          toggleBundleItem={this.toggleBundleItem}
-                          seasonFilters={CCSeasonFilters}
-                          changeCCSeasonFilters={this.changeCCSeasonFilters}
-                        />
-                      )}
-                    />
-                    {/* <Route
+    return (
+      <div className="App">
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <div>
+              <Nav />
+              <main>
+                <Switch>
+                  <Route
+                    exact
+                    path={URLS["Characters"]}
+                    render={() => (
+                      <Home
+                        authenticated={authenticated}
+                        selectedCharacter={selectedCharacter}
+                        characters={characters}
+                        authenticateUser={authenticateUser}
+                        selectCharacter={selectCharacter}
+                        addCharacter={addCharacter}
+                      />
+                    )}
+                  />
+                  <Route
+                    path="/login"
+                    render={() => (
+                      <Login authenticateUser={this.authenticateUser} />
+                    )}
+                  />
+                  <Route
+                    path="/signup"
+                    render={() => (
+                      <Signup authenticateUser={this.authenticateUser} />
+                    )}
+                  />
+                  <Route
+                    exact
+                    path={URLS["Community Center"]}
+                    render={() => (
+                      <CCBundles
+                        authenticated={authenticated}
+                        bundles={bundles}
+                        userData={userData}
+                        toggleRoom={toggleRoom}
+                        toggleBundle={toggleBundle}
+                        toggleBundleItem={toggleBundleItem}
+                        seasonFilters={CCSeasonFilters}
+                        changeCCSeasonFilters={changeCCSeasonFilters}
+                      />
+                    )}
+                  />
+                  {/* <Route
                       path={`${URLS["Community Center"]}/list`}
                       render={() => (
                         <CCList
@@ -409,59 +389,56 @@ class App extends Component {
                         />
                       )}
                     /> */}
-                    <Route
-                      path={URLS["Upgrades"]}
-                      render={() => (
-                        <Upgrades
-                          authenticated={authenticated}
-                          upgrades={upgrades}
-                          userData={userData}
-                          toolPickup={toolPickup}
-                          toggleUpgrade={this.toggleUpgrade}
-                          setToolPickup={this.setToolPickup}
-                        />
-                      )}
-                    />
-                    <Route
-                      path={URLS["Calendar"]}
-                      render={() => (
-                        <Calendar
-                          calendarSeasonFilter={calendarSeasonFilter}
-                          changeCalendarSeasonFilter={
-                            this.changeCalendarSeasonFilter
-                          }
-                          authenticated={authenticated}
-                          userData={userData}
-                          calendar={calendar}
-                          fairItems={fairItems}
-                          toggleFairItem={this.toggleFairItem}
-                        />
-                      )}
-                    />
-                    <Route
-                      path={URLS["My Account"]}
-                      render={() => (
-                        <Account
-                          authenticated={authenticated}
-                          appData={appData}
-                          characters={characters}
-                          addCharacter={this.addCharacter}
-                          toggleUpgrade={this.toggleUpgrade}
-                          toggleRoom={this.toggleRoom}
-                          toggleBundle={this.toggleBundle}
-                          toggleBundleItem={this.toggleBundleItem}
-                        />
-                      )}
-                    />
-                  </Switch>
-                </main>
-              </div>
-            </BrowserRouter>
-          </ThemeProvider>
-        </div>
-      );
-    }
+                  <Route
+                    path={URLS["Upgrades"]}
+                    render={() => (
+                      <Upgrades
+                        authenticated={authenticated}
+                        upgrades={upgrades}
+                        userData={userData}
+                        toolPickup={toolPickupDay}
+                        toggleUpgrade={toggleUpgrade}
+                        setToolPickup={setToolPickupDay}
+                      />
+                    )}
+                  />
+                  <Route
+                    path={URLS["Calendar"]}
+                    render={() => (
+                      <Calendar
+                        calendarSeasonFilter={calendarSeasonFilter}
+                        changeCalendarSeasonFilter={changeCalendarSeasonFilter}
+                        authenticated={authenticated}
+                        userData={userData}
+                        calendar={calendar}
+                        fairItems={fairItems}
+                        toggleFairItem={toggleFairItem}
+                      />
+                    )}
+                  />
+                  <Route
+                    path={URLS["My Account"]}
+                    render={() => (
+                      <Account
+                        authenticated={authenticated}
+                        appData={appData}
+                        characters={characters}
+                        addCharacter={addCharacter}
+                        toggleUpgrade={toggleUpgrade}
+                        toggleRoom={toggleRoom}
+                        toggleBundle={toggleBundle}
+                        toggleBundleItem={toggleBundleItem}
+                      />
+                    )}
+                  />
+                </Switch>
+              </main>
+            </div>
+          </BrowserRouter>
+        </ThemeProvider>
+      </div>
+    );
   }
-}
+};
 
 export default App;
