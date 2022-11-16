@@ -3,14 +3,12 @@ import React, { Component } from "react";
 import axios from "axios";
 import "./App.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { ThemeProvider } from "@mui/material";
 
 import { LS, URLS } from "./utils/globals";
 import bundles from "./data/bundles";
 import upgrades from "./data/upgrades";
 import calendar from "./data/calendar";
-
-import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
-import { createMuiTheme } from "@material-ui/core";
 import Nav from "./components/Nav";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -20,16 +18,7 @@ import Upgrades from "./pages/Upgrades";
 import Calendar from "./pages/Calendar";
 import Account from "./pages/Account";
 import Loading from "./components/Loading";
-
-import purple from "@material-ui/core/colors/purple";
-import teal from "@material-ui/core/colors/teal";
-
-const theme = createMuiTheme({
-  palette: {
-    primary: purple,
-    secondary: teal
-  }
-});
+import { theme } from "./theme";
 
 class App extends Component {
   constructor(props) {
@@ -345,7 +334,7 @@ class App extends Component {
     if (!appData || !appData.bundles || !appData.upgrades || !characters) {
       return (
         <div className="App">
-          <MuiThemeProvider theme={theme}>
+          <ThemeProvider theme={theme}>
             <BrowserRouter>
               <div>
                 <Nav />
@@ -354,7 +343,7 @@ class App extends Component {
                 </main>
               </div>
             </BrowserRouter>
-          </MuiThemeProvider>
+          </ThemeProvider>
         </div>
       );
     } else {
@@ -363,7 +352,7 @@ class App extends Component {
 
       return (
         <div className="App">
-          <MuiThemeProvider theme={theme}>
+          <ThemeProvider theme={theme}>
             <BrowserRouter>
               <div>
                 <Nav />
@@ -468,7 +457,7 @@ class App extends Component {
                 </main>
               </div>
             </BrowserRouter>
-          </MuiThemeProvider>
+          </ThemeProvider>
         </div>
       );
     }

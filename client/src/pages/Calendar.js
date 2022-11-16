@@ -1,11 +1,8 @@
 import _ from "lodash";
 import React from "react";
+import { Grid, Divider, Checkbox, FormControlLabel } from "@mui/material";
 
 import SeasonFilterBtns from "../components/SeasonFilterBtns";
-import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Loading from "../components/Loading";
 import Landing from "./Landing";
 import CharacterSelect from "./CharacterSelect";

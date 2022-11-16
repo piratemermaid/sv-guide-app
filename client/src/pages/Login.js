@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-
-import Button from "@material-ui/core/Button";
+import { Button } from "@mui/material";
 
 class Login extends Component {
   async loginUser(e, { username, password }) {

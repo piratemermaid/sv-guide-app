@@ -1,22 +1,25 @@
 import _ from "lodash";
 import React from "react";
+import {
+  Checkbox,
+  FormControlLabel,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon
+} from "@mui/material";
+import {
+  Error as ErrorIcon,
+  Inbox as InboxIcon,
+  Build as BuildIcon,
+  Pets as PetsIcon,
+  Dashboard as DashboardIcon,
+  Lock as LockIcon,
+  Kitchen as KitchenIcon,
+  ShoppingCart as ShoppingCartIcon
+} from "@mui/icons-material";
 
 import SeasonFilterBtns from "../components/SeasonFilterBtns";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import ErrorIcon from "@material-ui/icons/Error";
-import { makeStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import BuildIcon from "@material-ui/icons/Build";
-import PetsIcon from "@material-ui/icons/Pets";
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import LockIcon from "@material-ui/icons/Lock";
-import KitchenIcon from "@material-ui/icons/Kitchen";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Loading from "../components/Loading";
 import SeasonCircle from "../components/SeasonCircle";
 import { seasons } from "../utils/utils";
@@ -25,7 +28,7 @@ import CharacterSelect from "./CharacterSelect";
 
 const drawerWidth = 50;
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
   root: {
     display: "flex"
   },
@@ -37,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     margin: "50px 0 0 0"
   }
-}));
+};
 
 const getIcon = (text, found) => {
   let color = "";
@@ -108,8 +111,6 @@ const CCBundles = (props) => {
     }
   };
 
-  const classes = useStyles();
-
   return (
     <div>
       <SeasonFilterBtns
@@ -117,14 +118,14 @@ const CCBundles = (props) => {
         changeSeasonFilters={props.changeCCSeasonFilters}
       />
       <Drawer
-        className={classes.drawer}
+        sx={styles.drawer}
         variant="permanent"
         classes={{
-          paper: classes.drawerPaper
+          paper: style.drawerPaper
         }}
         anchor="right"
       >
-        <div className={classes.toolbar} />
+        <div sx={styles.toolbar} />
         <List>
           {[
             "Crafts Room",

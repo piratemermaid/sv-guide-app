@@ -1,11 +1,12 @@
 import _ from "lodash";
 import React from "react";
-
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import NatureIcon from "@material-ui/icons/Nature";
-import Brightness5Icon from "@material-ui/icons/Brightness5";
-import EcoIcon from "@material-ui/icons/Eco";
-import AcUnitIcon from "@material-ui/icons/AcUnit";
+import { ListItemIcon } from "@mui/material";
+import {
+  Nature as NatureIcon,
+  Brightness5 as Brightness5Icon,
+  Park as ParkIcon,
+  AcUnit as AcUnitIcon
+} from "@mui/icons-material";
 
 import { seasonColors } from "../utils/utils";
 
@@ -32,7 +33,7 @@ const SeasonFilterBtns = (props) => {
         );
       case "fall":
         return (
-          <EcoIcon
+          <ParkIcon
             className="season-filter-btn"
             style={{
               color: seasonColors[season]

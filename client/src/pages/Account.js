@@ -1,6 +1,6 @@
 import React, { Component } from "react";
+import { Button } from "@mui/material";
 
-import Button from "@material-ui/core/Button";
 import Loading from "../components/Loading";
 import Landing from "./Landing";
 

@@ -1,20 +1,22 @@
 import _ from "lodash";
 import React from "react";
-
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { makeStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import BuildIcon from "@material-ui/icons/Build";
-import PetsIcon from "@material-ui/icons/Pets";
-import HomeIcon from "@material-ui/icons/Home";
-import BusinessIcon from "@material-ui/icons/Business";
-import NatureIcon from "@material-ui/icons/Nature";
+import {
+  Checkbox,
+  FormControlLabel,
+  Drawer,
+  List,
+  Divider,
+  ListItem,
+  ListItemIcon
+} from "@mui/material";
+import {
+  Inbox as InboxIcon,
+  Build as BuildIcon,
+  Pets as PetsIcon,
+  Home as HomeIcon,
+  Business as BusinessIcon,
+  Nature as NatureIcon
+} from "@mui/icons-material";
 
 import Loading from "../components/Loading";
 import Landing from "./Landing";
@@ -22,7 +24,7 @@ import CharacterSelect from "./CharacterSelect";
 
 const drawerWidth = 50;
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
   root: {
     display: "flex"
   },
@@ -34,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     margin: "50px 0 0 0"
   }
-}));
+};
 
 const Upgrades = (props) => {
   if (!props.authenticated) {
@@ -70,19 +72,17 @@ const Upgrades = (props) => {
     }
   };
 
-  const classes = useStyles();
-
   return (
     <div>
       <Drawer
-        className={classes.drawer}
+        sx={styles.drawer}
         variant="permanent"
         classes={{
-          paper: classes.drawerPaper
+          paper: styles.drawerPaper
         }}
         anchor="right"
       >
-        <div className={classes.toolbar} />
+        <div sx={styles.toolbar} />
         <Divider />
         <List>
           {["tool", "building", "animal", "tree", "home"].map((text, index) => (
