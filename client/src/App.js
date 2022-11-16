@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 import { LS, URLS } from "./utils/globals";
 import bundles from "./data/bundles";
@@ -314,16 +315,18 @@ const App = () => {
   if (!appData || !appData.bundles || !appData.upgrades || !characters) {
     return (
       <div className="App">
-        <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <div>
-              <Nav />
-              <main>
-                <Loading />
-              </main>
-            </div>
-          </BrowserRouter>
-        </ThemeProvider>
+        <QueryClientProvider client={new QueryClient()}>
+          <ThemeProvider theme={theme}>
+            <BrowserRouter>
+              <div>
+                <Nav />
+                <main>
+                  <Loading />
+                </main>
+              </div>
+            </BrowserRouter>
+          </ThemeProvider>
+        </QueryClientProvider>
       </div>
     );
   } else {
@@ -332,55 +335,56 @@ const App = () => {
 
     return (
       <div className="App">
-        <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <div>
-              <Nav />
-              <main>
-                <Switch>
-                  <Route
-                    exact
-                    path={URLS["Characters"]}
-                    render={() => (
-                      <Home
-                        authenticated={authenticated}
-                        selectedCharacter={selectedCharacter}
-                        characters={characters}
-                        authenticateUser={authenticateUser}
-                        selectCharacter={selectCharacter}
-                        addCharacter={addCharacter}
-                      />
-                    )}
-                  />
-                  <Route
-                    path="/login"
-                    render={() => (
-                      <Login authenticateUser={this.authenticateUser} />
-                    )}
-                  />
-                  <Route
-                    path="/signup"
-                    render={() => (
-                      <Signup authenticateUser={this.authenticateUser} />
-                    )}
-                  />
-                  <Route
-                    exact
-                    path={URLS["Community Center"]}
-                    render={() => (
-                      <CCBundles
-                        authenticated={authenticated}
-                        bundles={bundles}
-                        userData={userData}
-                        toggleRoom={toggleRoom}
-                        toggleBundle={toggleBundle}
-                        toggleBundleItem={toggleBundleItem}
-                        seasonFilters={CCSeasonFilters}
-                        changeCCSeasonFilters={changeCCSeasonFilters}
-                      />
-                    )}
-                  />
-                  {/* <Route
+        <QueryClientProvider client={new QueryClient()}>
+          <ThemeProvider theme={theme}>
+            <BrowserRouter>
+              <div>
+                <Nav />
+                <main>
+                  <Switch>
+                    <Route
+                      exact
+                      path={URLS["Characters"]}
+                      render={() => (
+                        <Home
+                          authenticated={authenticated}
+                          selectedCharacter={selectedCharacter}
+                          characters={characters}
+                          authenticateUser={authenticateUser}
+                          selectCharacter={selectCharacter}
+                          addCharacter={addCharacter}
+                        />
+                      )}
+                    />
+                    <Route
+                      path="/login"
+                      render={() => (
+                        <Login authenticateUser={this.authenticateUser} />
+                      )}
+                    />
+                    <Route
+                      path="/signup"
+                      render={() => (
+                        <Signup authenticateUser={this.authenticateUser} />
+                      )}
+                    />
+                    <Route
+                      exact
+                      path={URLS["Community Center"]}
+                      render={() => (
+                        <CCBundles
+                          authenticated={authenticated}
+                          bundles={bundles}
+                          userData={userData}
+                          toggleRoom={toggleRoom}
+                          toggleBundle={toggleBundle}
+                          toggleBundleItem={toggleBundleItem}
+                          seasonFilters={CCSeasonFilters}
+                          changeCCSeasonFilters={changeCCSeasonFilters}
+                        />
+                      )}
+                    />
+                    {/* <Route
                       path={`${URLS["Community Center"]}/list`}
                       render={() => (
                         <CCList
@@ -389,53 +393,56 @@ const App = () => {
                         />
                       )}
                     /> */}
-                  <Route
-                    path={URLS["Upgrades"]}
-                    render={() => (
-                      <Upgrades
-                        authenticated={authenticated}
-                        upgrades={upgrades}
-                        userData={userData}
-                        toolPickup={toolPickupDay}
-                        toggleUpgrade={toggleUpgrade}
-                        setToolPickup={setToolPickupDay}
-                      />
-                    )}
-                  />
-                  <Route
-                    path={URLS["Calendar"]}
-                    render={() => (
-                      <Calendar
-                        calendarSeasonFilter={calendarSeasonFilter}
-                        changeCalendarSeasonFilter={changeCalendarSeasonFilter}
-                        authenticated={authenticated}
-                        userData={userData}
-                        calendar={calendar}
-                        fairItems={fairItems}
-                        toggleFairItem={toggleFairItem}
-                      />
-                    )}
-                  />
-                  <Route
-                    path={URLS["My Account"]}
-                    render={() => (
-                      <Account
-                        authenticated={authenticated}
-                        appData={appData}
-                        characters={characters}
-                        addCharacter={addCharacter}
-                        toggleUpgrade={toggleUpgrade}
-                        toggleRoom={toggleRoom}
-                        toggleBundle={toggleBundle}
-                        toggleBundleItem={toggleBundleItem}
-                      />
-                    )}
-                  />
-                </Switch>
-              </main>
-            </div>
-          </BrowserRouter>
-        </ThemeProvider>
+                    <Route
+                      path={URLS["Upgrades"]}
+                      render={() => (
+                        <Upgrades
+                          authenticated={authenticated}
+                          upgrades={upgrades}
+                          userData={userData}
+                          toolPickup={toolPickupDay}
+                          toggleUpgrade={toggleUpgrade}
+                          setToolPickup={setToolPickupDay}
+                        />
+                      )}
+                    />
+                    <Route
+                      path={URLS["Calendar"]}
+                      render={() => (
+                        <Calendar
+                          calendarSeasonFilter={calendarSeasonFilter}
+                          changeCalendarSeasonFilter={
+                            changeCalendarSeasonFilter
+                          }
+                          authenticated={authenticated}
+                          userData={userData}
+                          calendar={calendar}
+                          fairItems={fairItems}
+                          toggleFairItem={toggleFairItem}
+                        />
+                      )}
+                    />
+                    <Route
+                      path={URLS["My Account"]}
+                      render={() => (
+                        <Account
+                          authenticated={authenticated}
+                          appData={appData}
+                          characters={characters}
+                          addCharacter={addCharacter}
+                          toggleUpgrade={toggleUpgrade}
+                          toggleRoom={toggleRoom}
+                          toggleBundle={toggleBundle}
+                          toggleBundleItem={toggleBundleItem}
+                        />
+                      )}
+                    />
+                  </Switch>
+                </main>
+              </div>
+            </BrowserRouter>
+          </ThemeProvider>
+        </QueryClientProvider>
       </div>
     );
   }

@@ -21,6 +21,7 @@ import {
 import Loading from "../components/Loading";
 import Landing from "./Landing";
 import CharacterSelect from "./CharacterSelect";
+import { useAppUpgrades } from "../hooks/appData/useAppUpgrades";
 
 const drawerWidth = 50;
 
@@ -39,9 +40,12 @@ const styles = {
 };
 
 const Upgrades = (props) => {
+  const { data: appUpgrades, isFetching: isAppUpgradesFetching } =
+    useAppUpgrades();
+
   if (!props.authenticated) {
     return <Landing />;
-  } else if (!props.upgrades) {
+  } else if (isAppUpgradesFetching) {
     return <Loading />;
   } else if (!props.userData) {
     return <CharacterSelect />;
@@ -49,7 +53,7 @@ const Upgrades = (props) => {
 
   const userUpgrades = props.userData.upgrades;
 
-  const upgradesByType = _.groupBy(props.upgrades, "type");
+  const upgradesByType = _.groupBy(appUpgrades, "type");
 
   const handleChange = (e, name) => {
     props.toggleUpgrade({ upgradeName: name, value: e.target.checked });

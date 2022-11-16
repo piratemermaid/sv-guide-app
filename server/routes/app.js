@@ -66,11 +66,11 @@ router.get("/bundles", function (req, res, next) {
 router.get("/upgrades", function (req, res, next) {
   Upgrade.fetchAll().then((upgradesResult) => {
     const upgrades = upgradesResult.toJSON();
-    res.send({
-      upgrades: upgrades.map(({ name, type, cost, prereq }) => {
+    res.send(
+      upgrades.map(({ name, type, cost, prereq }) => {
         return { name, type, cost, prereq };
       })
-    });
+    );
   });
 });
 
