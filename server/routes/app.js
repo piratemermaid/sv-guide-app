@@ -13,8 +13,8 @@ const router = new Router();
 router.get("/bundles", function (req, res, next) {
   Room.fetchAll({ withRelated: ["bundles.items"] }).then((roomsResult) => {
     const rooms = roomsResult.toJSON();
-    res.send({
-      bundles: rooms.map(({ name, reward, bundles }) => {
+    res.send(
+      rooms.map(({ name, reward, bundles }) => {
         return {
           name,
           reward,
@@ -59,7 +59,7 @@ router.get("/bundles", function (req, res, next) {
           )
         };
       })
-    });
+    );
   });
 });
 

@@ -7,7 +7,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 import { LS } from "./utils/globals";
 import ROUTES from "./constants/routes";
-import bundles from "./data/bundles";
 import calendar from "./data/calendar";
 import Nav from "./components/Nav";
 import Login from "./pages/Login";
@@ -23,7 +22,6 @@ import "./App.css";
 
 const App = () => {
   const [appData, setAppData] = useState({
-    bundles: [],
     calendar: [],
     fairItems: []
   });
@@ -238,14 +236,6 @@ const App = () => {
       try {
         await axios({
           method: "get",
-          url: "/api/app/bundles"
-        }).then((res) => {
-          const { bundles } = res.data;
-          setAppData({ ...appData, bundles });
-        });
-
-        await axios({
-          method: "get",
           url: "/api/app/calendar"
         }).then((res) => {
           const { calendar } = res.data;
@@ -288,7 +278,6 @@ const App = () => {
     // get app data from FE
     setAppData({
       appData: {
-        bundles: bundles.bundles,
         calendar: calendar.calendar,
         fairItems: calendar.fairItems
       }
@@ -302,79 +291,58 @@ const App = () => {
     }
   };
 
-  if (!appData || !appData.bundles || !characters) {
-    return (
-      <div className="App">
-        <QueryClientProvider client={new QueryClient()}>
-          <ThemeProvider theme={theme}>
-            <BrowserRouter>
-              <div>
-                <Nav />
-                <main>
-                  <Loading />
-                </main>
-              </div>
-            </BrowserRouter>
-          </ThemeProvider>
-        </QueryClientProvider>
-      </div>
-    );
-  } else {
-    const { bundles, calendar, fairItems } = appData;
-    const userData = _.find(characters, { name: selectedCharacter });
+  const { calendar, fairItems } = appData;
+  const userData = _.find(characters, { name: selectedCharacter });
 
-    return (
-      <div className="App">
-        <QueryClientProvider client={new QueryClient()}>
-          <ThemeProvider theme={theme}>
-            <BrowserRouter>
-              <div>
-                <Nav />
-                <main>
-                  <Switch>
-                    <Route
-                      exact
-                      path={ROUTES.CHARACTERS}
-                      render={() => (
-                        <Home
-                          authenticated={authenticated}
-                          selectedCharacter={selectedCharacter}
-                          characters={characters}
-                          authenticateUser={authenticateUser}
-                          selectCharacter={selectCharacter}
-                          addCharacter={addCharacter}
-                        />
-                      )}
-                    />
-                    <Route
-                      path="/login"
-                      render={() => (
-                        <Login authenticateUser={authenticateUser} />
-                      )}
-                    />
-                    <Route
-                      path="/signup"
-                      render={() => (
-                        <Signup authenticateUser={authenticateUser} />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path={ROUTES.COMMUNITY_CENTER}
-                      render={() => (
-                        <CCBundles
-                          authenticated={authenticated}
-                          bundles={bundles}
-                          userData={userData}
-                          toggleRoom={toggleRoom}
-                          toggleBundle={toggleBundle}
-                          toggleBundleItem={toggleBundleItem}
-                          seasonFilters={CCSeasonFilters}
-                          changeCCSeasonFilters={changeCCSeasonFilters}
-                        />
-                      )}
-                    />
-                    {/* <Route
+  return (
+    <div className="App">
+      <QueryClientProvider client={new QueryClient()}>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <div>
+              <Nav />
+              <main>
+                <Switch>
+                  <Route
+                    exact
+                    path={ROUTES.CHARACTERS}
+                    render={() => (
+                      <Home
+                        authenticated={authenticated}
+                        selectedCharacter={selectedCharacter}
+                        characters={characters}
+                        authenticateUser={authenticateUser}
+                        selectCharacter={selectCharacter}
+                        addCharacter={addCharacter}
+                      />
+                    )}
+                  />
+                  <Route
+                    path="/login"
+                    render={() => <Login authenticateUser={authenticateUser} />}
+                  />
+                  <Route
+                    path="/signup"
+                    render={() => (
+                      <Signup authenticateUser={authenticateUser} />
+                    )}
+                  />
+                  <Route
+                    exact
+                    path={ROUTES.COMMUNITY_CENTER}
+                    render={() => (
+                      <CCBundles
+                        authenticated={authenticated}
+                        userData={userData}
+                        toggleRoom={toggleRoom}
+                        toggleBundle={toggleBundle}
+                        toggleBundleItem={toggleBundleItem}
+                        seasonFilters={CCSeasonFilters}
+                        changeCCSeasonFilters={changeCCSeasonFilters}
+                      />
+                    )}
+                  />
+                  {/* <Route
                       path={`${ROUTES."Community Center"]}/list}
                       render={() => (
                         <CCList
@@ -383,58 +351,55 @@ const App = () => {
                         />
                       )}
                     /> */}
-                    <Route
-                      path={ROUTES.UPGRADES}
-                      render={() => (
-                        <Upgrades
-                          authenticated={authenticated}
-                          userData={userData}
-                          toolPickup={toolPickupDay}
-                          toggleUpgrade={toggleUpgrade}
-                          setToolPickup={setToolPickupDay}
-                        />
-                      )}
-                    />
-                    <Route
-                      path={ROUTES.CALENDAR}
-                      render={() => (
-                        <Calendar
-                          calendarSeasonFilter={calendarSeasonFilter}
-                          changeCalendarSeasonFilter={
-                            changeCalendarSeasonFilter
-                          }
-                          authenticated={authenticated}
-                          userData={userData}
-                          calendar={calendar}
-                          fairItems={fairItems}
-                          toggleFairItem={toggleFairItem}
-                        />
-                      )}
-                    />
-                    <Route
-                      path={ROUTES.ACCOUNT}
-                      render={() => (
-                        <Account
-                          authenticated={authenticated}
-                          appData={appData}
-                          characters={characters}
-                          addCharacter={addCharacter}
-                          toggleUpgrade={toggleUpgrade}
-                          toggleRoom={toggleRoom}
-                          toggleBundle={toggleBundle}
-                          toggleBundleItem={toggleBundleItem}
-                        />
-                      )}
-                    />
-                  </Switch>
-                </main>
-              </div>
-            </BrowserRouter>
-          </ThemeProvider>
-        </QueryClientProvider>
-      </div>
-    );
-  }
+                  <Route
+                    path={ROUTES.UPGRADES}
+                    render={() => (
+                      <Upgrades
+                        authenticated={authenticated}
+                        userData={userData}
+                        toolPickup={toolPickupDay}
+                        toggleUpgrade={toggleUpgrade}
+                        setToolPickup={setToolPickupDay}
+                      />
+                    )}
+                  />
+                  <Route
+                    path={ROUTES.CALENDAR}
+                    render={() => (
+                      <Calendar
+                        calendarSeasonFilter={calendarSeasonFilter}
+                        changeCalendarSeasonFilter={changeCalendarSeasonFilter}
+                        authenticated={authenticated}
+                        userData={userData}
+                        calendar={calendar}
+                        fairItems={fairItems}
+                        toggleFairItem={toggleFairItem}
+                      />
+                    )}
+                  />
+                  <Route
+                    path={ROUTES.ACCOUNT}
+                    render={() => (
+                      <Account
+                        authenticated={authenticated}
+                        appData={appData}
+                        characters={characters}
+                        addCharacter={addCharacter}
+                        toggleUpgrade={toggleUpgrade}
+                        toggleRoom={toggleRoom}
+                        toggleBundle={toggleBundle}
+                        toggleBundleItem={toggleBundleItem}
+                      />
+                    )}
+                  />
+                </Switch>
+              </main>
+            </div>
+          </BrowserRouter>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </div>
+  );
 };
 
 export default App;

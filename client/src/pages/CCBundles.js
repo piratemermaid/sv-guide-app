@@ -25,6 +25,7 @@ import SeasonCircle from "../components/SeasonCircle";
 import { seasons } from "../utils/utils";
 import Landing from "./Landing";
 import CharacterSelect from "./CharacterSelect";
+import { useAppBundles } from "../hooks/appData/useAppBundles";
 
 const drawerWidth = 50;
 
@@ -64,9 +65,12 @@ const getIcon = (text, found) => {
 };
 
 const CCBundles = (props) => {
+  const { data: appBundles, isFetching: isAppBundlesFetching } =
+    useAppBundles();
+
   if (!props.authenticated) {
     return <Landing />;
-  } else if (!props.bundles) {
+  } else if (isAppBundlesFetching) {
     return <Loading />;
   } else if (!props.userData) {
     return <CharacterSelect />;
@@ -154,7 +158,7 @@ const CCBundles = (props) => {
         </List>
       </Drawer>
       <div>
-        {props.bundles.map(({ name, reward, bundles }) => {
+        {appBundles.map(({ name, reward, bundles }) => {
           let completed = false;
           let canComplete = false;
           if (_.find(props.userData.rooms, { name })) {

@@ -1,6 +1,8 @@
 const queryKeys = {
   app: {
-    upgrades: "upgrades"
+    upgrades: "upgrades",
+    bundles: "bundles",
+    calendar: "calendar"
   }
 };
 
