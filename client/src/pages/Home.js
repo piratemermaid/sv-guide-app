@@ -33,8 +33,6 @@ const Home = (props) => {
           {props.characters.length > 0 ? (
             <Grid container spacing={2}>
               {props.characters.map(({ name, created }) => {
-                console.log(">> created:", created);
-                console.log(">> created Date:", new Date(created));
                 // TODO: show some character stats
                 return (
                   <Grid item l={6} m={4} xs={3}>
