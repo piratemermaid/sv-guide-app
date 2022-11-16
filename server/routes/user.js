@@ -35,6 +35,7 @@ router.get("/data", function (req, res, next) {
           characters: characters.map(
             ({
               name,
+              id,
               created,
               upgrades,
               rooms,
@@ -44,6 +45,7 @@ router.get("/data", function (req, res, next) {
             }) => {
               return {
                 name,
+                id,
                 created,
                 upgrades: upgrades.map(({ name, type, cost, prereq }) => {
                   return { name };

@@ -2,9 +2,15 @@ import React from "react";
 import { format } from "date-fns";
 import { Typography, Grid, Card, CardContent, Button } from "@mui/material";
 
+import useStore from "../store";
 import Landing from "./Landing";
 
 const Home = (props) => {
+  const selectedCharacterId = useStore((state) => state.selectedCharacterId);
+  const setSelectedCharacterId = useStore(
+    (state) => state.setSelectedCharacterId
+  );
+
   async function accountLogout() {
     try {
       let response = await fetch("/api/account/logout");
@@ -32,20 +38,22 @@ const Home = (props) => {
           <p>Your characters:</p>
           {props.characters.length > 0 ? (
             <Grid container spacing={2}>
-              {props.characters.map(({ name, created }) => {
+              {props.characters.map(({ name, id, created }) => {
                 // TODO: show some character stats
                 return (
-                  <Grid item l={6} m={4} xs={3}>
+                  <Grid key={id} item l={6} m={4} xs={3}>
                     <Card
-                      key={name}
-                      onClick={() => props.selectCharacter(name)}
+                      onClick={() => {
+                        props.selectCharacter(name);
+                        setSelectedCharacterId(id);
+                      }}
                       className="user-character"
                     >
                       <CardContent>
                         <Typography
                           variant="body1"
                           style={
-                            props.selectedCharacter === name
+                            selectedCharacterId === id
                               ? { fontWeight: "bold" }
                               : {}
                           }

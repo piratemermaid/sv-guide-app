@@ -13,7 +13,8 @@
     "react-dom": "^18.2.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "zustand": "^4.1.4"
   },
   "scripts": {
     "start": "set PORT=3002 && react-scripts start",
