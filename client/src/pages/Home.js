@@ -1,4 +1,6 @@
 import React from "react";
+import { format } from "date-fns";
+import { Typography } from "@material-ui/core";
 
 import Landing from "./Landing";
 import { makeStyles } from "@material-ui/core/styles";
@@ -35,7 +37,9 @@ const Home = (props) => {
           <p>Your characters:</p>
           {props.characters.length > 0 ? (
             <Grid container spacing={2}>
-              {props.characters.map(({ name }) => {
+              {props.characters.map(({ name, created }) => {
+                console.log(">> created:", created);
+                console.log(">> created Date:", new Date(created));
                 // TODO: show some character stats
                 return (
                   <Grid item l={6} m={4} xs={3}>
@@ -48,7 +52,14 @@ const Home = (props) => {
                           : "user-character"
                       }
                     >
-                      <CardContent>{name}</CardContent>
+                      <CardContent>
+                        <Typography variant="body1" style={{ fontWeight: 600 }}>
+                          {name}
+                        </Typography>
+                        <Typography variant="body2">
+                          {format(new Date(created), "MM-dd-yyyy")}
+                        </Typography>
+                      </CardContent>
                     </Card>
                   </Grid>
                 );

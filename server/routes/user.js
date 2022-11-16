@@ -33,9 +33,18 @@ router.get("/data", function (req, res, next) {
         const { characters } = userData.toJSON();
         res.send({
           characters: characters.map(
-            ({ name, upgrades, rooms, bundles, bundleItems, fairItems }) => {
+            ({
+              name,
+              created,
+              upgrades,
+              rooms,
+              bundles,
+              bundleItems,
+              fairItems
+            }) => {
               return {
                 name,
+                created,
                 upgrades: upgrades.map(({ name, type, cost, prereq }) => {
                   return { name };
                 }),
