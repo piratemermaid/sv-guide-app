@@ -25,7 +25,7 @@ import CharacterSelect from "./CharacterSelect";
 
 const drawerWidth = 50;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex"
   },
@@ -60,7 +60,7 @@ const getIcon = (text, found) => {
   }
 };
 
-const CCBundles = props => {
+const CCBundles = (props) => {
   if (!props.authenticated) {
     return <Landing />;
   } else if (!props.bundles) {
@@ -84,7 +84,7 @@ const CCBundles = props => {
     });
   };
 
-  const itemMatchesSeasonFilter = item => {
+  const itemMatchesSeasonFilter = (item) => {
     const filters = props.seasonFilters;
     let filteredSeasons = 0;
     let match = false;
@@ -177,7 +177,7 @@ const CCBundles = props => {
                 control={
                   <Checkbox
                     checked={completed}
-                    onChange={e => handleRoomChange(e, name)}
+                    onChange={(e) => handleRoomChange(e, name)}
                     value={name}
                     color="primary"
                   />
@@ -188,14 +188,9 @@ const CCBundles = props => {
               <p className="room-subheader">Reward: {reward}</p>
               {!completed ? (
                 <div className="bundles">
-                  {bundles.map(bundle => {
-                    const {
-                      name,
-                      reward,
-                      rewardAmount,
-                      requiredItems,
-                      items
-                    } = bundle;
+                  {bundles.map((bundle) => {
+                    const { name, reward, rewardAmount, requiredItems, items } =
+                      bundle;
                     let completed = false;
                     let canComplete = false;
                     let completedItems = 0;
@@ -219,7 +214,7 @@ const CCBundles = props => {
                           control={
                             <Checkbox
                               checked={completed}
-                              onChange={e => handleBundleChange(e, name)}
+                              onChange={(e) => handleBundleChange(e, name)}
                               value={name}
                               color="secondary"
                             />
@@ -238,7 +233,7 @@ const CCBundles = props => {
                               {completedItems}/{requiredItems})
                             </p>
                             <ul>
-                              {items.map(item => {
+                              {items.map((item) => {
                                 const {
                                   name,
                                   key,
@@ -261,9 +256,8 @@ const CCBundles = props => {
                                   ? true
                                   : false;
 
-                                const displayItem = itemMatchesSeasonFilter(
-                                  item
-                                );
+                                const displayItem =
+                                  itemMatchesSeasonFilter(item);
 
                                 const allSeasons =
                                   item.spring &&
@@ -278,7 +272,7 @@ const CCBundles = props => {
                                       control={
                                         <Checkbox
                                           checked={checked}
-                                          onChange={e =>
+                                          onChange={(e) =>
                                             handleBundleItemChange(e, key)
                                           }
                                           value={name}
@@ -288,7 +282,7 @@ const CCBundles = props => {
                                       label={label}
                                     />
                                     {!allSeasons
-                                      ? seasons.map(season => {
+                                      ? seasons.map((season) => {
                                           if (item[season]) {
                                             return (
                                               <SeasonCircle

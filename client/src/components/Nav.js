@@ -27,7 +27,7 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex"
   },
@@ -88,7 +88,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const getIcon = text => {
+const getIcon = (text) => {
   switch (text) {
     case "Characters":
       return <SupervisorAccountIcon />;
@@ -106,7 +106,7 @@ const getIcon = text => {
   }
 };
 
-const getPageName = path => {
+const getPageName = (path) => {
   switch (path) {
     case "/":
       return "Characters";
@@ -128,7 +128,7 @@ const getPageName = path => {
   }
 };
 
-const Header = props => {
+const Header = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -192,7 +192,7 @@ const Header = props => {
         <Divider />
         <List>
           {["Characters", "Upgrades", "Community Center", "Calendar"].map(
-            text => (
+            (text) => (
               <ListItem href={URLS[text]} button key={text} component="a">
                 <ListItemIcon>{getIcon(text)}</ListItemIcon>
                 <ListItemText primary={text} />
@@ -202,7 +202,7 @@ const Header = props => {
         </List>
         <Divider />
         <List>
-          {["My Account"].map(text => (
+          {["My Account"].map((text) => (
             <ListItem href={URLS[text]} button key={text} component="a">
               <ListItemIcon>{getIcon(text)}</ListItemIcon>
               <ListItemText primary={text} />

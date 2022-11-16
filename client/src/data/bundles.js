@@ -1038,35 +1038,23 @@ const bundleData = [
 // }
 
 const bundlesFormat = {
-  bundles: bundleData.map(room => {
+  bundles: bundleData.map((room) => {
     const { room: name, reward, roomBundles } = room;
     return {
       name,
       reward,
-      bundles: roomBundles.map(bundle => {
+      bundles: roomBundles.map((bundle) => {
         let itemIndex = 0;
-        const {
-          name,
-          reward,
-          rewardAmount,
-          requiredItems,
-          bundleItems
-        } = bundle;
+        const { name, reward, rewardAmount, requiredItems, bundleItems } =
+          bundle;
         return {
           name,
           reward,
           rewardAmount,
           requiredItems,
-          items: bundleItems.map(item => {
-            const {
-              name,
-              amount,
-              type,
-              seasons,
-              location,
-              time,
-              special
-            } = item;
+          items: bundleItems.map((item) => {
+            const { name, amount, type, seasons, location, time, special } =
+              item;
             itemIndex++;
 
             let key = `${name}_${bundle.name}`;

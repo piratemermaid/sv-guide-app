@@ -9,8 +9,8 @@ import AcUnitIcon from "@material-ui/icons/AcUnit";
 
 import { seasonColors } from "../utils/utils";
 
-const SeasonFilterBtns = props => {
-  const getSeasonIcon = season => {
+const SeasonFilterBtns = (props) => {
+  const getSeasonIcon = (season) => {
     switch (season) {
       case "spring":
         return (
@@ -55,7 +55,7 @@ const SeasonFilterBtns = props => {
 
   return (
     <div style={{ marginBottom: "15px" }}>
-      {seasons.map(season => {
+      {seasons.map((season) => {
         let containerClass = "season-filter-container";
         if (props.seasonFilters[season]) {
           containerClass += " season-filter-active";

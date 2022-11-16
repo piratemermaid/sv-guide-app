@@ -101,7 +101,7 @@ class Signup extends Component {
                 type="text"
                 placeholder="username"
                 value={this.state.username}
-                onChange={e => this.onInputChange(e, "username")}
+                onChange={(e) => this.onInputChange(e, "username")}
               />
             </div>
             <div className="input-field">
@@ -110,7 +110,7 @@ class Signup extends Component {
                 type="password"
                 placeholder="password"
                 value={this.state.password}
-                onChange={e => this.onInputChange(e, "password")}
+                onChange={(e) => this.onInputChange(e, "password")}
               />
             </div>
             <div className="input-field">
@@ -119,7 +119,7 @@ class Signup extends Component {
                 type="password"
                 placeholder="passwordMatch"
                 value={this.state.passwordMatch}
-                onChange={e => this.onInputChange(e, "passwordMatch")}
+                onChange={(e) => this.onInputChange(e, "passwordMatch")}
               />
             </div>
             <div className="input-field">
@@ -128,7 +128,7 @@ class Signup extends Component {
                 type="text"
                 placeholder="email"
                 value={this.state.email}
-                onChange={e => this.onInputChange(e, "email")}
+                onChange={(e) => this.onInputChange(e, "email")}
               />
             </div>
             <div className="form-error">{this.state.errorMessage}</div>
@@ -136,7 +136,7 @@ class Signup extends Component {
               variant="contained"
               color="secondary"
               type="submit"
-              onClick={e =>
+              onClick={(e) =>
                 this.signupUser(e, {
                   username: this.state.username,
                   password: this.state.password,

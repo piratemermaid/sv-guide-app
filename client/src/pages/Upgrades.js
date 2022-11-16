@@ -22,7 +22,7 @@ import CharacterSelect from "./CharacterSelect";
 
 const drawerWidth = 50;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex"
   },
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Upgrades = props => {
+const Upgrades = (props) => {
   if (!props.authenticated) {
     return <Landing />;
   } else if (!props.upgrades) {
@@ -53,7 +53,7 @@ const Upgrades = props => {
     props.toggleUpgrade({ upgradeName: name, value: e.target.checked });
   };
 
-  const getIcon = text => {
+  const getIcon = (text) => {
     switch (text) {
       case "tool":
         return <BuildIcon />;
@@ -92,7 +92,7 @@ const Upgrades = props => {
           ))}
         </List>
       </Drawer>
-      {_.map(upgradesByType, typeUpgrades => {
+      {_.map(upgradesByType, (typeUpgrades) => {
         const type = typeUpgrades[0].type;
         return (
           <div key={type} id={type}>
@@ -126,7 +126,7 @@ const Upgrades = props => {
                         control={
                           <Checkbox
                             checked={checked && prereqStatus}
-                            onChange={e => handleChange(e, name)}
+                            onChange={(e) => handleChange(e, name)}
                             value={name}
                             color="secondary"
                             disabled={!prereqStatus}

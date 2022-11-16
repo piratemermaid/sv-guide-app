@@ -10,7 +10,7 @@ import Loading from "../components/Loading";
 import Landing from "./Landing";
 import CharacterSelect from "./CharacterSelect";
 
-const Calendar = props => {
+const Calendar = (props) => {
   if (!props.authenticated) {
     return <Landing />;
   } else if (!props.calendar) {
@@ -34,7 +34,7 @@ const Calendar = props => {
           control={
             <Checkbox
               checked={checked}
-              onChange={e => handleChange(e, name)}
+              onChange={(e) => handleChange(e, name)}
               value={name}
               color="secondary"
             />
@@ -45,8 +45,8 @@ const Calendar = props => {
     });
   };
 
-  const renderCalendar = season => {
-    return calendar[season].map(event => {
+  const renderCalendar = (season) => {
+    return calendar[season].map((event) => {
       const { name, type, day, likes, loves } = event;
       return (
         <Grid container spacing={2} key={name}>

@@ -4,16 +4,14 @@ const { rooms, bundles, items } = require("../../data/bundles");
 const { birthdays, festivals, fairItems } = require("../../data/calendar");
 const upgrades = require("../../data/upgrades");
 
-exports.seed = async function(knex) {
+exports.seed = async function (knex) {
   // reset tables
   for (let table in TABLES) {
     await resetTable(knex, TABLES[table]);
   }
 
   const roomsByKey = keyBy(
-    await knex(TABLES.ROOMS)
-      .insert(rooms)
-      .returning("*"),
+    await knex(TABLES.ROOMS).insert(rooms).returning("*"),
     "key"
   );
 
@@ -31,9 +29,7 @@ exports.seed = async function(knex) {
     }
   );
   const bundlesByKey = keyBy(
-    await knex(TABLES.BUNDLES)
-      .insert(bundlesInsert)
-      .returning("*"),
+    await knex(TABLES.BUNDLES).insert(bundlesInsert).returning("*"),
     "key"
   );
 
@@ -70,13 +66,9 @@ exports.seed = async function(knex) {
       };
     }
   );
-  await knex(TABLES.BUNDLE_ITEMS)
-    .insert(bundleItemsInsert)
-    .returning("*");
+  await knex(TABLES.BUNDLE_ITEMS).insert(bundleItemsInsert).returning("*");
 
-  await knex(TABLES.UPGRADES)
-    .insert(upgrades)
-    .returning("*");
+  await knex(TABLES.UPGRADES).insert(upgrades).returning("*");
 
   await knex(TABLES.BIRTHDAYS).insert(birthdays);
 

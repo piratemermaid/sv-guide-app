@@ -61,7 +61,7 @@ class Login extends Component {
               type="text"
               placeholder="username"
               value={this.state.username}
-              onChange={e => this.onInputChange(e, "username")}
+              onChange={(e) => this.onInputChange(e, "username")}
             />
           </div>
           <div className="input-field">
@@ -70,7 +70,7 @@ class Login extends Component {
               type="password"
               placeholder="password"
               value={this.state.password}
-              onChange={e => this.onInputChange(e, "password")}
+              onChange={(e) => this.onInputChange(e, "password")}
             />
           </div>
           <div className="form-error">{this.state.errorMessage}</div>
@@ -78,7 +78,7 @@ class Login extends Component {
             variant="contained"
             color="secondary"
             type="submit"
-            onClick={e =>
+            onClick={(e) =>
               this.loginUser(e, {
                 username: this.state.username,
                 password: this.state.password

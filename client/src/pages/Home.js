@@ -7,7 +7,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 
-const Home = props => {
+const Home = (props) => {
   async function accountLogout() {
     try {
       let response = await fetch("/api/account/logout");

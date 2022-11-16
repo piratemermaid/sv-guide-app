@@ -10,8 +10,8 @@ const {
 
 const router = new Router();
 
-router.get("/bundles", function(req, res, next) {
-  Room.fetchAll({ withRelated: ["bundles.items"] }).then(roomsResult => {
+router.get("/bundles", function (req, res, next) {
+  Room.fetchAll({ withRelated: ["bundles.items"] }).then((roomsResult) => {
     const rooms = roomsResult.toJSON();
     res.send({
       bundles: rooms.map(({ name, reward, bundles }) => {
@@ -63,8 +63,8 @@ router.get("/bundles", function(req, res, next) {
   });
 });
 
-router.get("/upgrades", function(req, res, next) {
-  Upgrade.fetchAll().then(upgradesResult => {
+router.get("/upgrades", function (req, res, next) {
+  Upgrade.fetchAll().then((upgradesResult) => {
     const upgrades = upgradesResult.toJSON();
     res.send({
       upgrades: upgrades.map(({ name, type, cost, prereq }) => {
@@ -74,8 +74,8 @@ router.get("/upgrades", function(req, res, next) {
   });
 });
 
-router.get("/calendar", async function(req, res, next) {
-  const birthdays = await Birthday.fetchAll().then(birthdaysResult => {
+router.get("/calendar", async function (req, res, next) {
+  const birthdays = await Birthday.fetchAll().then((birthdaysResult) => {
     return birthdaysResult
       .toJSON()
       .map(({ name, season, day, loves, likes }) => {
@@ -83,7 +83,7 @@ router.get("/calendar", async function(req, res, next) {
       });
   });
 
-  const festivals = await Festival.fetchAll().then(eventsResult => {
+  const festivals = await Festival.fetchAll().then((eventsResult) => {
     return eventsResult.toJSON().map(({ name, season, day }) => {
       return { name, season, day, type: "festival" };
     });
@@ -97,8 +97,8 @@ router.get("/calendar", async function(req, res, next) {
   res.send({ calendar });
 });
 
-router.get("/fair_items", function(req, res, next) {
-  FairItem.fetchAll().then(fairItems => {
+router.get("/fair_items", function (req, res, next) {
+  FairItem.fetchAll().then((fairItems) => {
     res.send({
       fairItems: fairItems.toJSON().map(({ name }) => {
         return { name };

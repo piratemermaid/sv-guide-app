@@ -485,7 +485,7 @@ export default {
     _.sortBy(_.concat(birthdaysFormat, festivalsFormat), "day"),
     "season"
   ),
-  fairItems: fairItems.map(name => {
+  fairItems: fairItems.map((name) => {
     return { name };
   })
 };

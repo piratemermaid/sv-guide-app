@@ -49,9 +49,8 @@ class App extends Component {
 
     this.setToolPickup = this.setToolPickup.bind(this);
     this.changeCCSeasonFilters = this.changeCCSeasonFilters.bind(this);
-    this.changeCalendarSeasonFilter = this.changeCalendarSeasonFilter.bind(
-      this
-    );
+    this.changeCalendarSeasonFilter =
+      this.changeCalendarSeasonFilter.bind(this);
 
     this.authenticateUser = this.authenticateUser.bind(this);
     this.selectCharacter = this.selectCharacter.bind(this);
@@ -105,7 +104,7 @@ class App extends Component {
     }
   }
 
-  selectCharacter = name => {
+  selectCharacter = (name) => {
     localStorage.setItem("selectedCharacter", name);
     this.setState({ selectedCharacter: name });
   };
@@ -115,7 +114,7 @@ class App extends Component {
       method: "post",
       url: "/api/user/add_character",
       params: { name }
-    }).then(res => {
+    }).then((res) => {
       if (res.data === "success") {
         this.fetchUserData();
       } else {
@@ -135,7 +134,7 @@ class App extends Component {
         upgradeName,
         value
       }
-    }).then(res => {
+    }).then((res) => {
       if (res.data === "success") {
         this.fetchUserData();
       } else {
@@ -155,7 +154,7 @@ class App extends Component {
         name,
         value
       }
-    }).then(res => {
+    }).then((res) => {
       if (res.data === "success") {
         this.fetchUserData();
       } else {
@@ -175,7 +174,7 @@ class App extends Component {
         name,
         value
       }
-    }).then(res => {
+    }).then((res) => {
       if (res.data === "success") {
         this.fetchUserData();
       } else {
@@ -195,7 +194,7 @@ class App extends Component {
         key,
         value
       }
-    }).then(res => {
+    }).then((res) => {
       if (res.data === "success") {
         this.fetchUserData();
       } else {
@@ -215,7 +214,7 @@ class App extends Component {
         name,
         value
       }
-    }).then(res => {
+    }).then((res) => {
       if (res.data === "success") {
         this.fetchUserData();
       } else {
@@ -232,11 +231,11 @@ class App extends Component {
       method: "get",
       url: "/api/user/data"
     })
-      .then(res => {
+      .then((res) => {
         localStorage.setItem("svData", JSON.stringify(res.data.characters));
         this.setState({ characters: res.data.characters });
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
   }
@@ -256,7 +255,7 @@ class App extends Component {
       await axios({
         method: "get",
         url: "/api/account/authenticated"
-      }).then(res => {
+      }).then((res) => {
         const { authenticated } = res.data;
         this.authenticateUser(authenticated ? true : false);
       });
@@ -268,7 +267,7 @@ class App extends Component {
       await axios({
         method: "get",
         url: "/api/app/bundles"
-      }).then(res => {
+      }).then((res) => {
         const { bundles } = res.data;
         const appData = this.state.appData;
         this.setState({ appData: { ...appData, bundles } });
@@ -277,7 +276,7 @@ class App extends Component {
       await axios({
         method: "get",
         url: "/api/app/upgrades"
-      }).then(res => {
+      }).then((res) => {
         const { upgrades } = res.data;
         const appData = this.state.appData;
         this.setState({ appData: { ...appData, upgrades } });
@@ -286,7 +285,7 @@ class App extends Component {
       await axios({
         method: "get",
         url: "/api/app/calendar"
-      }).then(res => {
+      }).then((res) => {
         const { calendar } = res.data;
         const appData = this.state.appData;
         this.setState({ appData: { ...appData, calendar } });
@@ -295,7 +294,7 @@ class App extends Component {
       await axios({
         method: "get",
         url: "/api/app/fair_items"
-      }).then(res => {
+      }).then((res) => {
         const { fairItems } = res.data;
         const appData = this.state.appData;
         this.setState({ appData: { ...appData, fairItems } });

@@ -1,3 +1,4 @@
 {
-    "lineWidth": 2
+  "lineWidth": 2,
+  "trailingComma": "none"
 }

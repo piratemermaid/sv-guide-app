@@ -477,7 +477,7 @@ module.exports = {
   festivals: festivals.map(({ name, season, day }) => {
     return { name, key: name, season, day };
   }),
-  fairItems: fairItems.map(item => {
+  fairItems: fairItems.map((item) => {
     return { name: item, key: item };
   })
 };

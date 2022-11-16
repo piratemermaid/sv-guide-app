@@ -7,7 +7,7 @@ const TABLES = require("../db/tables");
 
 const router = new Router();
 
-router.get("/data", function(req, res, next) {
+router.get("/data", function (req, res, next) {
   const { sessionString } = req.cookies;
 
   if (!sessionString || !Session.verify(sessionString)) {
@@ -29,7 +29,7 @@ router.get("/data", function(req, res, next) {
           "characters.fairItems"
         ]
       })
-      .then(userData => {
+      .then((userData) => {
         const { characters } = userData.toJSON();
         res.send({
           characters: characters.map(
@@ -59,60 +59,42 @@ router.get("/data", function(req, res, next) {
   }
 });
 
-router.post("/add_character", async function(req, res, next) {
-  // TODO: prevent dupe names
+router.post("/add_character", async function (req, res, next) {
   const { name } = req.query;
 
   const { sessionString } = req.cookies;
 
   if (!sessionString || !Session.verify(sessionString)) {
     const error = new Error("Invalid session");
-
     error.status = 400;
-
     return next(error);
   } else {
     const { username } = Session.parse(sessionString);
 
-    const nameExists = await User.forge({ username })
-      .fetch({
-        withRelated: ["characters"]
-      })
-      .then(userData => {
-        const { characters } = userData.toJSON();
-        return _.find(characters, { name });
+    const now = new Date();
+
+    const user = await knex(TABLES.USERS).where({ username }).first();
+
+    const characterId = await knex(TABLES.CHARACTERS)
+      .insert({ name, created: now })
+      .returning("id")
+      .then((character) => {
+        return character[0];
       });
-    if (nameExists) {
-      res.send({ error: "user already has character with this name" });
-    } else {
-      const userId = await knex(TABLES.USERS)
-        .where({ username })
-        .first()
-        .then(user => {
-          return user.id;
-        });
 
-      const characterId = await knex(TABLES.CHARACTERS)
-        .insert({ name })
-        .returning("id")
-        .then(character => {
-          return character[0];
-        });
-
-      await knex(TABLES.USERS_CHARACTERS)
-        .insert({
-          user_id: userId,
-          character_id: characterId,
-          selected: false
-        })
-        .then(() => {
-          res.send("success");
-        });
-    }
+    await knex(TABLES.USERS_CHARACTERS)
+      .insert({
+        user_id: user.id,
+        character_id: characterId,
+        selected: false
+      })
+      .then(() => {
+        res.send("success");
+      });
   }
 });
 
-router.post("/toggle_upgrade", async function(req, res, next) {
+router.post("/toggle_upgrade", async function (req, res, next) {
   const { characterName, upgradeName, value } = req.query;
 
   const { sessionString } = req.cookies;
@@ -130,7 +112,7 @@ router.post("/toggle_upgrade", async function(req, res, next) {
       .fetch({
         withRelated: ["characters"]
       })
-      .then(userData => {
+      .then((userData) => {
         const selectedCharacter = _.find(userData.toJSON().characters, {
           name: characterName
         });
@@ -149,7 +131,7 @@ router.post("/toggle_upgrade", async function(req, res, next) {
           character_id: ids.character
         })
         .first()
-        .then(char => {
+        .then((char) => {
           return char.id;
         });
 
@@ -158,7 +140,7 @@ router.post("/toggle_upgrade", async function(req, res, next) {
           name: upgradeName
         })
         .first()
-        .then(upgrade => {
+        .then((upgrade) => {
           return upgrade.id;
         });
 
@@ -168,7 +150,7 @@ router.post("/toggle_upgrade", async function(req, res, next) {
           upgrade_id: upgradeId
         })
         .first()
-        .then(userUpgrade => {
+        .then((userUpgrade) => {
           if (!userUpgrade) {
             return false;
           } else {
@@ -201,7 +183,7 @@ router.post("/toggle_upgrade", async function(req, res, next) {
 });
 
 // TODO: room true means all rooms true
-router.post("/toggle_room", async function(req, res, next) {
+router.post("/toggle_room", async function (req, res, next) {
   const { characterName, name, value } = req.query;
 
   const { sessionString } = req.cookies;
@@ -219,7 +201,7 @@ router.post("/toggle_room", async function(req, res, next) {
       .fetch({
         withRelated: ["characters"]
       })
-      .then(userData => {
+      .then((userData) => {
         const selectedCharacter = _.find(userData.toJSON().characters, {
           name: characterName
         });
@@ -238,14 +220,14 @@ router.post("/toggle_room", async function(req, res, next) {
           character_id: ids.character
         })
         .first()
-        .then(char => {
+        .then((char) => {
           return char.id;
         });
 
       const roomId = await knex(TABLES.ROOMS)
         .where({ name })
         .first()
-        .then(room => {
+        .then((room) => {
           return room.id;
         });
 
@@ -255,7 +237,7 @@ router.post("/toggle_room", async function(req, res, next) {
           room_id: roomId
         })
         .first()
-        .then(userRoom => {
+        .then((userRoom) => {
           if (!userRoom) {
             return false;
           } else {
@@ -288,7 +270,7 @@ router.post("/toggle_room", async function(req, res, next) {
 });
 
 // TODO: bundle true means all bundle items true
-router.post("/toggle_bundle", async function(req, res, next) {
+router.post("/toggle_bundle", async function (req, res, next) {
   const { characterName, name, value } = req.query;
 
   const { sessionString } = req.cookies;
@@ -306,7 +288,7 @@ router.post("/toggle_bundle", async function(req, res, next) {
       .fetch({
         withRelated: ["characters"]
       })
-      .then(userData => {
+      .then((userData) => {
         const selectedCharacter = _.find(userData.toJSON().characters, {
           name: characterName
         });
@@ -325,14 +307,14 @@ router.post("/toggle_bundle", async function(req, res, next) {
           character_id: ids.character
         })
         .first()
-        .then(char => {
+        .then((char) => {
           return char.id;
         });
 
       const bundleId = await knex(TABLES.BUNDLES)
         .where({ name })
         .first()
-        .then(bundle => {
+        .then((bundle) => {
           return bundle.id;
         });
 
@@ -342,7 +324,7 @@ router.post("/toggle_bundle", async function(req, res, next) {
           bundle_id: bundleId
         })
         .first()
-        .then(userBundle => {
+        .then((userBundle) => {
           if (!userBundle) {
             return false;
           } else {
@@ -374,7 +356,7 @@ router.post("/toggle_bundle", async function(req, res, next) {
   }
 });
 
-router.post("/toggle_bundle_item", async function(req, res, next) {
+router.post("/toggle_bundle_item", async function (req, res, next) {
   const { characterName, key, value } = req.query;
 
   const { sessionString } = req.cookies;
@@ -392,7 +374,7 @@ router.post("/toggle_bundle_item", async function(req, res, next) {
       .fetch({
         withRelated: ["characters"]
       })
-      .then(userData => {
+      .then((userData) => {
         const selectedCharacter = _.find(userData.toJSON().characters, {
           name: characterName
         });
@@ -411,14 +393,14 @@ router.post("/toggle_bundle_item", async function(req, res, next) {
           character_id: ids.character
         })
         .first()
-        .then(char => {
+        .then((char) => {
           return char.id;
         });
 
       const itemId = await knex(TABLES.BUNDLE_ITEMS)
         .where({ key })
         .first()
-        .then(item => {
+        .then((item) => {
           return item.id;
         });
 
@@ -428,7 +410,7 @@ router.post("/toggle_bundle_item", async function(req, res, next) {
           bundle_item_id: itemId
         })
         .first()
-        .then(userItem => {
+        .then((userItem) => {
           if (!userItem) {
             return false;
           } else {
@@ -460,7 +442,7 @@ router.post("/toggle_bundle_item", async function(req, res, next) {
   }
 });
 
-router.post("/toggle_fair_item", async function(req, res, next) {
+router.post("/toggle_fair_item", async function (req, res, next) {
   const { characterName, name, value } = req.query;
 
   const { sessionString } = req.cookies;
@@ -478,7 +460,7 @@ router.post("/toggle_fair_item", async function(req, res, next) {
       .fetch({
         withRelated: ["characters"]
       })
-      .then(userData => {
+      .then((userData) => {
         const selectedCharacter = _.find(userData.toJSON().characters, {
           name: characterName
         });
@@ -497,14 +479,14 @@ router.post("/toggle_fair_item", async function(req, res, next) {
           character_id: ids.character
         })
         .first()
-        .then(char => {
+        .then((char) => {
           return char.id;
         });
 
       const fairItemId = await knex(TABLES.FAIR_ITEMS)
         .where({ name })
         .first()
-        .then(fairItem => {
+        .then((fairItem) => {
           return fairItem.id;
         });
 
@@ -514,7 +496,7 @@ router.post("/toggle_fair_item", async function(req, res, next) {
           fair_item_id: fairItemId
         })
         .first()
-        .then(userFairItem => {
+        .then((userFairItem) => {
           if (!userFairItem) {
             return false;
           } else {

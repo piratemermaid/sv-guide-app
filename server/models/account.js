@@ -72,7 +72,7 @@ class Session {
     return {
       username: sessionData[0],
       id: sessionData[1],
-      sessionHash: sessionData[2],
+      sessionHash: sessionData[2]
     };
   }
 
@@ -113,7 +113,7 @@ const setSession = ({ username, res, sessionId }) => {
 
       AccountTable.updateSessionId({
         sessionId: session.id,
-        username,
+        username
       })
         .then(() => {
           setSessionCookie({ sessionString, res });
@@ -128,7 +128,7 @@ const setSession = ({ username, res, sessionId }) => {
 const setSessionCookie = ({ sessionString, res }) => {
   res.cookie("sessionString", sessionString, {
     expire: Date.now() + 3600000,
-    httpOnly: true,
+    httpOnly: true
     // , secure: true // use with https
   });
 };

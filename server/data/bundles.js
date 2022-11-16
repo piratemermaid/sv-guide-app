@@ -1038,15 +1038,8 @@ for (let ROOM of bundleData) {
     });
     for (let i in bundleItems) {
       itemIndex++;
-      const {
-        name,
-        amount,
-        seasons,
-        type,
-        location,
-        time,
-        special
-      } = bundleItems[i];
+      const { name, amount, seasons, type, location, time, special } =
+        bundleItems[i];
 
       let key = `${name}_${BUNDLE.name}`;
       // differentiate duplicate items

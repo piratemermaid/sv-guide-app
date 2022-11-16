@@ -1,10 +1,10 @@
 const TABLES = require("../tables");
 
-exports.up = async function(knex) {
+exports.up = async function (knex) {
   /////////////////////////////////////////
   // app data tables
   /////////////////////////////////////////
-  await knex.schema.createTable(TABLES.ROOMS, table => {
+  await knex.schema.createTable(TABLES.ROOMS, (table) => {
     table.increments("id");
     table.string("name").notNullable();
     table.string("key").notNullable();
@@ -12,7 +12,7 @@ exports.up = async function(knex) {
     table.integer("order");
   });
 
-  await knex.schema.createTable(TABLES.BUNDLES, table => {
+  await knex.schema.createTable(TABLES.BUNDLES, (table) => {
     table.increments("id");
     table.string("name").notNullable();
     table.string("key").notNullable();
@@ -27,7 +27,7 @@ exports.up = async function(knex) {
     table.integer("order");
   });
 
-  await knex.schema.createTable(TABLES.BUNDLE_ITEMS, table => {
+  await knex.schema.createTable(TABLES.BUNDLE_ITEMS, (table) => {
     table.increments("id");
     table.string("name").notNullable();
     table.string("key").notNullable();
@@ -48,7 +48,7 @@ exports.up = async function(knex) {
     table.integer("order");
   });
 
-  await knex.schema.createTable(TABLES.UPGRADES, table => {
+  await knex.schema.createTable(TABLES.UPGRADES, (table) => {
     table.increments("id");
     table.string("name").notNullable();
     table.string("key").notNullable();
@@ -57,7 +57,7 @@ exports.up = async function(knex) {
     table.string("prereq");
   });
 
-  await knex.schema.createTable(TABLES.BIRTHDAYS, table => {
+  await knex.schema.createTable(TABLES.BIRTHDAYS, (table) => {
     table.increments("id");
     table.string("name").notNullable();
     table.string("key").notNullable();
@@ -67,7 +67,7 @@ exports.up = async function(knex) {
     table.specificType("likes", "text ARRAY");
   });
 
-  await knex.schema.createTable(TABLES.FESTIVALS, table => {
+  await knex.schema.createTable(TABLES.FESTIVALS, (table) => {
     table.increments("id");
     table.string("name").notNullable();
     table.string("key").notNullable();
@@ -75,7 +75,7 @@ exports.up = async function(knex) {
     table.integer("day");
   });
 
-  await knex.schema.createTable(TABLES.FAIR_ITEMS, table => {
+  await knex.schema.createTable(TABLES.FAIR_ITEMS, (table) => {
     table.increments("id");
     table.string("name").notNullable();
     table.string("key").notNullable();
@@ -84,33 +84,22 @@ exports.up = async function(knex) {
   /////////////////////////////////////////
   // user tables
   /////////////////////////////////////////
-  await knex.schema.createTable(TABLES.USERS, table => {
-    table
-      .increments("id")
-      .unsigned()
-      .primary();
-    table
-      .string("username")
-      .unique()
-      .notNullable();
+  await knex.schema.createTable(TABLES.USERS, (table) => {
+    table.increments("id").unsigned().primary();
+    table.string("username").unique().notNullable();
     table.string("password").notNullable();
     table.string("email").notNullable();
     table.string("sessionId");
   });
 
-  await knex.schema.createTable(TABLES.CHARACTERS, table => {
-    table
-      .increments("id")
-      .unsigned()
-      .primary();
+  await knex.schema.createTable(TABLES.CHARACTERS, (table) => {
+    table.increments("id").unsigned().primary();
     table.string("name").notNullable();
+    table.date("created").notNullable();
   });
 
-  await knex.schema.createTable(TABLES.USERS_CHARACTERS, table => {
-    table
-      .increments("id")
-      .unsigned()
-      .primary();
+  await knex.schema.createTable(TABLES.USERS_CHARACTERS, (table) => {
+    table.increments("id").unsigned().primary();
     table
       .integer("user_id")
       .references("id")
@@ -126,11 +115,8 @@ exports.up = async function(knex) {
     table.boolean("selected");
   });
 
-  await knex.schema.createTable(TABLES.CHARACTERS_ROOMS, table => {
-    table
-      .increments("id")
-      .unsigned()
-      .primary();
+  await knex.schema.createTable(TABLES.CHARACTERS_ROOMS, (table) => {
+    table.increments("id").unsigned().primary();
     table
       .integer("character_id")
       .references("id")
@@ -145,11 +131,8 @@ exports.up = async function(knex) {
       .notNullable();
   });
 
-  await knex.schema.createTable(TABLES.CHARACTERS_BUNDLES, table => {
-    table
-      .increments("id")
-      .unsigned()
-      .primary();
+  await knex.schema.createTable(TABLES.CHARACTERS_BUNDLES, (table) => {
+    table.increments("id").unsigned().primary();
     table
       .integer("character_id")
       .references("id")
@@ -164,11 +147,8 @@ exports.up = async function(knex) {
       .notNullable();
   });
 
-  await knex.schema.createTable(TABLES.CHARACTERS_BUNDLE_ITEMS, table => {
-    table
-      .increments("id")
-      .unsigned()
-      .primary();
+  await knex.schema.createTable(TABLES.CHARACTERS_BUNDLE_ITEMS, (table) => {
+    table.increments("id").unsigned().primary();
     table
       .integer("character_id")
       .references("id")
@@ -183,11 +163,8 @@ exports.up = async function(knex) {
       .notNullable();
   });
 
-  await knex.schema.createTable(TABLES.CHARACTERS_UPGRADES, table => {
-    table
-      .increments("id")
-      .unsigned()
-      .primary();
+  await knex.schema.createTable(TABLES.CHARACTERS_UPGRADES, (table) => {
+    table.increments("id").unsigned().primary();
     table
       .integer("character_id")
       .references("id")
@@ -202,11 +179,8 @@ exports.up = async function(knex) {
       .notNullable();
   });
 
-  await knex.schema.createTable(TABLES.CHARACTERS_FAIR_ITEMS, table => {
-    table
-      .increments("id")
-      .unsigned()
-      .primary();
+  await knex.schema.createTable(TABLES.CHARACTERS_FAIR_ITEMS, (table) => {
+    table.increments("id").unsigned().primary();
     table
       .integer("character_id")
       .references("id")
@@ -222,7 +196,7 @@ exports.up = async function(knex) {
   });
 };
 
-exports.down = async function(knex) {
+exports.down = async function (knex) {
   const tableOrder = [
     TABLES.ROOMS,
     TABLES.BUNDLES,

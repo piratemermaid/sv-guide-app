@@ -1,23 +1,23 @@
 {
-    "name": "react-app-base",
-    "version": "0.1.0",
-    "private": true,
-    "dependencies": {
-        "@material-ui/core": "^4.9.2",
-        "@material-ui/icons": "^4.9.1",
-        "axios": "^0.19.2",
-        "material-ui": "^0.20.2",
-        "react": "^16.7.0-alpha.2",
-        "react-dom": "^16.7.0-alpha.2",
-        "react-router": "^4.3.1",
-        "react-router-dom": "^4.3.1",
-        "react-scripts": "1.1.4"
-    },
-    "scripts": {
-        "start": "set PORT=3002 && react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test --env=jsdom",
-        "eject": "react-scripts eject"
-    },
-    "proxy": "http://localhost:3001/"
+  "name": "react-app-base",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.9.2",
+    "@material-ui/icons": "^4.9.1",
+    "axios": "^0.19.2",
+    "material-ui": "^0.20.2",
+    "react": "^16.7.0-alpha.2",
+    "react-dom": "^16.7.0-alpha.2",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "set PORT=3002 && react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:3001/"
 }
