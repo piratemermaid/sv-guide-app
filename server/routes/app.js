@@ -94,16 +94,16 @@ router.get("/calendar", async function (req, res, next) {
     "season"
   );
 
-  res.send({ calendar });
+  res.send(calendar);
 });
 
 router.get("/fair_items", function (req, res, next) {
   FairItem.fetchAll().then((fairItems) => {
-    res.send({
-      fairItems: fairItems.toJSON().map(({ name }) => {
+    res.send(
+      fairItems.toJSON().map(({ name }) => {
         return { name };
       })
-    });
+    );
   });
 });
 

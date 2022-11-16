@@ -2,12 +2,12 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import queryKeys from "../../constants/queryKeys";
 
-export function useAppBundles() {
-  const query = useQuery(queryKeys.app.bundles, async () => {
+export function useCalendar() {
+  const query = useQuery(queryKeys.app.calendar, async () => {
     try {
       return await axios({
         method: "get",
-        url: "/api/app/bundles"
+        url: "/api/app/calendar"
       });
     } catch (err) {
       return [];

@@ -6,17 +6,22 @@ import SeasonFilterBtns from "../components/SeasonFilterBtns";
 import Loading from "../components/Loading";
 import Landing from "./Landing";
 import CharacterSelect from "./CharacterSelect";
+import { useCalendar } from "../hooks/appData/useCalendar";
+import { useFairItems } from "../hooks/appData/useFairItems";
 
 const Calendar = (props) => {
+  const { data: calendar, isFetching: isAppCalendarFetching } = useCalendar();
+  const { data: fairItems, isFetching: isFairItemsFetching } = useFairItems();
+
   if (!props.authenticated) {
     return <Landing />;
-  } else if (!props.calendar) {
+  } else if (isAppCalendarFetching || isFairItemsFetching) {
     return <Loading />;
   } else if (!props.userData) {
     return <CharacterSelect />;
   }
 
-  const { calendarSeasonFilter, calendar, fairItems } = props;
+  const { calendarSeasonFilter } = props;
 
   const handleChange = (e, name) => {
     props.toggleFairItem({ name, value: e.target.checked });

@@ -7,7 +7,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 import { LS } from "./utils/globals";
 import ROUTES from "./constants/routes";
-import calendar from "./data/calendar";
 import Nav from "./components/Nav";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -16,13 +15,11 @@ import CCBundles from "./pages/CCBundles";
 import Upgrades from "./pages/Upgrades";
 import Calendar from "./pages/Calendar";
 import Account from "./pages/Account";
-import Loading from "./components/Loading";
 import { theme } from "./theme";
 import "./App.css";
 
 const App = () => {
   const [appData, setAppData] = useState({
-    calendar: [],
     fairItems: []
   });
   const [authenticated, setAuthenticated] = useState(false);
@@ -236,14 +233,6 @@ const App = () => {
       try {
         await axios({
           method: "get",
-          url: "/api/app/calendar"
-        }).then((res) => {
-          const { calendar } = res.data;
-          setAppData({ ...appData, calendar });
-        });
-
-        await axios({
-          method: "get",
           url: "/api/app/fair_items"
         }).then((res) => {
           const { fairItems } = res.data;
@@ -278,7 +267,6 @@ const App = () => {
     // get app data from FE
     setAppData({
       appData: {
-        calendar: calendar.calendar,
         fairItems: calendar.fairItems
       }
     });
@@ -291,7 +279,7 @@ const App = () => {
     }
   };
 
-  const { calendar, fairItems } = appData;
+  const { fairItems } = appData;
   const userData = _.find(characters, { name: selectedCharacter });
 
   return (
@@ -371,7 +359,6 @@ const App = () => {
                         changeCalendarSeasonFilter={changeCalendarSeasonFilter}
                         authenticated={authenticated}
                         userData={userData}
-                        calendar={calendar}
                         fairItems={fairItems}
                         toggleFairItem={toggleFairItem}
                       />
