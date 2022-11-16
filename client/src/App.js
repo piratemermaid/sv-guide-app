@@ -19,9 +19,6 @@ import { theme } from "./theme";
 import "./App.css";
 
 const App = () => {
-  const [appData, setAppData] = useState({
-    fairItems: []
-  });
   const [authenticated, setAuthenticated] = useState(false);
   const [selectedCharacter, setSelectedCharacter] = useState(null);
   const [characters, setCharacters] = useState([]);
@@ -230,18 +227,6 @@ const App = () => {
         setAuthenticated(false);
       }
 
-      try {
-        await axios({
-          method: "get",
-          url: "/api/app/fair_items"
-        }).then((res) => {
-          const { fairItems } = res.data;
-          setAppData({ ...appData, fairItems });
-        });
-      } catch (err) {
-        tempAppData();
-      }
-
       if (selectedCharacter) {
         if (localStorage.getItem("selectedCharacter")) {
           setSelectedCharacter(localStorage.getItem("selectedCharacter"));
@@ -262,24 +247,6 @@ const App = () => {
     }
   }, []);
 
-  // TODO: delete this if I someday deploy the database for real
-  const tempAppData = () => {
-    // get app data from FE
-    setAppData({
-      appData: {
-        fairItems: calendar.fairItems
-      }
-    });
-
-    // get user data from LS if exists
-    const userData = JSON.parse(localStorage.getItem("svData"));
-    if (userData) {
-      setAuthenticated(true);
-      setCharacters(userData);
-    }
-  };
-
-  const { fairItems } = appData;
   const userData = _.find(characters, { name: selectedCharacter });
 
   return (
@@ -359,7 +326,6 @@ const App = () => {
                         changeCalendarSeasonFilter={changeCalendarSeasonFilter}
                         authenticated={authenticated}
                         userData={userData}
-                        fairItems={fairItems}
                         toggleFairItem={toggleFairItem}
                       />
                     )}
@@ -369,7 +335,6 @@ const App = () => {
                     render={() => (
                       <Account
                         authenticated={authenticated}
-                        appData={appData}
                         characters={characters}
                         addCharacter={addCharacter}
                         toggleUpgrade={toggleUpgrade}

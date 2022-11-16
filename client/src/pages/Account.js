@@ -50,9 +50,10 @@ class Account extends Component {
   };
 
   render() {
-    if (!this.props.appData) {
-      return <Loading />;
-    } else if (!this.props.authenticated) {
+    // if (!this.props.appData) {
+    //   return <Loading />;
+    // } else
+    if (!this.props.authenticated) {
       return <Landing />;
     } else {
       return (
