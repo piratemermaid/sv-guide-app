@@ -389,14 +389,12 @@ class App extends Component {
                         <Login authenticateUser={this.authenticateUser} />
                       )}
                     />
-                    }
                     <Route
                       path="/signup"
                       render={() => (
                         <Signup authenticateUser={this.authenticateUser} />
                       )}
                     />
-                    }
                     <Route
                       exact
                       path={URLS["Community Center"]}
