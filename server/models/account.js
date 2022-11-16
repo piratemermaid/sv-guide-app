@@ -3,25 +3,19 @@ const uuid = require("uuid/v4");
 const bcrypt = require("bcrypt");
 const HASH = require("../secrets");
 
-const hash = data => {
-  const salt = bcrypt.genSaltSync(HASH.saltRounds);
-  const hash = bcrypt.hashSync(data, salt);
-  return hash;
-};
-
 class AccountTable {
   static storeAccount({ username, password, email }) {
-    return knex
-      .insert({ username, password, email })
-      .into("users")
-      .then(function() {
-        return knex("users")
-          .first()
-          .where("username", username);
-      })
-      .catch(function(error) {
-        console.error(error);
-      });
+    bcrypt.hash(password, 10, function (err, hash) {
+      return knex
+        .insert({ username, password: hash, email })
+        .into("users")
+        .then(function () {
+          return knex("users").first().where("username", username);
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    });
   }
 
   static getAccount({ username }) {
@@ -29,7 +23,7 @@ class AccountTable {
       .select("*")
       .from("users")
       .where("username", username)
-      .then(function(rows) {
+      .then(function (rows) {
         return rows[0];
       });
   }
@@ -39,7 +33,7 @@ class AccountTable {
       .select("*")
       .from("users")
       .where("email", email)
-      .then(function(rows) {
+      .then(function (rows) {
         return rows[0];
       });
   }
@@ -49,10 +43,10 @@ class AccountTable {
       .where({ username })
       .update({ sessionId })
       .returning("*")
-      .then(rows => {
+      .then((rows) => {
         //
       })
-      .catch(error => {
+      .catch((error) => {
         return error;
       });
   }
@@ -78,7 +72,7 @@ class Session {
     return {
       username: sessionData[0],
       id: sessionData[1],
-      sessionHash: sessionData[2]
+      sessionHash: sessionData[2],
     };
   }
 
@@ -87,7 +81,7 @@ class Session {
 
     const accountData = Session.accountData({ username, id });
 
-    await bcrypt.compare(accountData, sessionHash).then(res => {
+    await bcrypt.compare(accountData, sessionHash).then((res) => {
       return res;
     });
   }
@@ -99,7 +93,7 @@ class Session {
   static sessionString({ username, id }) {
     const accountData = Session.accountData({ username, id });
 
-    return `${accountData}${SEPARATOR}${hash(accountData)}`;
+    return `${accountData}${SEPARATOR}`;
   }
 }
 
@@ -119,14 +113,14 @@ const setSession = ({ username, res, sessionId }) => {
 
       AccountTable.updateSessionId({
         sessionId: session.id,
-        username
+        username,
       })
         .then(() => {
           setSessionCookie({ sessionString, res });
 
           resolve({ message: "session created" });
         })
-        .catch(error => reject(error));
+        .catch((error) => reject(error));
     }
   });
 };
@@ -134,9 +128,9 @@ const setSession = ({ username, res, sessionId }) => {
 const setSessionCookie = ({ sessionString, res }) => {
   res.cookie("sessionString", sessionString, {
     expire: Date.now() + 3600000,
-    httpOnly: true
+    httpOnly: true,
     // , secure: true // use with https
   });
 };
 
-module.exports = { AccountTable, hash, Session, setSession };
+module.exports = { AccountTable, Session, setSession };

@@ -1,12 +1,7 @@
 const { Router } = require("express");
 const { knex } = require("../db/config");
 const bcrypt = require("bcrypt");
-const {
-  AccountTable,
-  hash,
-  Session,
-  setSession
-} = require("../models/account");
+const { AccountTable, Session, setSession } = require("../models/account");
 
 const router = new Router();
 
@@ -27,13 +22,13 @@ router.post("/signup", async (req, res, next) => {
       if (!account) {
         await AccountTable.storeAccount({
           username,
-          password: hash(password),
-          email
+          password,
+          email,
         });
 
         await setSession({
           username,
-          res
+          res,
         }).then(() => {
           res.send({ signup: "success" });
           next();
@@ -61,7 +56,7 @@ router.post("/login", async (req, res, next) => {
         return setSession({
           username,
           res,
-          sessionId: account.sessionId
+          sessionId: account.sessionId,
         }).then(() => {
           res.send({ login: "success" });
         });
@@ -81,14 +76,14 @@ router.get("/logout", (req, res, next) => {
 
   AccountTable.updateSessionId({
     sessionId: null,
-    username
+    username,
   })
     .then(() => {
       res.clearCookie("sessionString");
 
       res.json({ message: "Successful logout" });
     })
-    .catch(error => next(error));
+    .catch((error) => next(error));
 });
 
 router.get("/authenticated", (req, res, next) => {
@@ -104,12 +99,12 @@ router.get("/authenticated", (req, res, next) => {
     const { username, id } = Session.parse(sessionString);
 
     AccountTable.getAccount({ username })
-      .then(account => {
+      .then((account) => {
         const authenticated = account.sessionId === id;
 
         res.send({ authenticated });
       })
-      .catch(error => next(error));
+      .catch((error) => next(error));
   }
 });
 
