@@ -349,13 +349,13 @@ const App = () => {
                     <Route
                       path="/login"
                       render={() => (
-                        <Login authenticateUser={this.authenticateUser} />
+                        <Login authenticateUser={authenticateUser} />
                       )}
                     />
                     <Route
                       path="/signup"
                       render={() => (
-                        <Signup authenticateUser={this.authenticateUser} />
+                        <Signup authenticateUser={authenticateUser} />
                       )}
                     />
                     <Route
