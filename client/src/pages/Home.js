@@ -46,14 +46,17 @@ const Home = (props) => {
                     <Card
                       key={name}
                       onClick={() => props.selectCharacter(name)}
-                      className={
-                        props.selectedCharacter === name
-                          ? "user-character selected-character"
-                          : "user-character"
-                      }
+                      className="user-character"
                     >
                       <CardContent>
-                        <Typography variant="body1" style={{ fontWeight: 600 }}>
+                        <Typography
+                          variant="body1"
+                          style={
+                            props.selectedCharacter === name
+                              ? { fontWeight: "bold" }
+                              : {}
+                          }
+                        >
                           {name}
                         </Typography>
                         <Typography variant="body2">
