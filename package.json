@@ -2,6 +2,9 @@
   "name": "sv-guide-app",
   "version": "1.0.0",
   "description": "Stardew Valley guide",
+  "engines": {
+    "node": "18.12.1"
+  },
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "client": "npm start --prefix client",
