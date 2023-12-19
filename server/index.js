@@ -24,6 +24,17 @@ app.use((err, req, res, next) => {
   });
 });
 
+app.get("/*", function (_req, res) {
+  res.sendFile(
+    path.join(__dirname, "../client/build/index.html"),
+    function (error) {
+      if (error) {
+        res.status(500).send(error);
+      }
+    }
+  );
+});
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
